@@ -10,630 +10,1164 @@
 <title>Ghare Bazar</title>
 
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:Arial,sans-serif;background:#fffdf2;color:#263d28}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
 :root{
---green:#2f7d32;--dark:#1f5d24;--yellow:#f5c542;
---yellowLight:#fff4bd;--border:#e5dca9;--danger:#d9534f;
---shadow:0 5px 18px rgba(72,75,25,.10)
+  --green:#2f7d32;
+  --dark:#1f5d24;
+  --yellow:#f5c542;
+  --yellowLight:#fff4bd;
+  --border:#e5dca9;
+  --danger:#d9534f;
+  --bg:#f8faf5;
+  --white:#fff;
+  --text:#222;
+  --muted:#666;
+  --shadow:0 5px 18px rgba(72,75,25,.10);
 }
-#splash{position:fixed;inset:0;background:linear-gradient(145deg,#2f7d32,#f5c542);color:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;transition:.6s}
-.splashBox{text-align:center;animation:pop .8s ease}
-.splashLogo{width:92px;height:92px;border-radius:26px;background:#fff;color:var(--green);display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:bold;margin:auto;box-shadow:0 10px 35px rgba(0,0,0,.25)}
-.splashTitle{font-size:32px;font-weight:800;margin-top:18px}
-.splashSub{font-size:15px;margin-top:7px}
-.loader{width:100px;height:4px;background:rgba(255,255,255,.3);margin:25px auto 0;border-radius:10px;overflow:hidden}
-.loader i{display:block;height:100%;background:#fff;width:0;animation:load 1.8s forwards}
-@keyframes load{to{width:100%}}
-@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
 
-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px solid var(--yellow);box-shadow:0 2px 10px rgba(0,0,0,.05)}
-.topbar{min-height:68px;display:flex;align-items:center;padding:0 15px;gap:8px}
-.brand{display:flex;align-items:center;gap:9px;flex:1;min-width:0}
-.brandIcon{width:42px;height:42px;border-radius:13px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:bold;border:2px solid var(--yellow);flex-shrink:0}
-.brandText{min-width:0}
-.brandText b{display:block;font-size:18px}
-.brandText small{color:#66817d;font-size:11px}
-.langBtn{border:1px solid var(--green);background:#fff;color:var(--green);border-radius:20px;padding:7px 10px;font-weight:bold}
-.cartBtn{position:relative;border:0;background:var(--yellowLight);color:var(--green);width:43px;height:43px;border-radius:13px;font-size:21px}
-.badge{position:absolute;right:-4px;top:-5px;background:#e84c3d;color:#fff;min-width:20px;height:20px;border-radius:50%;font-size:11px;display:flex;align-items:center;justify-content:center}
-.installBtn{display:none;width:100%;border:0;background:var(--yellow);color:var(--dark);border-radius:12px;padding:11px 13px;font-weight:800;margin:0 0 12px}
-main{max-width:850px;margin:auto;padding:15px 15px 90px}
-.hero{background:linear-gradient(135deg,#2f7d32,#6da83f);color:#fff;border-radius:22px;padding:24px 20px;margin-bottom:15px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.hero:after{content:"🛍️";position:absolute;right:18px;bottom:-10px;font-size:75px;opacity:.17}
-.hero h1{margin:0 0 7px;font-size:28px}
-.hero p{margin:0;opacity:.94;line-height:1.5}
-.freeDeliveryBanner{background:linear-gradient(135deg,#fff4bd,#fff9dd);border:2px solid var(--yellow);color:var(--dark);border-radius:16px;padding:13px 14px;margin:12px 0;font-weight:bold}
-.freeDeliveryBanner small{display:block;margin-top:4px;font-weight:normal;color:#536b4f}
-.search{display:flex;gap:8px;margin:15px 0}
-.search input{flex:1;border:1px solid var(--border);background:#fff;border-radius:14px;padding:13px 15px;outline:none}
-.search button{width:48px;border:0;border-radius:14px;background:var(--green);color:#fff;font-size:20px}
-.sectionTitle{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 11px}
-.sectionTitle h2{font-size:18px;margin:0}
-.sectionTitle button{border:0;background:none;color:var(--green);font-weight:bold}
-.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.cat{background:#fff;border:1px solid var(--border);border-radius:16px;padding:12px 5px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.03)}
-.cat .emoji{font-size:27px}
-.cat span{display:block;font-size:12px;margin-top:5px}
-.products{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
-.product{background:#fff;border:1px solid var(--border);border-radius:17px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.05)}
-.productImg{height:135px;background:linear-gradient(135deg,#fff8d9,#e9f4dc);display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden}
-.productImg img{width:100%;height:100%;object-fit:cover}
-.productBody{padding:12px}
-.productBody h3{font-size:15px;margin:0 0 5px}
-.unit{font-size:11px;color:#718582}
-.price{font-size:18px;font-weight:bold;color:var(--green);margin:8px 0}
-.add{width:100%;border:0;background:var(--green);color:#fff;border-radius:10px;padding:9px;font-weight:bold}
-.out{background:#a7b5b3!important}
-.page{display:none}
-.page.active{display:block}
-.back{border:0;background:var(--yellowLight);color:var(--green);border-radius:12px;padding:9px 13px;font-weight:bold;margin-bottom:12px}
-.card{background:#fff;border:1px solid var(--border);border-radius:17px;padding:15px;box-shadow:var(--shadow);margin-bottom:12px}
-.card h3{margin-top:0}
-.cartItem{display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
-.cartEmoji{font-size:38px}
-.cartPhoto{width:50px;height:50px;border-radius:10px;object-fit:cover}
-.cartInfo{flex:1}
-.cartInfo b{display:block}
-.qty{display:flex;align-items:center;gap:7px;margin-top:7px}
-.qty button{width:30px;height:30px;border:1px solid var(--border);border-radius:8px;background:#fff}
-.subtotalRow,.deliveryRow,.dueRow{display:flex;justify-content:space-between;padding-top:9px;font-size:14px}
-.grandTotal{display:flex;justify-content:space-between;padding-top:13px;margin-top:10px;border-top:2px solid var(--yellow);font-size:20px;font-weight:bold;color:var(--green)}
-label{display:block;font-weight:bold;font-size:13px;margin:13px 0 6px}
-input,textarea,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:11px;background:#fff;outline:none}
-textarea{min-height:85px;resize:vertical}
-.primary{width:100%;border:0;background:var(--green);color:#fff;border-radius:12px;padding:13px;font-weight:bold;margin-top:13px}
-.secondary{width:100%;border:1px solid var(--green);background:#fff;color:var(--green);border-radius:12px;padding:12px;font-weight:bold;margin-top:8px}
-.secondary:disabled{opacity:.6;cursor:not-allowed}
-.dangerBtn{width:100%;border:1px solid var(--danger);background:#fff;color:var(--danger);border-radius:12px;padding:12px;font-weight:bold;margin-top:8px}
-.status{display:inline-block;padding:6px 10px;border-radius:20px;background:var(--yellowLight);color:var(--green);font-size:12px;font-weight:bold;margin-left:5px}
-.statusDanger{background:#ffe3e0!important;color:#a52b27!important}
-.statusGreen{background:#ddf2dd!important;color:#276b2b!important}
-.orderBox{border:1px solid var(--border);border-radius:13px;padding:12px;margin-bottom:10px;background:#fff}
-.orderBox p{margin:5px 0;font-size:13px}
-.orderProducts{margin-top:10px;padding:9px;background:#fffdf0;border-radius:10px}
-.orderProductLine{padding:5px 0;font-size:13px;border-bottom:1px dashed #ddd}
-.orderProductLine:last-child{border-bottom:0}
-.cancelBtn{width:100%;border:1px solid var(--danger);background:#fff;color:var(--danger);border-radius:10px;padding:10px;font-weight:bold;margin-top:10px}
-.dueBox{background:#fff0ed;border:1px solid #efaaa4;color:#9b2d28;border-radius:12px;padding:11px;margin:10px 0;font-size:13px}
-.infoBox{background:#f0f8e9;border:1px solid #c5dfb8;color:#35622f;border-radius:12px;padding:11px;margin:10px 0;font-size:13px}
-.locationBox{background:#f0f8e9;border:1px solid #b9d9aa;border-radius:13px;padding:12px;margin-top:10px}
-.locationStatus{font-size:12px;color:#66817d;margin-top:7px;line-height:1.5}
-.locationLink{display:block;margin-top:8px;color:#2f7d32;font-weight:bold}
-.adminGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.adminBtn{border:1px solid var(--border);background:#fff;border-radius:14px;padding:16px;text-align:left}
-.adminBtn b{display:block;margin-bottom:4px}
-.adminBtn span{font-size:12px;color:#6d817e}
-.adminImagePreview{width:100px;height:100px;object-fit:cover;border-radius:12px;display:none;margin-top:10px;border:1px solid var(--border)}
-.adminProductImage{width:60px;height:60px;object-fit:cover;border-radius:10px}
-.adminOrderAction{margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
-.dueAdmin{background:#fff0ed;border:1px solid #efaaa4;border-radius:12px;padding:10px;margin-top:10px;color:#9b2d28}
-.bottomNav{position:fixed;bottom:0;left:0;right:0;height:67px;background:#fff;border-top:2px solid var(--yellow);display:flex;z-index:200}
-.navItem{flex:1;border:0;background:#fff;color:#71817f;font-size:11px}
-.navItem.active{color:var(--green);font-weight:bold}
-.navItem div{font-size:21px;margin-bottom:3px}
-.notice{background:#fff8df;border:1px solid #f0df9b;border-radius:13px;padding:11px;font-size:12px;line-height:1.5;margin-top:12px}
-@media(min-width:700px){
-.products{grid-template-columns:repeat(4,1fr)}
-.categories{grid-template-columns:repeat(8,1fr)}
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+body{
+  min-height:100vh;
+  padding-bottom:75px;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* ================= SPLASH ================= */
+
+#splash{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:linear-gradient(135deg,#2f7d32,#1f5d24);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.splashBox{
+  animation:splashIn .8s ease;
+}
+
+.splashLogo{
+  width:82px;
+  height:82px;
+  margin:auto;
+  border-radius:24px;
+  background:white;
+  color:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  font-weight:bold;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.splashTitle{
+  font-size:30px;
+  font-weight:800;
+  margin-top:18px;
+}
+
+.splashShop{
+  margin-top:7px;
+  font-size:16px;
+}
+
+@keyframes splashIn{
+  from{
+    opacity:0;
+    transform:scale(.85);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* ================= HEADER ================= */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:white;
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+
+.headerInner{
+  max-width:1100px;
+  margin:auto;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brand{
+  flex:1;
+  min-width:0;
+  user-select:none;
+}
+
+.brandTitle{
+  color:var(--green);
+  font-size:20px;
+  font-weight:800;
+}
+
+.brandSub{
+  color:#777;
+  font-size:12px;
+  margin-top:2px;
+}
+
+.headerBtn{
+  border:1px solid var(--border);
+  background:white;
+  border-radius:12px;
+  padding:9px 11px;
+  min-width:42px;
+}
+
+.cartBtn{
+  position:relative;
+}
+
+.cartBadge{
+  position:absolute;
+  right:-4px;
+  top:-5px;
+  background:var(--danger);
+  color:white;
+  border-radius:50%;
+  min-width:20px;
+  height:20px;
+  padding:2px;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ================= MAIN ================= */
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:14px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  background:linear-gradient(135deg,#e9f7e7,#fff8cf);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px 18px;
+  margin-bottom:15px;
+  box-shadow:var(--shadow);
+}
+
+.hero h1{
+  margin:0;
+  color:var(--dark);
+  font-size:28px;
+}
+
+.hero p{
+  margin:7px 0 0;
+  color:#555;
+}
+
+/* ================= SEARCH ================= */
+
+.searchBox{
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.searchBox input{
+  flex:1;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  outline:none;
+  background:white;
+}
+
+.searchBox button{
+  border:0;
+  background:var(--green);
+  color:white;
+  border-radius:12px;
+  padding:0 16px;
+}
+
+/* ================= CATEGORY ================= */
+
+.sectionTitle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:18px 0 10px;
+}
+
+.sectionTitle h2{
+  margin:0;
+  font-size:19px;
+}
+
+.categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(105px,1fr));
+  gap:9px;
+}
+
+.category{
+  border:1px solid var(--border);
+  background:white;
+  border-radius:13px;
+  padding:12px 7px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+
+.category .emoji{
+  font-size:25px;
+}
+
+.category small{
+  display:block;
+  margin-top:5px;
+}
+
+/* ================= PRODUCTS ================= */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+  gap:12px;
+}
+
+.product{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.productImage{
+  height:125px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f8f8ed;
+  font-size:48px;
+}
+
+.productImage img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.productBody{
+  padding:11px;
+}
+
+.productName{
+  font-weight:700;
+  min-height:38px;
+}
+
+.productUnit{
+  color:#777;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.productPrice{
+  color:var(--green);
+  font-size:18px;
+  font-weight:800;
+  margin:8px 0;
+}
+
+.productActions{
+  display:flex;
+  gap:6px;
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 12px;
+  font-weight:700;
+}
+
+.btnPrimary{
+  background:var(--green);
+  color:white;
+}
+
+.btnYellow{
+  background:var(--yellow);
+  color:#222;
+}
+
+.btnDanger{
+  background:var(--danger);
+  color:white;
+}
+
+.btnLight{
+  background:#f2f2e8;
+  border:1px solid var(--border);
+}
+
+.btnBlock{
+  width:100%;
+}
+
+.outStock{
+  color:var(--danger);
+  font-weight:bold;
+  font-size:13px;
+}
+
+/* ================= CART ================= */
+
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow);
+}
+
+.cartItem{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+
+.cartItem:last-child{
+  border-bottom:0;
+}
+
+.cartInfo{
+  flex:1;
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.qty button{
+  width:30px;
+  height:30px;
+  border:1px solid var(--border);
+  background:white;
+  border-radius:8px;
+}
+
+.summaryRow{
+  display:flex;
+  justify-content:space-between;
+  padding:6px 0;
+}
+
+.summaryTotal{
+  font-size:20px;
+  font-weight:800;
+  color:var(--green);
+  border-top:1px solid var(--border);
+  margin-top:7px;
+  padding-top:10px;
+}
+
+/* ================= FORMS ================= */
+
+.formGroup{
+  margin-bottom:12px;
+}
+
+.formGroup label{
+  display:block;
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:11px;
+  background:white;
+  outline:none;
+}
+
+.formGroup textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.notice{
+  background:var(--yellowLight);
+  border:1px solid var(--border);
+  padding:11px;
+  border-radius:11px;
+  margin-bottom:12px;
+  font-size:14px;
+}
+
+/* ================= ORDER ================= */
+
+.orderCard{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:14px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow);
+}
+
+.orderHeader{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.status{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:8px;
+  background:#e8f5e9;
+  color:var(--green);
+  font-size:12px;
+  font-weight:bold;
+}
+
+.orderItems{
+  margin:10px 0;
+  font-size:14px;
+}
+
+.orderItemLine{
+  display:flex;
+  justify-content:space-between;
+  padding:4px 0;
+}
+
+.locationBox{
+  background:#f3f7ef;
+  padding:9px;
+  border-radius:9px;
+  margin-top:8px;
+  font-size:13px;
+}
+
+/* ================= ADMIN ================= */
+
+.adminGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:10px;
+}
+
+.adminTile{
+  border:1px solid var(--border);
+  background:white;
+  border-radius:14px;
+  padding:18px 10px;
+  text-align:center;
+  box-shadow:var(--shadow);
+  font-weight:700;
+}
+
+.adminTile span{
+  display:block;
+  font-size:28px;
+  margin-bottom:6px;
+}
+
+.adminTop{
+  background:linear-gradient(135deg,#e7f5e5,#fff7cb);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:13px;
+}
+
+/* ================= TABLE ================= */
+
+.tableWrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+th,td{
+  padding:9px;
+  border-bottom:1px solid #eee;
+  text-align:left;
+  vertical-align:top;
+}
+
+th{
+  background:#f4f7e8;
+}
+
+/* ================= NAV ================= */
+
+.bottomNav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:1000;
+  background:white;
+  border-top:1px solid var(--border);
+  box-shadow:0 -4px 15px rgba(0,0,0,.08);
+}
+
+.navInner{
+  max-width:700px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+
+.navBtn{
+  border:0;
+  background:white;
+  padding:9px 3px;
+  color:#555;
+  font-size:11px;
+}
+
+.navBtn span{
+  display:block;
+  font-size:20px;
+}
+
+.navBtn.active{
+  color:var(--green);
+  font-weight:bold;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:5000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modalBox{
+  width:min(500px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:white;
+  border-radius:18px;
+  padding:18px;
+}
+
+.modalHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.closeBtn{
+  border:0;
+  background:#eee;
+  border-radius:50%;
+  width:34px;
+  height:34px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:600px){
+  .grid2{
+    grid-template-columns:1fr;
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .productImage{
+    height:105px;
+  }
+
+  .hero h1{
+    font-size:24px;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- ================= SPLASH ================= -->
+
 <div id="splash">
- <div class="splashBox">
-  <div class="splashLogo">G+</div>
-  <div class="splashTitle">Ghare Bazar</div>
-  <div class="splashSub">Ma Manosha Stationery</div>
-  <div class="loader"><i></i></div>
- </div>
+  <div class="splashBox">
+    <div class="splashLogo">G+</div>
+    <div class="splashTitle">Ghare Bazar</div>
+    <div class="splashShop">Ma Manosha Stationery</div>
+  </div>
 </div>
 
+<!-- ================= HEADER ================= -->
+
 <header>
- <div class="topbar">
-  <div class="brand" onclick="openPage('home')">
-   <div class="brandIcon">G+</div>
-   <div class="brandText">
-    <b>Ghare Bazar</b>
-    <small>Ma Manosha Stationery</small>
-   </div>
+  <div class="headerInner">
+
+    <div class="brand" id="brandAdmin">
+      <div class="brandTitle">Ghare Bazar</div>
+      <div class="brandSub">Ma Manosha Stationery</div>
+    </div>
+
+    <button class="headerBtn" onclick="toggleLang()" id="langBtn">
+      বাংলা
+    </button>
+
+    <button class="headerBtn cartBtn" onclick="openPage('cart')">
+      🛒
+      <span class="cartBadge" id="cartCount">0</span>
+    </button>
+
   </div>
-  <button class="langBtn" onclick="toggleLang()">বাংলা</button>
-  <button class="cartBtn" onclick="openPage('cart')">🛒<span class="badge" id="cartCount">0</span></button>
- </div>
 </header>
 
 <main>
 
+<!-- ================= HOME ================= -->
+
 <section id="home" class="page active">
- <button id="installBtn" class="installBtn" onclick="installApp()">📲 Install Ghare Bazar App</button>
 
- <div class="hero">
-  <h1 id="heroTitle">Grocery at Your Door</h1>
-  <p id="heroText">Daily household products, simple ordering and convenient delivery.</p>
- </div>
+  <div class="hero">
+    <h1>Ghare Bazar</h1>
+    <p>Ma Manosha Stationery</p>
+    <p>Daily grocery and household products at your convenience.</p>
+  </div>
 
- <div class="freeDeliveryBanner">
-  🛵 <span id="freeDeliveryTitle">Order ₹149 or more & get FREE delivery!</span>
-  <small id="freeDeliverySub">Delivery is free for orders of ₹149 or more.</small>
- </div>
+  <div class="searchBox">
+    <input
+      id="homeSearch"
+      type="search"
+      placeholder="Search products..."
+      oninput="renderProducts()"
+    >
+    <button onclick="openPage('products')">Search</button>
+  </div>
 
- <div class="search">
-  <input id="searchInput" placeholder="Search products..." oninput="renderProducts()">
-  <button>🔎</button>
- </div>
+  <div class="sectionTitle">
+    <h2>Categories</h2>
+  </div>
 
- <div class="sectionTitle">
-  <h2 id="catTitle">Categories</h2>
- </div>
+  <div id="categories" class="categories"></div>
 
- <div class="categories" id="categories"></div>
+  <div class="sectionTitle">
+    <h2>Products</h2>
+    <button class="btn btnLight" onclick="openPage('products')">
+      View All
+    </button>
+  </div>
 
- <div class="sectionTitle">
-  <h2 id="productTitle">Popular Products</h2>
-  <button onclick="openPage('products')" id="viewAll">View All</button>
- </div>
+  <div id="homeProducts" class="products"></div>
 
- <div class="products" id="homeProducts"></div>
-
- <div class="notice" id="homeNotice">
-  Delivery availability and charges may depend on your location.
- </div>
 </section>
+
+<!-- ================= PRODUCTS ================= -->
 
 <section id="products" class="page">
- <button class="back" onclick="openPage('home')">← <span>Back</span></button>
 
- <div class="card">
-  <h2 id="allProductsTitle">All Products</h2>
-
-  <div class="search">
-   <input id="productSearch" placeholder="Search products..." oninput="renderProductsPage()">
+  <div class="sectionTitle">
+    <h2>Products</h2>
   </div>
 
-  <div class="products" id="allProducts"></div>
- </div>
+  <div class="searchBox">
+    <input
+      id="productSearch"
+      type="search"
+      placeholder="Search products..."
+      oninput="renderProductsPage()"
+    >
+  </div>
+
+  <div id="productsPage" class="products"></div>
+
 </section>
+
+<!-- ================= CART ================= -->
 
 <section id="cart" class="page">
- <button class="back" onclick="openPage('home')">← Back</button>
 
- <div class="card">
-  <h2 id="cartTitle">Your Cart</h2>
-
-  <div id="cartItems"></div>
-
-  <div id="cartEmpty" style="text-align:center;padding:25px;color:#789">
-   Your cart is empty.
+  <div class="sectionTitle">
+    <h2>Cart</h2>
   </div>
 
-  <div id="cartBottom" style="display:none">
+  <div id="cartContent"></div>
 
-   <div class="subtotalRow">
-    <span>Subtotal</span>
-    <span id="cartSubtotal">₹0</span>
-   </div>
-
-   <div class="deliveryRow">
-    <span>Delivery Charge</span>
-    <span id="cartDelivery">₹0</span>
-   </div>
-
-   <div class="grandTotal">
-    <span>Total</span>
-    <span id="cartTotal">₹0</span>
-   </div>
-
-   <button class="primary" onclick="openPage('checkout')" id="checkoutBtn">
-    Proceed to Checkout
-   </button>
-
-  </div>
- </div>
 </section>
+
+<!-- ================= CHECKOUT ================= -->
 
 <section id="checkout" class="page">
 
- <button class="back" onclick="openPage('cart')">← Back</button>
+  <div class="sectionTitle">
+    <h2>Checkout</h2>
+  </div>
 
- <div class="card">
+  <div id="checkoutDue"></div>
 
-  <h2 id="checkoutTitle">Delivery Details</h2>
+  <div class="card">
 
-  <label id="nameLabel">Customer Name</label>
-  <input id="custName" placeholder="Enter your name">
+    <div class="formGroup">
+      <label>Customer Name</label>
+      <input id="customerName" type="text">
+    </div>
 
-  <label id="phoneLabel">Mobile Number</label>
-  <input id="custPhone"
-         type="tel"
-         placeholder="Enter mobile number"
-         oninput="renderCheckoutDue()">
+    <div class="formGroup">
+      <label>Mobile Number</label>
+      <input id="customerPhone" type="tel">
+    </div>
 
-  <label id="addressLabel">Delivery Address</label>
-  <textarea id="custAddress"
-            placeholder="Village / House / Road / Post Office"></textarea>
+    <div class="formGroup">
+      <label>Delivery Address</label>
+      <textarea id="customerAddress"></textarea>
+    </div>
 
-  <div class="locationBox">
+    <button
+      class="btn btnYellow btnBlock"
+      onclick="shareCustomerLocation()">
+      📍 Share Location
+    </button>
 
-   <b>📍 Delivery Location</b>
-
-   <button type="button"
-           class="secondary"
-           onclick="shareCustomerLocation()"
-           id="locationBtn">
-    📍 Share My Location
-   </button>
-
-   <div class="locationStatus" id="locationStatus">
-    Location sharing is optional. Tap the button only if you want to share your current delivery location.
-   </div>
+    <div id="locationStatus"></div>
 
   </div>
 
-  <div id="customerDueArea"></div>
+  <div class="card">
 
-  <div class="infoBox">
-   💵 <b>Cash on Delivery</b><br>
-   Payment will be collected at the time of delivery.
+    <h3>Payment Method</h3>
+
+    <label>
+      <input type="radio" checked disabled>
+      Cash on Delivery
+    </label>
+
+    <div class="notice" style="margin-top:10px">
+      Online / UPI payment is currently unavailable.
+    </div>
+
   </div>
 
-  <input type="hidden" name="payment" value="COD">
+  <div id="checkoutSummary" class="card"></div>
 
-  <div class="subtotalRow">
-   <span>Subtotal</span>
-   <span id="checkoutSubtotal">₹0</span>
-  </div>
-
-  <div class="deliveryRow">
-   <span>Delivery Charge</span>
-   <span id="checkoutDelivery">₹0</span>
-  </div>
-
-  <div class="grandTotal">
-   <span id="orderTotalText">Order Total</span>
-   <span id="checkoutTotal">₹0</span>
-  </div>
-
-  <div id="previousDueCheckout"></div>
-
-  <button class="primary" onclick="placeOrder()" id="placeOrderBtn">
-   Place Order
+  <button
+    class="btn btnPrimary btnBlock"
+    onclick="placeOrder()">
+    Place Order
   </button>
 
- </div>
 </section>
+
+<!-- ================= ORDERS ================= -->
 
 <section id="orders" class="page">
 
- <div class="card">
-
-  <h2 id="ordersTitle">My Orders</h2>
-
-  <div id="ordersList"></div>
-
-  <div id="noOrders"
-       style="text-align:center;padding:25px;color:#789">
-   No orders yet.
+  <div class="sectionTitle">
+    <h2>My Orders</h2>
   </div>
 
- </div>
+  <div id="ordersContent"></div>
 
 </section>
+
+<!-- ================= ADMIN LOGIN ================= -->
 
 <section id="adminLogin" class="page">
 
- <button class="back" onclick="openPage('home')">← Back</button>
+  <div class="card">
 
- <div class="card">
+    <h2>Admin Login</h2>
 
-  <h2>Admin Login</h2>
+    <div class="formGroup">
+      <label>Admin PIN</label>
+      <input
+        id="adminPin"
+        type="password"
+        inputmode="numeric"
+        maxlength="10"
+      >
+    </div>
 
-  <label>Admin PIN</label>
+    <button
+      class="btn btnPrimary btnBlock"
+      onclick="adminLogin()">
+      Login
+    </button>
 
-  <input id="adminPin"
-         type="password"
-         placeholder="Enter PIN">
+    <p id="adminLoginMsg"></p>
 
-  <button class="primary" onclick="adminLogin()">
-   Login
-  </button>
-
- </div>
+  </div>
 
 </section>
+
+<!-- ================= ADMIN ================= -->
 
 <section id="admin" class="page">
 
- <div class="card">
-
-  <h2>Shop Admin</h2>
-
-  <p style="font-size:13px;color:#678">
-   Ma Manosha Stationery
-  </p>
+  <div class="adminTop">
+    <h2>Admin Panel</h2>
+    <p>Ma Manosha Stationery</p>
+  </div>
 
   <div class="adminGrid">
 
-   <button class="adminBtn" onclick="adminProducts()">
-    <b>📦 Products</b>
-    <span>Add / Edit / Delete</span>
-   </button>
+    <button class="adminTile" onclick="openPage('adminProducts')">
+      <span>📦</span>
+      Products
+    </button>
 
-   <button class="adminBtn" onclick="adminOrders()">
-    <b>🧾 Orders</b>
-    <span>View customer orders</span>
-   </button>
+    <button class="adminTile" onclick="openPage('adminOrders')">
+      <span>🧾</span>
+      Orders
+    </button>
 
-   <button class="adminBtn" onclick="adminSettings()">
-    <b>⚙️ Settings</b>
-    <span>Delivery / Cancellation</span>
-   </button>
+    <button class="adminTile" onclick="openPage('adminSettings')">
+      <span>⚙️</span>
+      Settings
+    </button>
 
-   <button class="adminBtn" onclick="adminDueList()">
-    <b>💰 Customer Due</b>
-    <span>View / Mark Paid</span>
-   </button>
+    <button class="adminTile" onclick="openPage('adminDue')">
+      <span>💰</span>
+      Customer Due
+    </button>
 
   </div>
 
-  <button class="secondary" onclick="openPage('home')">
-   Go to Customer App
-  </button>
-
- </div>
-
 </section>
+
+<!-- ================= ADMIN PRODUCTS ================= -->
 
 <section id="adminProducts" class="page">
 
- <button class="back" onclick="openPage('admin')">← Back</button>
+  <div class="sectionTitle">
+    <h2>Product Management</h2>
+  </div>
 
- <div class="card">
+  <div class="card">
 
-  <h2>Manage Products</h2>
+    <input type="hidden" id="editProductId">
 
-  <input type="hidden" id="editingProductId">
+    <div class="formGroup">
+      <label>Product Name</label>
+      <input id="pName">
+    </div>
 
-  <label>Product Name</label>
-  <input id="newProductName">
+    <div class="formGroup">
+      <label>Bengali Name</label>
+      <input id="pBn">
+    </div>
 
-  <label>Price</label>
-  <input id="newProductPrice" type="number">
+    <div class="grid2">
 
-  <label>Unit / Pack</label>
-  <input id="newProductUnit"
-         placeholder="1 kg pack / 250 gm pack / 1 piece">
+      <div class="formGroup">
+        <label>Price</label>
+        <input id="pPrice" type="number" min="0">
+      </div>
 
-  <label>Emoji</label>
-  <input id="newProductEmoji" placeholder="🛒">
+      <div class="formGroup">
+        <label>Unit</label>
+        <input id="pUnit" placeholder="1 kg / 1 piece">
+      </div>
 
-  <label>Real Product Photo</label>
-  <input id="newProductImage"
-         type="file"
-         accept="image/*"
-         onchange="previewProductImage(event)">
+    </div>
 
-  <img id="productImagePreview"
-       class="adminImagePreview">
+    <div class="grid2">
 
-  <button class="primary"
-          id="productSaveBtn"
-          onclick="saveProduct()">
-   Add Product
-  </button>
+      <div class="formGroup">
+        <label>Category</label>
+        <select id="pCat"></select>
+      </div>
 
-  <button class="secondary"
-          onclick="clearProductForm()">
-   Clear Form
-  </button>
+      <div class="formGroup">
+        <label>Emoji</label>
+        <input id="pEmoji" placeholder="🛒">
+      </div>
 
- </div>
+    </div>
 
- <div class="card">
-  <div id="adminProductList"></div>
- </div>
+    <div class="formGroup">
+      <label>Product Image</label>
+      <input
+        id="pImage"
+        type="file"
+        accept="image/*"
+        onchange="previewProductImage(event)"
+      >
+    </div>
+
+    <div id="imagePreview"></div>
+
+    <label>
+      <input id="pStock" type="checkbox" checked>
+      In Stock
+    </label>
+
+    <br><br>
+
+    <button
+      class="btn btnPrimary"
+      onclick="saveProduct()">
+      Save Product
+    </button>
+
+    <button
+      class="btn btnLight"
+      onclick="clearProductForm()">
+      Clear
+    </button>
+
+  </div>
+
+  <div id="adminProductsList"></div>
 
 </section>
+
+<!-- ================= ADMIN ORDERS ================= -->
 
 <section id="adminOrders" class="page">
 
- <button class="back" onclick="openPage('admin')">← Back</button>
+  <div class="sectionTitle">
+    <h2>Order Management</h2>
+  </div>
 
- <div class="card">
-
-  <h2>Customer Orders</h2>
-
-  <div id="adminOrderList"></div>
-
- </div>
+  <div id="adminOrdersList"></div>
 
 </section>
+
+<!-- ================= ADMIN SETTINGS ================= -->
 
 <section id="adminSettings" class="page">
 
- <button class="back" onclick="openPage('admin')">← Back</button>
-
- <div class="card">
-
-  <h2>Shop Settings</h2>
-
-  <div class="infoBox">
-   🛵 <b>Free Delivery Rule</b><br>
-   Orders of ₹149 or more automatically get FREE delivery.
+  <div class="sectionTitle">
+    <h2>Settings</h2>
   </div>
 
-  <label>Delivery Charge for Orders Below ₹149</label>
+  <div class="card">
 
-  <select id="deliveryMode"
-          onchange="deliveryModeChanged()">
+    <h3>Delivery Charge</h3>
 
-   <option value="10">₹10</option>
-   <option value="20">₹20</option>
-   <option value="30">₹30</option>
-   <option value="0">Free Delivery</option>
-   <option value="custom">Custom</option>
+    <div class="notice">
+      Free delivery for subtotal ₹149 or more.
+    </div>
 
-  </select>
+    <div class="formGroup">
+      <label>Below ₹149 Delivery Charge</label>
 
-  <div id="customDeliveryBox" style="display:none">
+      <select id="deliveryMode" onchange="deliveryModeChanged()">
+        <option value="free">Free</option>
+        <option value="10">₹10</option>
+        <option value="20">₹20</option>
+        <option value="30">₹30</option>
+        <option value="custom">Custom</option>
+      </select>
+    </div>
 
-   <label>Custom Delivery Charge</label>
+    <div
+      id="customDeliveryBox"
+      class="formGroup hidden">
 
-   <input id="customDelivery"
-          type="number"
-          min="0"
-          placeholder="Enter amount">
+      <label>Custom Delivery Charge</label>
+
+      <input
+        id="customDelivery"
+        type="number"
+        min="0"
+        placeholder="Enter amount"
+      >
+
+    </div>
+
+    <div class="formGroup">
+      <label>Failed Delivery Cancellation Charge</label>
+
+      <input
+        id="failedDeliveryCharge"
+        type="number"
+        min="0"
+        value="30"
+      >
+    </div>
+
+    <button
+      class="btn btnPrimary"
+      onclick="saveSettings()">
+      Save Settings
+    </button>
+
+    <p id="settingsMsg"></p>
 
   </div>
-
-  <label>Failed Delivery Cancellation Charge</label>
-
-  <input id="failedDeliveryCharge"
-         type="number"
-         min="0"
-         placeholder="Example: 30">
-
-  <div class="notice">
-   Customer cancellation before dispatch has <b>₹0 charge</b>.
-   The above charge applies only when the customer does not take the order
-   after the first delivery attempt and one re-delivery attempt.
-  </div>
-
-  <button class="primary" onclick="saveSettings()">
-   Save Settings
-  </button>
-
-  <div class="notice">
-   Online Payment / UPI is currently <b>OFF</b>.
-   Customers can use only Cash on Delivery.
-  </div>
-
- </div>
 
 </section>
 
+<!-- ================= ADMIN DUE ================= -->
+
 <section id="adminDue" class="page">
 
- <button class="back" onclick="openPage('admin')">← Back</button>
+  <div class="sectionTitle">
+    <h2>Customer Due</h2>
+  </div>
 
- <div class="card">
+  <div class="card">
 
-  <h2>Customer Due</h2>
+    <div class="formGroup">
+      <label>Customer Mobile Number</label>
+      <input id="duePhone" type="tel">
+    </div>
+
+    <div class="formGroup">
+      <label>Due Amount</label>
+      <input id="dueAmount" type="number" min="0">
+    </div>
+
+    <button
+      class="btn btnPrimary"
+      onclick="addCustomerDue()">
+      Add Due
+    </button>
+
+  </div>
 
   <div id="adminDueList"></div>
-
- </div>
 
 </section>
 
 </main>
 
-<div class="bottomNav">
+<!-- ================= BOTTOM NAV ================= -->
 
- <button class="navItem active"
-         id="navHome"
-         onclick="openPage('home')">
-  <div>🏠</div>
-  <span>Home</span>
- </button>
+<nav class="bottomNav">
 
- <button class="navItem"
-         id="navProducts"
-         onclick="openPage('products')">
-  <div>🛍️</div>
-  <span>Products</span>
- </button>
+  <div class="navInner">
 
- <button class="navItem"
-         id="navOrders"
-         onclick="openPage('orders')">
-  <div>📋</div>
-  <span>Orders</span>
- </button>
+    <button class="navBtn active" onclick="openPage('home',this)">
+      <span>🏠</span>
+      Home
+    </button>
 
- <button class="navItem"
-         onclick="openPage('cart')">
-  <div>🛒</div>
-  <span>Cart</span>
- </button>
+    <button class="navBtn" onclick="openPage('products',this)">
+      <span>📦</span>
+      Products
+    </button>
 
-</div>
+    <button class="navBtn" onclick="openPage('orders',this)">
+      <span>🧾</span>
+      Orders
+    </button>
+
+    <button class="navBtn" onclick="openPage('cart',this)">
+      <span>🛒</span>
+      Cart
+    </button>
+
+  </div>
+
+</nav>
 
 <script>
 
 /* =========================================================
-   SHOP INFORMATION
+   BASIC SETTINGS
 ========================================================= */
 
 const SHOP_NAME="Ma Manosha Stationery";
 const SHOP_PHONE="6294172197";
 const SHOP_EMAIL="parisubhajit@gmail.com";
 const ADMIN_PIN="2580";
+
 const ONLINE_PAYMENT_ENABLED=false;
 
-
-/* =========================================================
-   SAFE LOCAL STORAGE
-   This prevents old/corrupted data from stopping the app.
-========================================================= */
-
-function loadJSON(key,fallback){
-
- try{
-
-  const raw=localStorage.getItem(key);
-
-  if(!raw){
-   return fallback;
-  }
-
-  const parsed=JSON.parse(raw);
-
-  if(parsed===null||parsed===undefined){
-   return fallback;
-  }
-
-  return parsed;
-
- }catch(error){
-
-  console.warn("Invalid localStorage data:",key,error);
-
-  try{
-   localStorage.removeItem(key);
-  }catch(e){}
-
-  return fallback;
- }
-}
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-let deliveryMode=localStorage.getItem("gb_delivery_mode")||"10";
-
-let customDelivery=Number(
- localStorage.getItem("gb_custom_delivery")||0
-);
-
-let failedDeliveryCharge=Number(
- localStorage.getItem("gb_failed_delivery_charge")||30
-);
-
-let lang=localStorage.getItem("gb_lang")||"en";
-
-
-/* =========================================================
-   CUSTOMER LOCATION
-========================================================= */
-
-let customerLocation=null;
+const categories=[
+  ["🛒","Grocery","মুদিখানা"],
+  ["🍚","Rice","চাল"],
+  ["🫘","Dal","ডাল"],
+  ["🫗","Oil","তেল"],
+  ["🌶️","Spices","মশলা"],
+  ["🍪","Snacks","বিস্কুট"],
+  ["🧼","Personal Care","সাবান"],
+  ["🏠","Household","ঘরোয়া"]
+];
 
 
 /* =========================================================
@@ -641,222 +1175,316 @@ let customerLocation=null;
 ========================================================= */
 
 const defaultProducts=[
-
- {
-  id:1,
-  name:"Rice",
-  bn:"চাল",
-  price:55,
-  unit:"1 kg",
-  emoji:"🍚",
-  cat:"Grocery",
-  stock:true,
-  image:""
- },
-
- {
-  id:2,
-  name:"Lentil",
-  bn:"ডাল",
-  price:100,
-  unit:"1 kg",
-  emoji:"🫘",
-  cat:"Grocery",
-  stock:true,
-  image:""
- },
-
- {
-  id:3,
-  name:"Cooking Oil",
-  bn:"রান্নার তেল",
-  price:145,
-  unit:"1 L",
-  emoji:"🫗",
-  cat:"Grocery",
-  stock:true,
-  image:""
- },
-
- {
-  id:4,
-  name:"Salt",
-  bn:"নুন",
-  price:25,
-  unit:"1 kg",
-  emoji:"🧂",
-  cat:"Grocery",
-  stock:true,
-  image:""
- },
-
- {
-  id:5,
-  name:"Biscuit",
-  bn:"বিস্কুট",
-  price:20,
-  unit:"1 packet",
-  emoji:"🍪",
-  cat:"Snacks",
-  stock:true,
-  image:""
- },
-
- {
-  id:6,
-  name:"Soap",
-  bn:"সাবান",
-  price:35,
-  unit:"1 piece",
-  emoji:"🧼",
-  cat:"Personal Care",
-  stock:true,
-  image:""
- },
-
- {
-  id:7,
-  name:"Tea",
-  bn:"চা",
-  price:120,
-  unit:"250 g",
-  emoji:"🍵",
-  cat:"Grocery",
-  stock:true,
-  image:""
- },
-
- {
-  id:8,
-  name:"Sugar",
-  bn:"চিনি",
-  price:48,
-  unit:"1 kg",
-  emoji:"🧊",
-  cat:"Grocery",
-  stock:true,
-  image:""
- }
-
+  {
+    id:1,
+    name:"Rice",
+    bn:"চাল",
+    price:60,
+    unit:"1 kg",
+    emoji:"🍚",
+    cat:"Rice",
+    stock:true,
+    image:""
+  },
+  {
+    id:2,
+    name:"Lentil",
+    bn:"ডাল",
+    price:100,
+    unit:"1 kg",
+    emoji:"🫘",
+    cat:"Dal",
+    stock:true,
+    image:""
+  },
+  {
+    id:3,
+    name:"Cooking Oil",
+    bn:"তেল",
+    price:150,
+    unit:"1 litre",
+    emoji:"🫗",
+    cat:"Oil",
+    stock:true,
+    image:""
+  },
+  {
+    id:4,
+    name:"Salt",
+    bn:"নুন",
+    price:25,
+    unit:"1 kg",
+    emoji:"🧂",
+    cat:"Grocery",
+    stock:true,
+    image:""
+  },
+  {
+    id:5,
+    name:"Biscuit",
+    bn:"বিস্কুট",
+    price:20,
+    unit:"1 packet",
+    emoji:"🍪",
+    cat:"Snacks",
+    stock:true,
+    image:""
+  },
+  {
+    id:6,
+    name:"Soap",
+    bn:"সাবান",
+    price:35,
+    unit:"1 piece",
+    emoji:"🧼",
+    cat:"Personal Care",
+    stock:true,
+    image:""
+  },
+  {
+    id:7,
+    name:"Tea",
+    bn:"চা",
+    price:50,
+    unit:"250 g",
+    emoji:"🍵",
+    cat:"Grocery",
+    stock:true,
+    image:""
+  },
+  {
+    id:8,
+    name:"Sugar",
+    bn:"চিনি",
+    price:50,
+    unit:"1 kg",
+    emoji:"🍬",
+    cat:"Grocery",
+    stock:true,
+    image:""
+  }
 ];
 
 
 /* =========================================================
-   LOAD SAVED DATA SAFELY
+   SAFE LOCAL STORAGE
 ========================================================= */
 
-let products=loadJSON(
- "gb_products",
- defaultProducts
-);
+function loadJSON(key,fallback){
+
+  try{
+
+    const raw=localStorage.getItem(key);
+
+    if(!raw){
+      return fallback;
+    }
+
+    const parsed=JSON.parse(raw);
+
+    if(parsed===null || parsed===undefined){
+      return fallback;
+    }
+
+    return parsed;
+
+  }catch(error){
+
+    console.warn("Invalid localStorage:",key,error);
+
+    try{
+      localStorage.removeItem(key);
+    }catch(e){}
+
+    return fallback;
+  }
+}
+
+function save(key,value){
+
+  try{
+    localStorage.setItem(key,JSON.stringify(value));
+  }catch(error){
+    console.warn("Could not save:",key,error);
+  }
+
+}
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+let products=loadJSON("gb_products",defaultProducts);
 
 if(!Array.isArray(products)){
- products=defaultProducts;
+  products=defaultProducts;
 }
 
-let cart=loadJSON(
- "gb_cart",
- []
-);
+products=products
+.filter(p=>p && typeof p==="object")
+.map((p,index)=>({
+
+  id:Number(p.id)||Date.now()+index,
+
+  name:String(p.name||"Product"),
+
+  bn:String(p.bn||p.name||"Product"),
+
+  price:Number(p.price)||0,
+
+  unit:String(p.unit||"1 piece"),
+
+  emoji:String(p.emoji||"🛒"),
+
+  cat:String(p.cat||"Grocery"),
+
+  stock:p.stock!==false,
+
+  image:typeof p.image==="string"?p.image:""
+
+}));
+
+
+let cart=loadJSON("gb_cart",[]);
 
 if(!Array.isArray(cart)){
- cart=[];
+  cart=[];
 }
 
-let orders=loadJSON(
- "gb_orders",
- []
-);
+cart=cart
+.filter(item=>
+  item &&
+  typeof item==="object" &&
+  Number(item.id)>0 &&
+  Number(item.qty)>0
+)
+.map(item=>({
+
+  id:Number(item.id),
+
+  qty:Math.max(1,Number(item.qty)||1)
+
+}));
+
+
+let orders=loadJSON("gb_orders",[]);
 
 if(!Array.isArray(orders)){
- orders=[];
+  orders=[];
 }
 
-let customerDues=loadJSON(
- "gb_customer_dues",
- {}
-);
+orders=orders
+.filter(o=>o && typeof o==="object")
+.map(o=>({
+
+  ...o,
+
+  id:String(o.id||("GB"+Date.now())),
+
+  name:String(o.name||""),
+
+  phone:String(o.phone||""),
+
+  address:String(o.address||""),
+
+  status:String(o.status||"Pending"),
+
+  date:String(o.date||""),
+
+  payment:String(o.payment||"COD"),
+
+  subtotal:Number(o.subtotal)||0,
+
+  deliveryCharge:Number(o.deliveryCharge)||0,
+
+  total:Number(o.total)||0,
+
+  previousDue:Number(o.previousDue)||0,
+
+  payableTotal:Number(
+    o.payableTotal ||
+    ((Number(o.total)||0)+(Number(o.previousDue)||0))
+  ),
+
+  deliveryAttempt:Number(o.deliveryAttempt)||0,
+
+  redeliveryScheduled:!!o.redeliveryScheduled,
+
+  cancellationCharge:Number(o.cancellationCharge)||0,
+
+  cancellationChargePaid:!!o.cancellationChargePaid,
+
+  location:o.location||null,
+
+  items:Array.isArray(o.items)
+    ?o.items.filter(i=>i&&typeof i==="object")
+    :[]
+
+}));
+
+
+let customerDues=loadJSON("gb_customer_dues",{});
 
 if(
- !customerDues||
- typeof customerDues!=="object"||
- Array.isArray(customerDues)
+  !customerDues ||
+  typeof customerDues!=="object" ||
+  Array.isArray(customerDues)
 ){
- customerDues={};
+  customerDues={};
 }
 
-let deferredInstallPrompt=null;
+Object.keys(customerDues).forEach(key=>{
+
+  const amount=Number(customerDues[key]);
+
+  if(!Number.isFinite(amount)||amount<0){
+    delete customerDues[key];
+  }else{
+    customerDues[key]=amount;
+  }
+
+});
+
+
+save("gb_products",products);
+save("gb_cart",cart);
+save("gb_orders",orders);
+save("gb_customer_dues",customerDues);
 
 
 /* =========================================================
-   CATEGORIES
+   LANGUAGE
 ========================================================= */
 
-const categories=[
+let lang=localStorage.getItem("gb_lang")||"en";
 
- ["🛒","Grocery","মুদিখানা"],
- ["🍚","Rice","চাল"],
- ["🫘","Dal","ডাল"],
- ["🫗","Oil","তেল"],
- ["🌶️","Spices","মশলা"],
- ["🍪","Snacks","বিস্কুট"],
- ["🧼","Personal Care","সাবান"],
- ["🏠","Household","ঘরোয়া"]
+function toggleLang(){
 
-];
+  lang=lang==="en"?"bn":"en";
 
+  localStorage.setItem("gb_lang",lang);
 
-/* =========================================================
-   SAVE
-========================================================= */
+  applyLanguage();
 
-function save(){
+  renderCategories();
+  renderProducts();
+  renderProductsPage();
+  renderCart();
+  renderOrders();
 
- try{
+}
 
-  localStorage.setItem(
-   "gb_products",
-   JSON.stringify(products)
-  );
+function applyLanguage(){
 
-  localStorage.setItem(
-   "gb_cart",
-   JSON.stringify(cart)
-  );
+  document.documentElement.lang=lang;
 
-  localStorage.setItem(
-   "gb_orders",
-   JSON.stringify(orders)
-  );
+  const btn=document.getElementById("langBtn");
 
-  localStorage.setItem(
-   "gb_delivery_mode",
-   deliveryMode
-  );
+  if(btn){
+    btn.textContent=lang==="en"?"বাংলা":"English";
+  }
 
-  localStorage.setItem(
-   "gb_custom_delivery",
-   customDelivery
-  );
-
-  localStorage.setItem(
-   "gb_failed_delivery_charge",
-   failedDeliveryCharge
-  );
-
-  localStorage.setItem(
-   "gb_customer_dues",
-   JSON.stringify(customerDues)
-  );
-
- }catch(error){
-
-  console.error("Save error:",error);
-
-  alert(
-   "Storage problem. Please check your browser storage."
-  );
- }
 }
 
 
@@ -864,261 +1492,66 @@ function save(){
    PAGE NAVIGATION
 ========================================================= */
 
-function openPage(id){
+function openPage(id,navButton){
 
- document.querySelectorAll(".page")
- .forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".page")
+  .forEach(page=>page.classList.remove("active"));
 
- const el=document.getElementById(id);
+  const page=document.getElementById(id);
 
- if(el){
-  el.classList.add("active");
- }
+  if(page){
+    page.classList.add("active");
+  }
 
- document.querySelectorAll(".navItem")
- .forEach(n=>n.classList.remove("active"));
+  document.querySelectorAll(".navBtn")
+  .forEach(btn=>btn.classList.remove("active"));
 
- if(id==="home"){
-  document.getElementById("navHome")
-  ?.classList.add("active");
- }
+  if(navButton){
+    navButton.classList.add("active");
+  }
 
- if(id==="products"){
-  document.getElementById("navProducts")
-  ?.classList.add("active");
- }
+  if(id==="home"){
+    renderCategories();
+    renderProducts();
+  }
 
- if(id==="orders"){
-  document.getElementById("navOrders")
-  ?.classList.add("active");
- }
+  if(id==="products"){
+    renderProductsPage();
+  }
 
- window.scrollTo(0,0);
+  if(id==="cart"){
+    renderCart();
+  }
 
- if(id==="cart"){
-  renderCart();
- }
+  if(id==="checkout"){
+    renderCheckout();
+  }
 
- if(id==="orders"){
-  renderOrders();
- }
+  if(id==="orders"){
+    renderOrders();
+  }
 
- if(id==="checkout"){
-  renderCheckout();
- }
+  if(id==="adminProducts"){
+    renderAdminProducts();
+  }
 
- if(id==="products"){
-  renderProductsPage();
- }
+  if(id==="adminOrders"){
+    renderAdminOrders();
+  }
 
- if(id==="adminProducts"){
-  renderAdminProducts();
- }
+  if(id==="adminSettings"){
+    loadAdminSettings();
+  }
 
- if(id==="adminOrders"){
-  renderAdminOrders();
- }
+  if(id==="adminDue"){
+    renderAdminDue();
+  }
 
- if(id==="adminSettings"){
-  loadAdminSettings();
- }
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
- if(id==="adminDue"){
-  renderAdminDue();
- }
-}
-
-
-/* =========================================================
-   LANGUAGE
-========================================================= */
-
-function toggleLang(){
-
- lang=lang==="en"?"bn":"en";
-
- localStorage.setItem(
-  "gb_lang",
-  lang
- );
-
- applyLanguage();
-}
-
-
-function applyLanguage(){
-
- const langBtn=document.querySelector(".langBtn");
-
- if(langBtn){
-  langBtn.textContent=
-  lang==="en"?"বাংলা":"English";
- }
-
- const heroTitle=document.getElementById("heroTitle");
-
- if(heroTitle){
-  heroTitle.textContent=
-  lang==="en"
-  ?"Grocery at Your Door"
-  :"আপনার ঘরে বাজার";
- }
-
- const heroText=document.getElementById("heroText");
-
- if(heroText){
-  heroText.textContent=
-  lang==="en"
-  ?"Daily household products, simple ordering and convenient delivery."
-  :"প্রয়োজনীয় বাজারের জিনিস সহজে অর্ডার করুন এবং ঘরে ডেলিভারি নিন।";
- }
-
- const catTitle=document.getElementById("catTitle");
-
- if(catTitle){
-  catTitle.textContent=
-  lang==="en"?"Categories":"বিভাগ";
- }
-
- const productTitle=document.getElementById("productTitle");
-
- if(productTitle){
-  productTitle.textContent=
-  lang==="en"?"Popular Products":"জনপ্রিয় পণ্য";
- }
-
- const viewAll=document.getElementById("viewAll");
-
- if(viewAll){
-  viewAll.textContent=
-  lang==="en"?"View All":"সব দেখুন";
- }
-
- const searchInput=document.getElementById("searchInput");
-
- if(searchInput){
-  searchInput.placeholder=
-  lang==="en"
-  ?"Search products..."
-  :"পণ্য খুঁজুন...";
- }
-
- const productSearch=document.getElementById("productSearch");
-
- if(productSearch){
-  productSearch.placeholder=
-  lang==="en"
-  ?"Search products..."
-  :"পণ্য খুঁজুন...";
- }
-
- const cartTitle=document.getElementById("cartTitle");
-
- if(cartTitle){
-  cartTitle.textContent=
-  lang==="en"
-  ?"Your Cart"
-  :"আপনার কার্ট";
- }
-
- const checkoutBtn=document.getElementById("checkoutBtn");
-
- if(checkoutBtn){
-  checkoutBtn.textContent=
-  lang==="en"
-  ?"Proceed to Checkout"
-  :"অর্ডার করতে এগিয়ে যান";
- }
-
- const checkoutTitle=document.getElementById("checkoutTitle");
-
- if(checkoutTitle){
-  checkoutTitle.textContent=
-  lang==="en"
-  ?"Delivery Details"
-  :"ডেলিভারির তথ্য";
- }
-
- const nameLabel=document.getElementById("nameLabel");
-
- if(nameLabel){
-  nameLabel.textContent=
-  lang==="en"
-  ?"Customer Name"
-  :"গ্রাহকের নাম";
- }
-
- const phoneLabel=document.getElementById("phoneLabel");
-
- if(phoneLabel){
-  phoneLabel.textContent=
-  lang==="en"
-  ?"Mobile Number"
-  :"মোবাইল নম্বর";
- }
-
- const addressLabel=document.getElementById("addressLabel");
-
- if(addressLabel){
-  addressLabel.textContent=
-  lang==="en"
-  ?"Delivery Address"
-  :"ডেলিভারি ঠিকানা";
- }
-
- const orderTotalText=document.getElementById("orderTotalText");
-
- if(orderTotalText){
-  orderTotalText.textContent=
-  lang==="en"
-  ?"Order Total"
-  :"অর্ডারের মোট";
- }
-
- const placeOrderBtn=document.getElementById("placeOrderBtn");
-
- if(placeOrderBtn){
-  placeOrderBtn.textContent=
-  lang==="en"
-  ?"Place Order"
-  :"অর্ডার করুন";
- }
-
- const ordersTitle=document.getElementById("ordersTitle");
-
- if(ordersTitle){
-  ordersTitle.textContent=
-  lang==="en"
-  ?"My Orders"
-  :"আমার অর্ডার";
- }
-
- const freeDeliveryTitle=
- document.getElementById("freeDeliveryTitle");
-
- if(freeDeliveryTitle){
-  freeDeliveryTitle.textContent=
-  lang==="en"
-  ?"Order ₹149 or more & get FREE delivery!"
-  :"₹১৪৯ বা তার বেশি অর্ডারে FREE Delivery!";
- }
-
- const freeDeliverySub=
- document.getElementById("freeDeliverySub");
-
- if(freeDeliverySub){
-  freeDeliverySub.textContent=
-  lang==="en"
-  ?"Delivery is free for orders of ₹149 or more."
-  :"₹১৪৯ বা তার বেশি অর্ডারে ডেলিভারি একদম ফ্রি।";
- }
-
- renderCategories();
- renderProducts();
- renderProductsPage();
- renderCart();
- renderOrders();
- renderCheckout();
 }
 
 
@@ -1128,162 +1561,193 @@ function applyLanguage(){
 
 function renderCategories(){
 
- const box=document.getElementById("categories");
+  const box=document.getElementById("categories");
 
- if(!box)return;
+  if(!box)return;
 
- box.innerHTML=
- categories.map(c=>`
+  box.innerHTML="";
 
- <button class="cat"
- onclick="filterCategory('${c[1]}')">
+  categories.forEach(c=>{
 
-  <div class="emoji">${c[0]}</div>
+    const div=document.createElement("button");
 
-  <span>
-   ${lang==="en"?c[1]:c[2]}
-  </span>
+    div.className="category";
 
- </button>
+    div.onclick=()=>filterCategory(c[1]);
 
- `).join("");
+    div.innerHTML=`
+      <div class="emoji">${escapeHTML(c[0])}</div>
+      <small>${lang==="bn"
+        ?escapeHTML(c[2])
+        :escapeHTML(c[1])}</small>
+    `;
+
+    box.appendChild(div);
+
+  });
+
 }
-
 
 function filterCategory(cat){
 
- const list=
- products.filter(
-  p=>p.cat===cat||cat==="Grocery"
- );
+  openPage("products");
 
- const box=document.getElementById("homeProducts");
+  const search=document.getElementById("productSearch");
 
- if(!box)return;
+  if(search){
+    search.value="";
+  }
 
- box.innerHTML=
- list.map(productHTML).join("");
+  window.selectedCategory=cat;
+
+  renderProductsPage();
+
 }
 
 
 /* =========================================================
-   PRODUCT CARD
+   PRODUCT HTML
 ========================================================= */
 
 function productHTML(p){
 
- const name=
- lang==="en"
- ?p.name
- :(p.bn||p.name);
+  if(!p || typeof p!=="object"){
+    return "";
+  }
 
- const visual=
- p.image
- ?`<img src="${escapeHTML(p.image)}"
-         alt="${escapeHTML(name)}">`
- :escapeHTML(p.emoji||"🛒");
+  const name=lang==="bn"
+    ?(p.bn||p.name)
+    :p.name;
 
- return `
+  const image=p.image
+    ?`<img src="${escapeHTML(p.image)}" alt="${escapeHTML(name)}">`
+    :escapeHTML(p.emoji||"🛒");
 
- <div class="product">
+  return `
 
-  <div class="productImg">
-   ${visual}
-  </div>
+    <div class="product">
 
-  <div class="productBody">
+      <div class="productImage">
+        ${image}
+      </div>
 
-   <h3>
-    ${escapeHTML(name)}
-   </h3>
+      <div class="productBody">
 
-   <div class="unit">
-    ${escapeHTML(p.unit||"")}
-   </div>
+        <div class="productName">
+          ${escapeHTML(name)}
+        </div>
 
-   <div class="price">
-    ₹${Number(p.price||0)}
-   </div>
+        <div class="productUnit">
+          ${escapeHTML(p.unit||"")}
+        </div>
 
-   <button
-    class="add ${p.stock?"":"out"}"
-    onclick="addToCart(${Number(p.id)})">
+        <div class="productPrice">
+          ₹${Number(p.price||0).toFixed(2)}
+        </div>
 
-    ${
-     p.stock
-     ?(lang==="en"?"Add to Cart":"কার্টে যোগ করুন")
-     :(lang==="en"?"Out of Stock":"স্টক নেই")
-    }
+        ${
+          p.stock!==false
 
-   </button>
+          ?
 
-  </div>
+          `<div class="productActions">
 
- </div>
+            <button
+              class="btn btnPrimary"
+              style="flex:1"
+              onclick="addToCart(${Number(p.id)})">
+              Add to Cart
+            </button>
 
- `;
+          </div>`
+
+          :
+
+          `<div class="outStock">
+            Out of Stock
+          </div>`
+        }
+
+      </div>
+
+    </div>
+  `;
 }
 
 
 /* =========================================================
-   PRODUCT SEARCH
+   PRODUCTS
 ========================================================= */
 
 function renderProducts(){
 
- const input=document.getElementById("searchInput");
+  const box=document.getElementById("homeProducts");
 
- const q=
- input
- ?(input.value||"").toLowerCase()
- :"";
+  if(!box)return;
 
- const list=
- products.filter(p=>
-  (
-   String(p.name||"")+" "+
-   String(p.bn||"")
-  )
-  .toLowerCase()
-  .includes(q)
- );
+  const search=(
+    document.getElementById("homeSearch")?.value||""
+  ).toLowerCase().trim();
 
- const box=document.getElementById("homeProducts");
+  let list=products.filter(p=>{
 
- if(!box)return;
+    const text=(
+      p.name+" "+
+      p.bn+" "+
+      p.cat
+    ).toLowerCase();
 
- box.innerHTML=
- list.slice(0,8)
- .map(productHTML)
- .join("");
+    return !search || text.includes(search);
+
+  });
+
+  box.innerHTML=list
+    .slice(0,8)
+    .map(productHTML)
+    .join("");
+
 }
-
 
 function renderProductsPage(){
 
- const input=document.getElementById("productSearch");
+  const box=document.getElementById("productsPage");
 
- const q=
- input
- ?(input.value||"").toLowerCase()
- :"";
+  if(!box)return;
 
- const list=
- products.filter(p=>
-  (
-   String(p.name||"")+" "+
-   String(p.bn||"")
-  )
-  .toLowerCase()
-  .includes(q)
- );
+  const search=(
+    document.getElementById("productSearch")?.value||""
+  ).toLowerCase().trim();
 
- const box=document.getElementById("allProducts");
+  let list=products.filter(p=>{
 
- if(!box)return;
+    const text=(
+      p.name+" "+
+      p.bn+" "+
+      p.cat
+    ).toLowerCase();
 
- box.innerHTML=
- list.map(productHTML).join("");
+    const matchSearch=!search||text.includes(search);
+
+    const matchCat=
+      !window.selectedCategory||
+      p.cat===window.selectedCategory;
+
+    return matchSearch&&matchCat;
+
+  });
+
+  box.innerHTML=list.length
+
+    ?
+
+    list.map(productHTML).join("")
+
+    :
+
+    `<div class="card">
+      No products found.
+    </div>`;
+
 }
 
 
@@ -1293,333 +1757,329 @@ function renderProductsPage(){
 
 function addToCart(id){
 
- const p=
- products.find(x=>Number(x.id)===Number(id));
+  const product=products.find(p=>Number(p.id)===Number(id));
 
- if(!p||!p.stock)return;
+  if(!product || product.stock===false){
+    return;
+  }
 
- const item=
- cart.find(
-  x=>Number(x.id)===Number(id)
- );
+  const existing=cart.find(
+    item=>Number(item.id)===Number(id)
+  );
 
- if(item){
-  item.qty++;
- }else{
-  cart.push({
-   id:Number(id),
-   qty:1
-  });
- }
+  if(existing){
+    existing.qty++;
+  }else{
+    cart.push({
+      id:Number(id),
+      qty:1
+    });
+  }
 
- save();
- updateCartCount();
+  save("gb_cart",cart);
 
- if(
-  document.getElementById("cart")
-  ?.classList.contains("active")
- ){
+  updateCartCount();
+
   renderCart();
- }
-}
 
+}
 
 function updateCartCount(){
 
- const count=
- cart.reduce(
-  (s,x)=>s+Number(x.qty||0),
-  0
- );
-
- const badge=document.getElementById("cartCount");
-
- if(badge){
-  badge.textContent=count;
- }
-}
-
-
-function renderCart(){
-
- const box=document.getElementById("cartItems");
- const empty=document.getElementById("cartEmpty");
- const bottom=document.getElementById("cartBottom");
-
- if(!box||!empty||!bottom)return;
-
- if(!cart.length){
-
-  box.innerHTML="";
-  empty.style.display="block";
-  bottom.style.display="none";
-
-  return;
- }
-
- empty.style.display="none";
- bottom.style.display="block";
-
- box.innerHTML=
- cart.map(item=>{
-
-  const p=
-  products.find(
-   x=>Number(x.id)===Number(item.id)
+  const count=cart.reduce(
+    (sum,item)=>sum+(Number(item.qty)||0),
+    0
   );
 
-  if(!p)return"";
+  const el=document.getElementById("cartCount");
 
-  const visual=
-  p.image
-  ?`<img class="cartPhoto"
-          src="${escapeHTML(p.image)}"
-          alt="">`
-  :`<div class="cartEmoji">
-      ${escapeHTML(p.emoji||"🛒")}
-    </div>`;
+  if(el){
+    el.textContent=count;
+  }
 
-  return `
-
-  <div class="cartItem">
-
-   ${visual}
-
-   <div class="cartInfo">
-
-    <b>
-     ${escapeHTML(
-      lang==="en"
-      ?p.name
-      :(p.bn||p.name)
-     )}
-    </b>
-
-    <small>
-     ${escapeHTML(p.unit||"")} × ${Number(item.qty||0)}
-    </small>
-
-    <div class="qty">
-
-     <button
-      onclick="changeQty(${Number(p.id)},-1)">
-      −
-     </button>
-
-     <b>${Number(item.qty||0)}</b>
-
-     <button
-      onclick="changeQty(${Number(p.id)},1)">
-      +
-     </button>
-
-    </div>
-
-   </div>
-
-   <b>
-    ₹${Number(p.price||0)*Number(item.qty||0)}
-   </b>
-
-  </div>
-
-  `;
-
- }).join("");
-
- const subtotal=getTotal();
- const delivery=getDeliveryCharge(subtotal);
- const grand=subtotal+delivery;
-
- document.getElementById("cartSubtotal")
- .textContent="₹"+subtotal;
-
- document.getElementById("cartDelivery")
- .textContent=
- delivery===0
- ?"Free"
- :"₹"+delivery;
-
- document.getElementById("cartTotal")
- .textContent="₹"+grand;
 }
 
+function changeQty(id,delta){
 
-function changeQty(id,n){
-
- const item=
- cart.find(
-  x=>Number(x.id)===Number(id)
- );
-
- if(!item)return;
-
- item.qty+=Number(n);
-
- if(item.qty<=0){
-
-  cart=
-  cart.filter(
-   x=>Number(x.id)!==Number(id)
+  const item=cart.find(
+    x=>Number(x.id)===Number(id)
   );
- }
 
- save();
- updateCartCount();
- renderCart();
+  if(!item)return;
+
+  item.qty+=delta;
+
+  if(item.qty<=0){
+
+    cart=cart.filter(
+      x=>Number(x.id)!==Number(id)
+    );
+
+  }
+
+  save("gb_cart",cart);
+
+  renderCart();
+  updateCartCount();
+
 }
-
 
 function getTotal(){
 
- return cart.reduce(
-  (sum,item)=>{
+  return cart.reduce((sum,item)=>{
 
-   const p=
-   products.find(
-    x=>Number(x.id)===Number(item.id)
-   );
+    const p=products.find(
+      x=>Number(x.id)===Number(item.id)
+    );
 
-   return sum+
-   (
-    p
-    ?Number(p.price||0)*Number(item.qty||0)
-    :0
-   );
+    if(!p)return sum;
 
-  },
-  0
- );
+    return sum+
+      Number(p.price||0)*
+      Number(item.qty||0);
+
+  },0);
+
 }
-
-
-/* =========================================================
-   DELIVERY
-========================================================= */
 
 function getDeliveryCharge(subtotal){
 
- subtotal=Number(subtotal||0);
+  if(subtotal>=149){
+    return 0;
+  }
 
- if(subtotal>=149){
-  return 0;
- }
+  const mode=
+    localStorage.getItem("gb_delivery_mode")||"30";
 
- if(deliveryMode==="custom"){
-  return Math.max(
-   0,
-   Number(customDelivery||0)
-  );
- }
+  if(mode==="free"){
+    return 0;
+  }
 
- return Math.max(
-  0,
-  Number(deliveryMode||0)
- );
+  if(mode==="custom"){
+    return Number(
+      localStorage.getItem("gb_custom_delivery")
+    )||0;
+  }
+
+  return Number(mode)||0;
+
+}
+
+function renderCart(){
+
+  const box=document.getElementById("cartContent");
+
+  if(!box)return;
+
+  if(cart.length===0){
+
+    box.innerHTML=`
+      <div class="card">
+        <h3>Your cart is empty.</h3>
+        <button
+          class="btn btnPrimary"
+          onclick="openPage('products')">
+          Continue Shopping
+        </button>
+      </div>
+    `;
+
+    return;
+  }
+
+  let html="";
+
+  cart.forEach(item=>{
+
+    const p=products.find(
+      x=>Number(x.id)===Number(item.id)
+    );
+
+    if(!p)return;
+
+    const name=lang==="bn"
+      ?(p.bn||p.name)
+      :p.name;
+
+    const total=
+      Number(p.price||0)*
+      Number(item.qty||0);
+
+    html+=`
+
+      <div class="card cartItem">
+
+        <div style="font-size:32px">
+          ${escapeHTML(p.emoji||"🛒")}
+        </div>
+
+        <div class="cartInfo">
+
+          <strong>
+            ${escapeHTML(name)}
+          </strong>
+
+          <div>
+            ₹${Number(p.price||0).toFixed(2)}
+            × ${Number(item.qty)}
+          </div>
+
+          <strong>
+            ₹${total.toFixed(2)}
+          </strong>
+
+        </div>
+
+        <div class="qty">
+
+          <button
+            onclick="changeQty(${p.id},-1)">
+            −
+          </button>
+
+          <b>${item.qty}</b>
+
+          <button
+            onclick="changeQty(${p.id},1)">
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  const subtotal=getTotal();
+
+  const delivery=getDeliveryCharge(subtotal);
+
+  const total=subtotal+delivery;
+
+  html+=`
+
+    <div class="card">
+
+      <div class="summaryRow">
+        <span>Subtotal</span>
+        <strong>₹${subtotal.toFixed(2)}</strong>
+      </div>
+
+      <div class="summaryRow">
+        <span>Delivery Charge</span>
+        <strong>
+          ${delivery===0?"FREE":"₹"+delivery.toFixed(2)}
+        </strong>
+      </div>
+
+      <div class="summaryRow summaryTotal">
+        <span>Total</span>
+        <strong>₹${total.toFixed(2)}</strong>
+      </div>
+
+      <br>
+
+      <button
+        class="btn btnPrimary btnBlock"
+        onclick="openPage('checkout')">
+        Proceed to Checkout
+      </button>
+
+    </div>
+
+  `;
+
+  box.innerHTML=html;
+
 }
 
 
 /* =========================================================
-   PHONE / DUE
+   CUSTOMER DUE
 ========================================================= */
 
 function normalizePhone(phone){
 
- return String(phone||"")
- .replace(/\D/g,"")
- .slice(-10);
-}
+  return String(phone||"")
+    .replace(/\D/g,"")
+    .slice(-10);
 
+}
 
 function getCustomerDue(phone){
 
- const key=normalizePhone(phone);
+  const p=normalizePhone(phone);
 
- if(!key)return 0;
+  if(!p)return 0;
 
- return Math.max(
-  0,
-  Number(customerDues[key]||0)
- );
+  return Number(customerDues[p])||0;
+
 }
 
+function addCustomerDue(){
 
-function addCustomerDue(phone,amount){
+  const phone=normalizePhone(
+    document.getElementById("duePhone")?.value
+  );
 
- const key=normalizePhone(phone);
+  const amount=Number(
+    document.getElementById("dueAmount")?.value
+  );
 
- if(!key)return;
+  if(phone.length<10){
+    alert("Enter valid mobile number.");
+    return;
+  }
 
- customerDues[key]=
- getCustomerDue(phone)+
- Number(amount||0);
+  if(!amount || amount<=0){
+    alert("Enter valid due amount.");
+    return;
+  }
 
- save();
+  customerDues[phone]=
+    getCustomerDue(phone)+amount;
+
+  save("gb_customer_dues",customerDues);
+
+  document.getElementById("duePhone").value="";
+  document.getElementById("dueAmount").value="";
+
+  renderAdminDue();
+
 }
 
+function payCustomerDue(phone){
 
-function payCustomerDue(phone,amount){
+  const due=getCustomerDue(phone);
 
- const key=normalizePhone(phone);
+  if(due<=0){
+    return;
+  }
 
- if(!key)return;
+  const amount=prompt(
+    "Enter amount paid:",
+    due
+  );
 
- customerDues[key]=
- Math.max(
-  0,
-  getCustomerDue(phone)-
-  Number(amount||0)
- );
+  if(amount===null)return;
 
- save();
-}
+  const paid=Number(amount);
 
+  if(!Number.isFinite(paid)||paid<=0){
+    return;
+  }
 
-/* =========================================================
-   CHECKOUT DUE
-========================================================= */
+  customerDues[phone]=Math.max(
+    0,
+    due-paid
+  );
 
-function renderCheckoutDue(){
+  save("gb_customer_dues",customerDues);
 
- const phone=
- document.getElementById("custPhone")
- ?.value.trim()||"";
+  renderAdminDue();
 
- const due=getCustomerDue(phone);
-
- const area=
- document.getElementById("customerDueArea");
-
- const old=
- document.getElementById("previousDueCheckout");
-
- if(!area||!old)return;
-
- if(due>0){
-
-  area.innerHTML=
-  `<div class="dueBox">
-
-   ⚠️ Previous cancellation charge due:
-   <b>₹${due}</b>
-
-  </div>`;
-
-  old.innerHTML=
-  `<div class="dueBox">
-
-   Previous Due:
-   <b>₹${due}</b><br>
-
-   This amount will be collected with your next order.
-
-  </div>`;
-
- }else{
-
-  area.innerHTML="";
-  old.innerHTML="";
- }
 }
 
 
@@ -1627,182 +2087,160 @@ function renderCheckoutDue(){
    CHECKOUT
 ========================================================= */
 
-function renderCheckout(){
+function renderCheckoutDue(){
 
- const subtotal=getTotal();
+  const box=document.getElementById("checkoutDue");
 
- const delivery=
- getDeliveryCharge(subtotal);
+  if(!box)return;
 
- const grand=
- subtotal+delivery;
+  const phone=document.getElementById("customerPhone")?.value||"";
 
- const subtotalEl=
- document.getElementById("checkoutSubtotal");
+  const due=getCustomerDue(phone);
 
- const deliveryEl=
- document.getElementById("checkoutDelivery");
+  if(due>0){
 
- const totalEl=
- document.getElementById("checkoutTotal");
+    box.innerHTML=`
 
- if(subtotalEl)
- subtotalEl.textContent="₹"+subtotal;
+      <div class="notice">
+        Previous Due:
+        <strong>₹${due.toFixed(2)}</strong>
+      </div>
 
- if(deliveryEl)
- deliveryEl.textContent=
- delivery===0
- ?"Free"
- :"₹"+delivery;
+    `;
 
- if(totalEl)
- totalEl.textContent="₹"+grand;
+  }else{
 
- renderCheckoutDue();
+    box.innerHTML="";
 
- if(!customerLocation){
-
-  const status=
-  document.getElementById("locationStatus");
-
-  if(status){
-
-   status.textContent=
-   lang==="en"
-   ?"Location sharing is optional. Tap the button only if you want to share your current delivery location."
-   :"লোকেশন শেয়ার করা ঐচ্ছিক। আপনার বর্তমান ডেলিভারি লোকেশন দিতে চাইলে উপরের বোতামে চাপুন।";
   }
- }
+
 }
 
+function renderCheckout(){
 
-/* =========================================================
-   CUSTOMER LOCATION
-========================================================= */
+  renderCheckoutDue();
+
+  const box=document.getElementById("checkoutSummary");
+
+  if(!box)return;
+
+  const subtotal=getTotal();
+
+  const delivery=getDeliveryCharge(subtotal);
+
+  const total=subtotal+delivery;
+
+  const phone=document.getElementById("customerPhone")?.value||"";
+
+  const due=getCustomerDue(phone);
+
+  const payable=total+due;
+
+  box.innerHTML=`
+
+    <h3>Order Summary</h3>
+
+    <div class="summaryRow">
+      <span>Subtotal</span>
+      <strong>₹${subtotal.toFixed(2)}</strong>
+    </div>
+
+    <div class="summaryRow">
+      <span>Delivery Charge</span>
+      <strong>
+        ${delivery===0?"FREE":"₹"+delivery.toFixed(2)}
+      </strong>
+    </div>
+
+    <div class="summaryRow">
+      <span>Current Order Total</span>
+      <strong>₹${total.toFixed(2)}</strong>
+    </div>
+
+    <div class="summaryRow">
+      <span>Previous Due</span>
+      <strong>₹${due.toFixed(2)}</strong>
+    </div>
+
+    <div class="summaryRow summaryTotal">
+      <span>Payable Total</span>
+      <strong>₹${payable.toFixed(2)}</strong>
+    </div>
+
+  `;
+
+}
 
 function shareCustomerLocation(){
 
- const btn=
- document.getElementById("locationBtn");
+  const status=document.getElementById("locationStatus");
 
- const status=
- document.getElementById("locationStatus");
+  if(!navigator.geolocation){
 
- if(!navigator.geolocation){
+    if(status){
+      status.innerHTML=
+        `<div class="notice">
+          Location sharing is not supported.
+        </div>`;
+    }
 
-  alert(
-   lang==="en"
-   ?"Location is not supported on this device/browser."
-   :"এই ফোন বা ব্রাউজারে Location সুবিধা নেই।"
-  );
-
-  return;
- }
-
- if(btn){
-
-  btn.disabled=true;
-
-  btn.textContent=
-  lang==="en"
-  ?"📍 Getting Location..."
-  :"📍 লোকেশন নেওয়া হচ্ছে...";
- }
-
- if(status){
-
-  status.textContent=
-  lang==="en"
-  ?"Please allow location permission if your phone asks."
-  :"ফোনে Location permission চাইলে Allow করুন।";
- }
-
- navigator.geolocation.getCurrentPosition(
-
-  function(position){
-
-   const lat=
-   position.coords.latitude;
-
-   const lng=
-   position.coords.longitude;
-
-   customerLocation={
-
-    latitude:lat,
-
-    longitude:lng,
-
-    accuracy:
-    position.coords.accuracy,
-
-    mapsUrl:
-    "https://www.google.com/maps?q="+
-    lat+","+lng
-   };
-
-   if(btn){
-
-    btn.disabled=false;
-
-    btn.textContent=
-    lang==="en"
-    ?"📍 Location Shared ✓"
-    :"📍 লোকেশন শেয়ার হয়েছে ✓";
-   }
-
-   if(status){
-
-    status.innerHTML=
-    lang==="en"
-    ?"Your delivery location has been shared.<br><small>Location will be sent with your WhatsApp order.</small>"
-    :"আপনার ডেলিভারি লোকেশন শেয়ার হয়েছে।<br><small>WhatsApp order-এর সঙ্গে লোকেশন যাবে।</small>";
-   }
-
-  },
-
-  function(error){
-
-   customerLocation=null;
-
-   if(btn){
-
-    btn.disabled=false;
-
-    btn.textContent=
-    lang==="en"
-    ?"📍 Share My Location"
-    :"📍 আমার লোকেশন শেয়ার করুন";
-   }
-
-   let msg=
-   lang==="en"
-   ?"Unable to get your location. Please allow location permission and try again."
-   :"আপনার লোকেশন পাওয়া যাচ্ছে না। Location permission দিন এবং আবার চেষ্টা করুন।";
-
-   if(error&&error.code===1){
-
-    msg=
-    lang==="en"
-    ?"Location permission was denied. Please allow location permission in your browser settings and try again."
-    :"Location permission দেওয়া হয়নি। Browser settings থেকে Location permission Allow করে আবার চেষ্টা করুন।";
-   }
-
-   if(status){
-    status.textContent=msg;
-   }
-
-   alert(msg);
-
-  },
-
-  {
-   enableHighAccuracy:true,
-   timeout:15000,
-   maximumAge:60000
+    return;
   }
 
- );
+  if(status){
+    status.innerHTML=
+      `<div class="notice">
+        Getting location...
+      </div>`;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+
+    position=>{
+
+      const lat=position.coords.latitude;
+      const lng=position.coords.longitude;
+
+      window.customerLocation={
+        lat,
+        lng
+      };
+
+      if(status){
+
+        status.innerHTML=`
+
+          <div class="locationBox">
+            📍 Location captured successfully.<br>
+            <a
+              href="https://www.google.com/maps?q=${lat},${lng}"
+              target="_blank">
+              View Location
+            </a>
+          </div>
+
+        `;
+
+      }
+
+    },
+
+    error=>{
+
+      if(status){
+
+        status.innerHTML=`
+          <div class="notice">
+            Location permission was not granted.
+          </div>
+        `;
+
+      }
+
+    }
+
+  );
+
 }
 
 
@@ -1812,462 +2250,356 @@ function shareCustomerLocation(){
 
 function placeOrder(){
 
- if(!cart.length){
+  if(cart.length===0){
+    alert("Your cart is empty.");
+    return;
+  }
 
-  alert(
-   lang==="en"
-   ?"Your cart is empty."
-   :"আপনার কার্ট খালি।"
-  );
+  const name=
+    document.getElementById("customerName")?.value.trim();
 
-  return;
- }
+  const phone=
+    document.getElementById("customerPhone")?.value.trim();
 
- const name=
- document.getElementById("custName")
- ?.value.trim()||"";
+  const address=
+    document.getElementById("customerAddress")?.value.trim();
 
- const phone=
- document.getElementById("custPhone")
- ?.value.trim()||"";
+  if(!name){
+    alert("Please enter customer name.");
+    return;
+  }
 
- const address=
- document.getElementById("custAddress")
- ?.value.trim()||"";
+  if(normalizePhone(phone).length<10){
+    alert("Please enter valid mobile number.");
+    return;
+  }
 
- if(!name||!phone||!address){
+  if(!address){
+    alert("Please enter delivery address.");
+    return;
+  }
 
-  alert(
-   lang==="en"
-   ?"Please fill all delivery details."
-   :"দয়া করে সমস্ত ডেলিভারি তথ্য পূরণ করুন।"
-  );
+  const subtotal=getTotal();
 
-  return;
- }
+  const delivery=getDeliveryCharge(subtotal);
 
- if(normalizePhone(phone).length!==10){
+  const total=subtotal+delivery;
 
-  alert(
-   lang==="en"
-   ?"Please enter a valid 10-digit mobile number."
-   :"দয়া করে সঠিক ১০ সংখ্যার মোবাইল নম্বর দিন।"
-  );
+  const previousDue=getCustomerDue(phone);
 
-  return;
- }
+  const payableTotal=total+previousDue;
 
- const subtotal=getTotal();
+  const orderId=
+    "GB"+Date.now();
 
- const delivery=
- getDeliveryCharge(subtotal);
+  const items=cart.map(item=>{
 
- const orderTotal=
- subtotal+delivery;
+    const p=products.find(
+      x=>Number(x.id)===Number(item.id)
+    );
 
- const previousDue=
- getCustomerDue(phone);
+    return {
 
- const items=
- cart.map(i=>{
+      id:p?.id||item.id,
 
-  const p=
-  products.find(
-   x=>Number(x.id)===Number(i.id)
-  );
+      name:p?.name||"Product",
 
-  return {
+      bn:p?.bn||p?.name||"Product",
 
-   id:i.id,
+      price:Number(p?.price)||0,
 
-   qty:i.qty,
+      qty:Number(item.qty)||1,
 
-   name:p?p.name:"",
+      unit:p?.unit||""
 
-   bn:p?p.bn||p.name:"",
+    };
 
-   unit:p?p.unit||"":"",
+  });
 
-   price:p?p.price:0,
+  const order={
 
-   image:p?p.image||"":"",
+    id:orderId,
 
-   emoji:p?p.emoji||"🛒":"🛒"
+    name,
+
+    phone:normalizePhone(phone),
+
+    address,
+
+    location:window.customerLocation||null,
+
+    items,
+
+    subtotal,
+
+    deliveryCharge:delivery,
+
+    total,
+
+    previousDue,
+
+    payableTotal,
+
+    payment:"COD",
+
+    status:"Pending",
+
+    date:new Date().toLocaleString(),
+
+    deliveryAttempt:0,
+
+    redeliveryScheduled:false,
+
+    cancellationCharge:0,
+
+    cancellationChargePaid:false
 
   };
 
- });
+  orders.unshift(order);
 
- const order={
+  save("gb_orders",orders);
 
-  id:
-  "GB"+
-  Date.now()
-  .toString()
-  .slice(-7),
+  cart=[];
 
-  date:
-  new Date()
-  .toLocaleString("en-IN"),
+  save("gb_cart",cart);
 
-  timestamp:
-  Date.now(),
+  updateCartCount();
 
-  name:name,
+  renderOrders();
 
-  phone:phone,
+  sendOrderWhatsApp(order);
 
-  address:address,
+  alert(
+    "Order placed successfully.\nOrder ID: "+orderId
+  );
 
-  location:customerLocation,
+  openPage("orders");
 
-  payment:"COD",
-
-  subtotal:subtotal,
-
-  deliveryCharge:delivery,
-
-  total:orderTotal,
-
-  previousDue:previousDue,
-
-  payableTotal:
-  orderTotal+previousDue,
-
-  status:"Pending",
-
-  deliveryAttempt:0,
-
-  redeliveryScheduled:false,
-
-  cancellationCharge:0,
-
-  cancellationChargePaid:false,
-
-  items:items
-
- };
-
- orders.unshift(order);
-
- cart=[];
-
- save();
-
- updateCartCount();
-
- const productLines=
- items.map(i=>
-  `${i.name} — ${i.unit} × ${i.qty}`
- ).join("\n");
-
- let message=
- `🛒 Ghare Bazar Order
-Order ID: ${order.id}
-
-Products:
-${productLines}
-
-Customer: ${name}
-Mobile: ${phone}
-Address: ${address}
-Payment: COD
-Subtotal: ₹${subtotal}
-Delivery Charge: ${delivery===0?"Free":"₹"+delivery}
-Total: ₹${orderTotal}`;
-
- if(customerLocation){
-
-  message+=`
-
-📍 Delivery Location:
-${customerLocation.mapsUrl}`;
-
- }
-
- if(previousDue>0){
-
-  message+=`
-Previous Cancellation Due: ₹${previousDue}
-Payable Total: ₹${order.payableTotal}`;
- }
-
- const whatsappURL=
- "https://wa.me/91"+
- SHOP_PHONE+
- "?text="+
- encodeURIComponent(message);
-
- alert(
-  lang==="en"
-  ?"Order placed successfully. WhatsApp will open now."
-  :"অর্ডার সফলভাবে নেওয়া হয়েছে। এখন WhatsApp খুলবে।"
- );
-
- customerLocation=null;
-
- window.location.href=whatsappURL;
 }
 
 
 /* =========================================================
-   ORDER DISPLAY
+   WHATSAPP
 ========================================================= */
 
-function renderOrderItems(items){
+function sendOrderWhatsApp(order){
 
- return (items||[])
- .map(i=>{
+  let text=
+`New Ghare Bazar Order
 
-  const product=
-  products.find(
-   x=>Number(x.id)===Number(i.id)
-  )||{};
+Order ID: ${order.id}
 
-  const name=
-  i.name||
-  product.name||
-  "Product";
+Customer: ${order.name}
 
-  const unit=
-  i.unit||
-  product.unit||
-  "";
+Phone: ${order.phone}
+
+Address: ${order.address}
+
+Payment: Cash on Delivery
+
+`;
+
+  if(order.location){
+
+    text+=
+`Location:
+https://www.google.com/maps?q=${order.location.lat},${order.location.lng}
+
+`;
+
+  }
+
+  text+="Items:\n";
+
+  order.items.forEach(item=>{
+
+    text+=
+`${item.name} × ${item.qty} = ₹${(
+      Number(item.price)*Number(item.qty)
+    ).toFixed(2)}\n`;
+
+  });
+
+  text+=
+`
+Subtotal: ₹${order.subtotal.toFixed(2)}
+Delivery: ₹${order.deliveryCharge.toFixed(2)}
+Current Total: ₹${order.total.toFixed(2)}
+Previous Due: ₹${order.previousDue.toFixed(2)}
+Payable Total: ₹${order.payableTotal.toFixed(2)}
+`;
+
+  const url=
+    "https://wa.me/91"+
+    SHOP_PHONE+
+    "?text="+
+    encodeURIComponent(text);
+
+  window.open(url,"_blank");
+
+}
+
+
+/* =========================================================
+   ORDER ITEMS
+========================================================= */
+
+function renderOrderItems(order){
+
+  if(!Array.isArray(order.items)){
+    return "";
+  }
+
+  return order.items.map(item=>`
+
+    <div class="orderItemLine">
+
+      <span>
+        ${escapeHTML(item.name||"Product")}
+        × ${Number(item.qty||1)}
+      </span>
+
+      <strong>
+        ₹${(
+          Number(item.price||0)*
+          Number(item.qty||1)
+        ).toFixed(2)}
+      </strong>
+
+    </div>
+
+  `).join("");
+
+}
+
+function locationHTML(order){
+
+  if(!order.location){
+    return "";
+  }
 
   return `
-  <div class="orderProductLine">
 
-   ${escapeHTML(name)}
-   —
-   ${escapeHTML(unit)}
-   ×
-   ${Number(i.qty||0)}
+    <div class="locationBox">
 
-  </div>`;
- })
- .join("");
+      📍 Delivery Location<br>
+
+      <a
+        href="https://www.google.com/maps?q=${order.location.lat},${order.location.lng}"
+        target="_blank">
+        Open in Google Maps
+      </a>
+
+    </div>
+
+  `;
+
 }
 
 
-function locationHTML(o){
-
- if(
-  !o.location||
-  !o.location.mapsUrl
- ){
-  return "";
- }
-
- return `
- <div class="locationBox">
-
-  <b>📍 Delivery Location Shared</b>
-
-  <a class="locationLink"
-     href="${escapeHTML(o.location.mapsUrl)}"
-     target="_blank"
-     rel="noopener">
-
-   Open Location in Google Maps
-
-  </a>
-
- </div>`;
-}
-
+/* =========================================================
+   CUSTOMER ORDERS
+========================================================= */
 
 function renderOrders(){
 
- const box=
- document.getElementById("ordersList");
+  const box=document.getElementById("ordersContent");
 
- const none=
- document.getElementById("noOrders");
+  if(!box)return;
 
- if(!box||!none)return;
+  if(orders.length===0){
 
- if(!orders.length){
+    box.innerHTML=`
+      <div class="card">
+        <h3>No orders yet.</h3>
+      </div>
+    `;
 
-  box.innerHTML="";
-  none.style.display="block";
+    return;
+  }
 
-  return;
- }
+  box.innerHTML=orders.map(order=>`
 
- none.style.display="none";
+    <div class="orderCard">
 
- box.innerHTML=
- orders.map(o=>{
+      <div class="orderHeader">
 
-  const items=
-  renderOrderItems(o.items);
+        <div>
 
-  const statusClass=
-  o.status==="Cancelled"
-  ?"status statusDanger"
-  :o.status==="Delivered"
-  ?"status statusGreen"
-  :"status";
+          <strong>
+            ${escapeHTML(order.id)}
+          </strong>
 
-  const charge=
-  Number(o.cancellationCharge||0);
+          <div style="font-size:12px;color:#777">
+            ${escapeHTML(order.date)}
+          </div>
 
-  const canCancel=
-  ![
-   "Dispatched",
-   "Delivered",
-   "Cancelled"
-  ].includes(o.status);
+        </div>
 
-  return `
+        <span class="status">
+          ${escapeHTML(order.status)}
+        </span>
 
-  <div class="orderBox">
+      </div>
 
-   <div>
+      <hr>
 
-    <b>${escapeHTML(o.id)}</b>
+      <div>
+        <strong>${escapeHTML(order.name)}</strong><br>
+        ${escapeHTML(order.phone)}<br>
+        ${escapeHTML(order.address)}
+      </div>
 
-    <span class="${statusClass}">
-     ${escapeHTML(o.status)}
-    </span>
+      ${locationHTML(order)}
 
-   </div>
+      <div class="orderItems">
+        ${renderOrderItems(order)}
+      </div>
 
-   <div class="orderProducts">
+      <div class="summaryRow">
+        <span>Subtotal</span>
+        <strong>₹${Number(order.subtotal).toFixed(2)}</strong>
+      </div>
 
-    <b>Products:</b>
+      <div class="summaryRow">
+        <span>Delivery</span>
+        <strong>₹${Number(order.deliveryCharge).toFixed(2)}</strong>
+      </div>
 
-    ${items||
-    "<div>No product details</div>"}
+      <div class="summaryRow">
+        <span>Previous Due</span>
+        <strong>₹${Number(order.previousDue).toFixed(2)}</strong>
+      </div>
 
-   </div>
+      <div class="summaryRow summaryTotal">
+        <span>Payable</span>
+        <strong>₹${Number(order.payableTotal).toFixed(2)}</strong>
+      </div>
 
-   <p>
-    Order Date & Time:
-    ${escapeHTML(o.date||"")}
-   </p>
+      ${
+        order.status!=="Cancelled"
+        && order.status!=="Delivered"
 
-   <p>
-    Customer:
-    ${escapeHTML(o.name||"")}
-   </p>
+        ?
 
-   <p>
-    Mobile:
-    ${escapeHTML(o.phone||"")}
-   </p>
+        `<br>
+        <button
+          class="btn btnDanger"
+          onclick="customerCancelOrder('${escapeHTML(order.id)}')">
+          Cancel Order
+        </button>`
 
-   <p>
-    Address:
-    ${escapeHTML(o.address||"")}
-   </p>
+        :
 
-   ${locationHTML(o)}
+        ""
 
-   <p>
-    Payment:
-    ${escapeHTML(o.payment||"COD")}
-   </p>
-
-   <p>
-    Subtotal:
-    ₹${Number(o.subtotal??o.total??0)}
-   </p>
-
-   <p>
-    Delivery Charge:
-    ${
-     Number(o.deliveryCharge||0)===0
-     ?"Free"
-     :"₹"+Number(o.deliveryCharge||0)
-    }
-   </p>
-
-   <p>
-    <b>
-     Order Total:
-     ₹${Number(o.total||0)}
-    </b>
-   </p>
-
-   ${
-    Number(o.previousDue||0)>0
-    ?`
-    <p>
-     Previous Cancellation Due:
-     ₹${Number(o.previousDue)}
-    </p>
-
-    <p>
-     <b>
-      Payable Total:
-      ₹${Number(o.payableTotal||o.total)}
-     </b>
-    </p>
-    `
-    :""
-   }
-
-   ${
-    charge>0
-    ?`
-    <div class="dueBox">
-
-     Cancellation Charge:
-     <b>₹${charge}</b><br>
-
-     ${o.cancellationChargePaid
-      ?"Paid"
-      :"Due"}
+      }
 
     </div>
-    `
-    :""
-   }
 
-   ${
-    o.deliveryAttempt>0&&
-    o.status!=="Delivered"&&
-    o.status!=="Cancelled"
-    ?`
-    <div class="infoBox">
+  `).join("");
 
-     Delivery Attempt:
-     <b>${o.deliveryAttempt}</b>
-
-     ${
-      o.redeliveryScheduled
-      ?" — One-time re-delivery scheduled."
-      :""
-     }
-
-    </div>
-    `
-    :""
-   }
-
-   ${
-    canCancel
-    ?`
-    <button class="cancelBtn"
-     onclick="customerCancelOrder('${escapeHTML(o.id)}')">
-
-     ❌ Cancel Order
-
-    </button>
-
-    <small style="display:block;margin-top:6px;color:#718582">
-
-     Cancellation before dispatch: No charge
-
-    </small>
-    `
-    :""
-   }
-
-  </div>`;
-
- }).join("");
 }
 
 
@@ -2277,392 +2609,63 @@ function renderOrders(){
 
 function customerCancelOrder(id){
 
- const o=
- orders.find(
-  x=>String(x.id)===String(id)
- );
+  const order=orders.find(
+    o=>String(o.id)===String(id)
+  );
 
- if(!o)return;
+  if(!order)return;
 
- if(
-  [
-   "Dispatched",
-   "Delivered",
-   "Cancelled"
-  ].includes(o.status)
- ){
+  if(
+    !confirm(
+      "Are you sure you want to cancel this order?"
+    )
+  ){
+    return;
+  }
 
-  alert("This order cannot be cancelled now.");
+  order.status="Cancelled";
 
-  return;
- }
+  save("gb_orders",orders);
 
- if(!confirm(
-  "Cancel this order?\n\nNo cancellation charge will be applied before dispatch."
- )){
-  return;
- }
+  renderOrders();
 
- o.status="Cancelled";
-
- o.cancelledBy="Customer";
-
- o.cancellationCharge=0;
-
- o.cancellationChargePaid=true;
-
- save();
-
- renderOrders();
- renderAdminOrders();
-
- alert(
-  "Order cancelled successfully. No charge."
- );
 }
 
 
 /* =========================================================
-   ADMIN
+   ADMIN LOGIN
 ========================================================= */
+
+let adminLoggedIn=false;
 
 function adminLogin(){
 
- const pin=
- document.getElementById("adminPin")
- ?.value||"";
+  const pin=
+    document.getElementById("adminPin")?.value;
 
- if(pin===ADMIN_PIN){
+  const msg=
+    document.getElementById("adminLoginMsg");
 
-  document.getElementById("adminPin").value="";
+  if(String(pin)===ADMIN_PIN){
 
-  openPage("admin");
+    adminLoggedIn=true;
 
- }else{
+    if(msg){
+      msg.textContent="Login successful.";
+      msg.style.color="green";
+    }
 
-  alert("Wrong PIN");
- }
-}
-
-
-function adminProducts(){
- openPage("adminProducts");
-}
-
-function adminOrders(){
- openPage("adminOrders");
-}
-
-function adminSettings(){
- openPage("adminSettings");
-}
-
-function adminDueList(){
- openPage("adminDue");
-}
-
-
-/* =========================================================
-   IMAGE
-========================================================= */
-
-function readImageFile(file,callback){
-
- if(!file){
-
-  callback("");
-
-  return;
- }
-
- const reader=
- new FileReader();
-
- reader.onload=e=>
- callback(e.target.result);
-
- reader.onerror=()=>
- callback("");
-
- reader.readAsDataURL(file);
-}
-
-
-function previewProductImage(event){
-
- const file=
- event.target.files?.[0];
-
- const img=
- document.getElementById("productImagePreview");
-
- if(!img)return;
-
- if(!file){
-
-  img.src="";
-  img.style.display="none";
-
-  return;
- }
-
- const reader=
- new FileReader();
-
- reader.onload=e=>{
-
-  img.src=e.target.result;
-
-  img.style.display="block";
-
- };
-
- reader.readAsDataURL(file);
-}
-
-
-/* =========================================================
-   SAVE PRODUCT
-========================================================= */
-
-function saveProduct(){
-
- const name=
- document.getElementById("newProductName")
- ?.value.trim()||"";
-
- const price=
- Number(
-  document.getElementById("newProductPrice")
-  ?.value||0
- );
-
- const unit=
- document.getElementById("newProductUnit")
- ?.value.trim()||
- "1 piece";
-
- const emoji=
- document.getElementById("newProductEmoji")
- ?.value.trim()||
- "🛒";
-
- const editingId=
- Number(
-  document.getElementById("editingProductId")
-  ?.value||0
- );
-
- if(!name||price<=0){
-
-  alert(
-   "Enter product name and price"
-  );
-
-  return;
- }
-
- const file=
- document.getElementById("newProductImage")
- ?.files?.[0];
-
- if(editingId){
-
-  const p=
-  products.find(
-   x=>Number(x.id)===editingId
-  );
-
-  if(!p)return;
-
-  p.name=name;
-  p.bn=name;
-  p.price=price;
-  p.unit=unit;
-  p.emoji=emoji;
-
-  if(file){
-
-   readImageFile(file,data=>{
-
-    p.image=data;
-
-    save();
-
-    finishProductSave(
-     "Product updated"
-    );
-
-   });
-
-   return;
-  }
-
-  save();
-
-  finishProductSave(
-   "Product updated"
-  );
-
- }else{
-
-  const add=img=>{
-
-   products.push({
-
-    id:Date.now(),
-
-    name:name,
-
-    bn:name,
-
-    price:price,
-
-    unit:unit,
-
-    emoji:emoji,
-
-    cat:"Grocery",
-
-    stock:true,
-
-    image:img
-
-   });
-
-   save();
-
-   finishProductSave(
-    "Product added"
-   );
-  };
-
-  if(file){
-
-   readImageFile(
-    file,
-    add
-   );
+    openPage("admin");
 
   }else{
 
-   add("");
+    if(msg){
+      msg.textContent="Incorrect PIN.";
+      msg.style.color="red";
+    }
+
   }
- }
-}
 
-
-function finishProductSave(msg){
-
- clearProductForm();
-
- renderAdminProducts();
- renderProducts();
- renderProductsPage();
-
- alert(msg);
-}
-
-
-function clearProductForm(){
-
- document.getElementById(
-  "editingProductId"
- ).value="";
-
- document.getElementById(
-  "newProductName"
- ).value="";
-
- document.getElementById(
-  "newProductPrice"
- ).value="";
-
- document.getElementById(
-  "newProductUnit"
- ).value="";
-
- document.getElementById(
-  "newProductEmoji"
- ).value="";
-
- document.getElementById(
-  "newProductImage"
- ).value="";
-
- const img=
- document.getElementById(
-  "productImagePreview"
- );
-
- if(img){
-
-  img.src="";
-  img.style.display="none";
- }
-
- document.getElementById(
-  "productSaveBtn"
- ).textContent=
- "Add Product";
-}
-
-
-/* =========================================================
-   EDIT PRODUCT
-========================================================= */
-
-function editProduct(id){
-
- const p=
- products.find(
-  x=>Number(x.id)===Number(id)
- );
-
- if(!p)return;
-
- document.getElementById(
-  "editingProductId"
- ).value=p.id;
-
- document.getElementById(
-  "newProductName"
- ).value=p.name||"";
-
- document.getElementById(
-  "newProductPrice"
- ).value=p.price||"";
-
- document.getElementById(
-  "newProductUnit"
- ).value=p.unit||"";
-
- document.getElementById(
-  "newProductEmoji"
- ).value=p.emoji||"";
-
- const img=
- document.getElementById(
-  "productImagePreview"
- );
-
- if(p.image){
-
-  img.src=p.image;
-  img.style.display="block";
-
- }else{
-
-  img.src="";
-  img.style.display="none";
- }
-
- document.getElementById(
-  "productSaveBtn"
- ).textContent=
- "Save Changes";
-
- window.scrollTo(0,0);
 }
 
 
@@ -2670,137 +2673,410 @@ function editProduct(id){
    ADMIN PRODUCTS
 ========================================================= */
 
+function adminProducts(){
+
+  if(!adminLoggedIn){
+    openPage("adminLogin");
+    return;
+  }
+
+  openPage("adminProducts");
+
+}
+
+function renderCategoryOptions(){
+
+  const select=document.getElementById("pCat");
+
+  if(!select)return;
+
+  select.innerHTML=categories.map(c=>`
+
+    <option value="${escapeHTML(c[1])}">
+      ${escapeHTML(c[1])}
+    </option>
+
+  `).join("");
+
+}
+
+function readImageFile(file){
+
+  return new Promise((resolve,reject)=>{
+
+    if(!file){
+      resolve("");
+      return;
+    }
+
+    const reader=new FileReader();
+
+    reader.onload=()=>resolve(reader.result);
+
+    reader.onerror=reject;
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+
+function previewProductImage(event){
+
+  const file=event.target.files?.[0];
+
+  const box=document.getElementById("imagePreview");
+
+  if(!file||!box){
+    return;
+  }
+
+  const reader=new FileReader();
+
+  reader.onload=()=>{
+
+    box.innerHTML=`
+
+      <img
+        src="${reader.result}"
+        style="
+          width:100px;
+          height:100px;
+          object-fit:cover;
+          border-radius:10px;
+          border:1px solid #ddd;
+        "
+      >
+
+    `;
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+async function saveProduct(){
+
+  const name=
+    document.getElementById("pName")?.value.trim();
+
+  const bn=
+    document.getElementById("pBn")?.value.trim();
+
+  const price=Number(
+    document.getElementById("pPrice")?.value
+  );
+
+  const unit=
+    document.getElementById("pUnit")?.value.trim();
+
+  const cat=
+    document.getElementById("pCat")?.value;
+
+  const emoji=
+    document.getElementById("pEmoji")?.value.trim()
+    ||"🛒";
+
+  const stock=
+    document.getElementById("pStock")?.checked!==false;
+
+  const editId=
+    document.getElementById("editProductId")?.value;
+
+  if(!name){
+    alert("Enter product name.");
+    return;
+  }
+
+  if(!Number.isFinite(price)||price<0){
+    alert("Enter valid price.");
+    return;
+  }
+
+  let image="";
+
+  const file=
+    document.getElementById("pImage")?.files?.[0];
+
+  if(file){
+    image=await readImageFile(file);
+  }
+
+  if(editId){
+
+    const p=products.find(
+      x=>String(x.id)===String(editId)
+    );
+
+    if(p){
+
+      p.name=name;
+      p.bn=bn||name;
+      p.price=price;
+      p.unit=unit||"1 piece";
+      p.cat=cat||"Grocery";
+      p.emoji=emoji;
+      p.stock=stock;
+
+      if(image){
+        p.image=image;
+      }
+
+    }
+
+  }else{
+
+    products.push({
+
+      id:Date.now(),
+
+      name,
+
+      bn:bn||name,
+
+      price,
+
+      unit:unit||"1 piece",
+
+      emoji,
+
+      cat:cat||"Grocery",
+
+      stock,
+
+      image
+
+    });
+
+  }
+
+  save("gb_products",products);
+
+  clearProductForm();
+
+  renderAdminProducts();
+
+  renderProducts();
+
+  renderProductsPage();
+
+}
+
+function finishProductSave(){
+  saveProduct();
+}
+
+function clearProductForm(){
+
+  const ids=[
+    "editProductId",
+    "pName",
+    "pBn",
+    "pPrice",
+    "pUnit",
+    "pEmoji"
+  ];
+
+  ids.forEach(id=>{
+
+    const el=document.getElementById(id);
+
+    if(el){
+      el.value="";
+    }
+
+  });
+
+  const stock=document.getElementById("pStock");
+
+  if(stock){
+    stock.checked=true;
+  }
+
+  const file=document.getElementById("pImage");
+
+  if(file){
+    file.value="";
+  }
+
+  const preview=document.getElementById("imagePreview");
+
+  if(preview){
+    preview.innerHTML="";
+  }
+
+}
+
+function editProduct(id){
+
+  const p=products.find(
+    x=>Number(x.id)===Number(id)
+  );
+
+  if(!p)return;
+
+  document.getElementById("editProductId").value=p.id;
+  document.getElementById("pName").value=p.name||"";
+  document.getElementById("pBn").value=p.bn||"";
+  document.getElementById("pPrice").value=p.price||"";
+  document.getElementById("pUnit").value=p.unit||"";
+  document.getElementById("pCat").value=p.cat||"Grocery";
+  document.getElementById("pEmoji").value=p.emoji||"🛒";
+  document.getElementById("pStock").checked=p.stock!==false;
+
+  const preview=document.getElementById("imagePreview");
+
+  if(preview && p.image){
+
+    preview.innerHTML=`
+
+      <img
+        src="${escapeHTML(p.image)}"
+        style="
+          width:100px;
+          height:100px;
+          object-fit:cover;
+          border-radius:10px;
+        "
+      >
+
+    `;
+
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
 function renderAdminProducts(){
 
- const box=
- document.getElementById(
-  "adminProductList"
- );
+  renderCategoryOptions();
 
- if(!box)return;
+  const box=
+    document.getElementById("adminProductsList");
 
- box.innerHTML=
- products.map(p=>{
+  if(!box)return;
 
-  const visual=
-  p.image
-  ?`<img
-      class="adminProductImage"
-      src="${escapeHTML(p.image)}"
-      alt="">`
-  :`<span style="font-size:35px">
-      ${escapeHTML(p.emoji||"🛒")}
-    </span>`;
+  box.innerHTML=products.map(p=>`
 
-  return `
+    <div class="card">
 
-  <div class="orderBox">
+      <div style="
+        display:flex;
+        gap:12px;
+        align-items:center;
+      ">
 
-   <div style="display:flex;align-items:center;gap:8px">
+        <div style="font-size:35px">
+          ${
+            p.image
+            ?`<img
+                src="${escapeHTML(p.image)}"
+                style="
+                  width:55px;
+                  height:55px;
+                  object-fit:cover;
+                  border-radius:9px;
+                "
+              >`
+            :escapeHTML(p.emoji||"🛒")
+          }
+        </div>
 
-    ${visual}
+        <div style="flex:1">
 
-    <div>
+          <strong>
+            ${escapeHTML(p.name)}
+          </strong>
 
-     <b>
-      ${escapeHTML(p.name)}
-     </b>
+          <div>
+            ₹${Number(p.price).toFixed(2)}
+            / ${escapeHTML(p.unit)}
+          </div>
 
-     <p>
-      ₹${Number(p.price||0)}
-      •
-      ${escapeHTML(p.unit||"")}
-     </p>
+          <small>
+            ${p.stock!==false
+              ?"In Stock"
+              :"Out of Stock"}
+          </small>
 
-     <small>
-      ${p.stock
-       ?"Available"
-       :"Out of Stock"}
-     </small>
+        </div>
+
+      </div>
+
+      <br>
+
+      <button
+        class="btn btnYellow"
+        onclick="editProduct(${p.id})">
+        Edit
+      </button>
+
+      <button
+        class="btn btnLight"
+        onclick="toggleStock(${p.id})">
+        Toggle Stock
+      </button>
+
+      <button
+        class="btn btnDanger"
+        onclick="deleteProduct(${p.id})">
+        Delete
+      </button>
 
     </div>
 
-   </div>
+  `).join("");
 
-   <button class="secondary"
-           onclick="editProduct(${Number(p.id)})">
-
-    ✏️ Edit
-
-   </button>
-
-   <button class="secondary"
-           onclick="toggleStock(${Number(p.id)})">
-
-    ${
-     p.stock
-     ?"Mark Out of Stock"
-     :"Mark Available"
-    }
-
-   </button>
-
-   <button class="dangerBtn"
-           onclick="deleteProduct(${Number(p.id)})">
-
-    Delete
-
-   </button>
-
-  </div>`;
-
- }).join("");
 }
-
-
-/* =========================================================
-   STOCK
-========================================================= */
 
 function toggleStock(id){
 
- const p=
- products.find(
-  x=>Number(x.id)===Number(id)
- );
+  const p=products.find(
+    x=>Number(x.id)===Number(id)
+  );
 
- if(p){
+  if(!p)return;
+
   p.stock=!p.stock;
- }
 
- save();
+  save("gb_products",products);
 
- renderAdminProducts();
- renderProducts();
- renderProductsPage();
+  renderAdminProducts();
+  renderProducts();
+  renderProductsPage();
+
 }
-
 
 function deleteProduct(id){
 
- if(!confirm(
-  "Delete this product?"
- )){
-  return;
- }
+  if(!confirm("Delete this product?")){
+    return;
+  }
 
- products=
- products.filter(
-  p=>Number(p.id)!==Number(id)
- );
+  products=products.filter(
+    p=>Number(p.id)!==Number(id)
+  );
 
- cart=
- cart.filter(
-  c=>Number(c.id)!==Number(id)
- );
+  cart=cart.filter(
+    item=>products.some(
+      p=>Number(p.id)===Number(item.id)
+    )
+  );
 
- save();
+  save("gb_products",products);
+  save("gb_cart",cart);
 
- renderAdminProducts();
- renderProducts();
- renderProductsPage();
- updateCartCount();
- renderCart();
+  renderAdminProducts();
+  renderProducts();
+  renderProductsPage();
+  renderCart();
+  updateCartCount();
+
 }
 
 
@@ -2810,530 +3086,354 @@ function deleteProduct(id){
 
 function renderAdminOrders(){
 
- const box=
- document.getElementById(
-  "adminOrderList"
- );
+  const box=
+    document.getElementById("adminOrdersList");
 
- if(!box)return;
+  if(!box)return;
 
- if(!orders.length){
+  if(orders.length===0){
 
-  box.innerHTML=
-  "<p style='color:#789'>No orders.</p>";
+    box.innerHTML=`
+      <div class="card">
+        No orders.
+      </div>
+    `;
 
-  return;
- }
+    return;
+  }
 
- box.innerHTML=
- orders.map(o=>{
+  box.innerHTML=orders.map(order=>`
 
-  const items=
-  renderOrderItems(o.items);
+    <div class="orderCard">
 
-  const charge=
-  Number(o.cancellationCharge||0);
+      <div class="orderHeader">
 
-  return `
+        <div>
+          <strong>${escapeHTML(order.id)}</strong>
 
-  <div class="orderBox">
+          <div style="font-size:12px;color:#777">
+            ${escapeHTML(order.date)}
+          </div>
+        </div>
 
-   <div>
+        <span class="status">
+          ${escapeHTML(order.status)}
+        </span>
 
-    <b>
-     ${escapeHTML(o.id)}
-    </b>
+      </div>
 
-    <span class="status">
-     ${escapeHTML(o.status)}
-    </span>
+      <hr>
 
-   </div>
+      <strong>
+        ${escapeHTML(order.name)}
+      </strong>
 
-   <div class="orderProducts">
+      <br>
 
-    <b>Products:</b>
+      📞 ${escapeHTML(order.phone)}
 
-    ${
-     items||
-     "<div>No product details</div>"
-    }
+      <br>
 
-   </div>
+      📍 ${escapeHTML(order.address)}
 
-   <p>
-    Order Date & Time:
-    ${escapeHTML(o.date||"")}
-   </p>
+      ${locationHTML(order)}
 
-   <p>
-    Customer:
-    ${escapeHTML(o.name||"")}
-   </p>
+      <div class="orderItems">
+        ${renderOrderItems(order)}
+      </div>
 
-   <p>
-    Mobile:
-    ${escapeHTML(o.phone||"")}
-   </p>
+      <div class="summaryRow">
+        <span>Subtotal</span>
+        <strong>₹${Number(order.subtotal).toFixed(2)}</strong>
+      </div>
 
-   <p>
-    Address:
-    ${escapeHTML(o.address||"")}
-   </p>
+      <div class="summaryRow">
+        <span>Delivery</span>
+        <strong>₹${Number(order.deliveryCharge).toFixed(2)}</strong>
+      </div>
 
-   ${locationHTML(o)}
+      <div class="summaryRow">
+        <span>Previous Due</span>
+        <strong>₹${Number(order.previousDue).toFixed(2)}</strong>
+      </div>
 
-   <p>
-    Payment: COD
-   </p>
+      <div class="summaryRow summaryTotal">
+        <span>Payable</span>
+        <strong>₹${Number(order.payableTotal).toFixed(2)}</strong>
+      </div>
 
-   <p>
-    Subtotal:
-    ₹${Number(o.subtotal??o.total??0)}
-   </p>
+      <br>
 
-   <p>
-    Delivery Charge:
-    ${
-     Number(o.deliveryCharge||0)===0
-     ?"Free"
-     :"₹"+Number(o.deliveryCharge||0)
-    }
-   </p>
+      <div class="formGroup">
 
-   <p>
-    <b>
-     Order Total:
-     ₹${Number(o.total||0)}
-    </b>
-   </p>
+        <label>Order Status</label>
 
-   ${
-    Number(o.previousDue||0)>0
-    ?`
-    <p>
-     Previous Due:
-     ₹${Number(o.previousDue)}
-    </p>
+        <select
+          onchange="changeOrderStatus('${escapeHTML(order.id)}',this.value)">
 
-    <p>
-     <b>
-      Payable Total:
-      ₹${Number(o.payableTotal||o.total)}
-     </b>
-    </p>
-    `
-    :""
-   }
+          ${[
+            "Pending",
+            "Confirmed",
+            "Processing",
+            "Out for Delivery",
+            "Delivered",
+            "Cancelled"
+          ].map(s=>`
 
-   ${
-    o.deliveryAttempt>0
-    ?`
-    <div class="infoBox">
+            <option
+              value="${escapeHTML(s)}"
+              ${order.status===s?"selected":""}>
+              ${escapeHTML(s)}
+            </option>
 
-     Delivery Attempts:
-     <b>${o.deliveryAttempt}</b>
+          `).join("")}
 
-     ${
-      o.redeliveryScheduled
-      ?" — Re-delivery scheduled"
-      :""
-     }
+        </select>
 
-    </div>
-    `
-    :""
-   }
+      </div>
 
-   ${
-    charge>0
-    ?`
-    <div class="dueAdmin">
+      <button
+        class="btn btnYellow"
+        onclick="firstDeliveryFailed('${escapeHTML(order.id)}')">
+        First Delivery Failed
+      </button>
 
-     Cancellation Charge:
-     <b>₹${charge}</b><br>
+      <button
+        class="btn btnYellow"
+        onclick="secondDeliveryFailed('${escapeHTML(order.id)}')">
+        Second Delivery Failed
+      </button>
 
-     ${
-      o.cancellationChargePaid
-      ?"Status: Paid"
-      :"Status: Due"
-     }
+      <button
+        class="btn btnDanger"
+        onclick="adminCancelOrder('${escapeHTML(order.id)}')">
+        Cancel Order
+      </button>
+
+      ${
+        Number(order.cancellationCharge)>0
+
+        ?
+
+        `<button
+          class="btn btnPrimary"
+          onclick="markOrderChargePaid('${escapeHTML(order.id)}')">
+          Mark Charge Paid
+        </button>`
+
+        :
+
+        ""
+
+      }
 
     </div>
-    `
-    :""
-   }
 
-   <div class="adminOrderAction">
+  `).join("");
 
-    <label>Order Status</label>
-
-    <select
-     onchange="changeOrderStatus('${escapeHTML(o.id)}',this.value)">
-
-     <option value="Pending"
-      ${o.status==="Pending"?"selected":""}>
-      Pending
-     </option>
-
-     <option value="Confirmed"
-      ${o.status==="Confirmed"?"selected":""}>
-      Confirmed
-     </option>
-
-     <option value="Preparing"
-      ${o.status==="Preparing"?"selected":""}>
-      Preparing
-     </option>
-
-     <option value="Re-delivery"
-      ${o.status==="Re-delivery"?"selected":""}>
-      Re-delivery
-     </option>
-
-     <option value="Dispatched"
-      ${o.status==="Dispatched"?"selected":""}>
-      Dispatched
-     </option>
-
-     <option value="Delivered"
-      ${o.status==="Delivered"?"selected":""}>
-      Delivered
-     </option>
-
-     <option value="Cancelled"
-      ${o.status==="Cancelled"?"selected":""}>
-      Cancelled
-     </option>
-
-    </select>
-
-    ${
-     ![
-      "Dispatched",
-      "Delivered",
-      "Cancelled"
-     ].includes(o.status)
-     ?`
-     <button class="secondary"
-      onclick="adminCancelOrder('${escapeHTML(o.id)}')">
-
-      Cancel Order — No Charge
-
-     </button>
-     `
-     :""
-    }
-
-    ${
-     o.status!=="Delivered"&&
-     o.status!=="Cancelled"&&
-     Number(o.deliveryAttempt||0)===0
-     ?`
-     <button class="secondary"
-      onclick="firstDeliveryFailed('${escapeHTML(o.id)}')">
-
-      🚚 First Delivery Failed
-
-     </button>
-     `
-     :""
-    }
-
-    ${
-     Number(o.deliveryAttempt||0)===1&&
-     o.status!=="Delivered"&&
-     o.status!=="Cancelled"
-     ?`
-     <button class="secondary"
-      onclick="secondDeliveryFailed('${escapeHTML(o.id)}')">
-
-      🚚 Second Delivery Failed — Cancel + Charge
-
-     </button>
-     `
-     :""
-    }
-
-    ${
-     charge>0&&!o.cancellationChargePaid
-     ?`
-     <button class="primary"
-      onclick="markOrderChargePaid('${escapeHTML(o.id)}')">
-
-      💰 Mark Cancellation Charge Paid
-
-     </button>
-     `
-     :""
-    }
-
-   </div>
-
-  </div>`;
-
- }).join("");
 }
-
-
-/* =========================================================
-   ORDER STATUS
-========================================================= */
 
 function changeOrderStatus(id,status){
 
- const o=
- orders.find(
-  x=>String(x.id)===String(id)
- );
-
- if(!o)return;
-
- o.status=status;
-
- if(status==="Dispatched"){
-  o.dispatchedAt=Date.now();
- }
-
- if(status==="Delivered"){
-  o.deliveredAt=Date.now();
- }
-
- save();
-
- renderAdminOrders();
- renderOrders();
-}
-
-
-/* =========================================================
-   ADMIN CANCEL
-========================================================= */
-
-function adminCancelOrder(id){
-
- const o=
- orders.find(
-  x=>String(x.id)===String(id)
- );
-
- if(!o)return;
-
- if(
-  ["Dispatched","Delivered"]
-  .includes(o.status)
- ){
-
-  alert(
-   "This order has already been dispatched."
+  const order=orders.find(
+    o=>String(o.id)===String(id)
   );
 
-  return;
- }
+  if(!order)return;
 
- if(!confirm(
-  "Cancel this order?\n\nNo cancellation charge will be applied."
-  )){
-  return;
- }
+  order.status=status;
 
- o.status="Cancelled";
+  save("gb_orders",orders);
 
- o.cancelledBy="Admin";
+  renderAdminOrders();
+  renderOrders();
 
- o.cancellationCharge=0;
-
- o.cancellationChargePaid=true;
-
- save();
-
- renderAdminOrders();
- renderOrders();
-
- alert(
-  "Order cancelled. No charge."
- );
 }
 
 
 /* =========================================================
-   FIRST DELIVERY FAILED
+   DELIVERY FAILURE
 ========================================================= */
 
 function firstDeliveryFailed(id){
 
- const o=
- orders.find(
-  x=>String(x.id)===String(id)
- );
-
- if(!o)return;
-
- if(
-  ["Delivered","Cancelled"]
-  .includes(o.status)
- ){
-  return;
- }
-
- if(Number(o.deliveryAttempt||0)>0){
-
-  alert(
-   "First delivery attempt has already been recorded."
+  const order=orders.find(
+    o=>String(o.id)===String(id)
   );
 
-  return;
- }
+  if(!order)return;
 
- if(!confirm(
-  "Mark first delivery attempt as failed?\n\nA one-time re-delivery will be scheduled."
-  )){
-  return;
- }
+  order.deliveryAttempt=1;
+  order.status="Delivery Failed";
+  order.redeliveryScheduled=true;
 
- o.deliveryAttempt=1;
+  save("gb_orders",orders);
 
- o.redeliveryScheduled=true;
+  renderAdminOrders();
+  renderOrders();
 
- o.status="Re-delivery";
+  alert(
+    "First delivery failed. Redelivery can be scheduled."
+  );
 
- save();
-
- renderAdminOrders();
- renderOrders();
-
- alert(
-  "First delivery attempt recorded. One-time re-delivery scheduled."
- );
 }
-
-
-/* =========================================================
-   SECOND DELIVERY FAILED
-========================================================= */
 
 function secondDeliveryFailed(id){
 
- const o=
- orders.find(
-  x=>String(x.id)===String(id)
- );
+  const order=orders.find(
+    o=>String(o.id)===String(id)
+  );
 
- if(!o)return;
+  if(!order)return;
 
- if(
-  Number(o.deliveryAttempt||0)!==1
- ){
+  const charge=
+    Number(
+      localStorage.getItem(
+        "gb_failed_delivery_charge"
+      )
+    )||30;
+
+  order.deliveryAttempt=2;
+  order.status="Cancelled";
+  order.redeliveryScheduled=false;
+  order.cancellationCharge=charge;
+  order.cancellationChargePaid=false;
+
+  save("gb_orders",orders);
+
+  renderAdminOrders();
+  renderOrders();
 
   alert(
-   "First delivery attempt must be recorded first."
+    "Second delivery failed.\nCancellation charge: ₹"+charge
   );
 
-  return;
- }
+}
 
- if(!confirm(
-  "Customer did not take the order on the re-delivery attempt?\n\nThe order will be cancelled and the failed delivery cancellation charge will become due."
-  )){
-  return;
- }
+function markOrderChargePaid(id){
 
- o.deliveryAttempt=2;
-
- o.redeliveryScheduled=false;
-
- o.status="Cancelled";
-
- o.cancelledBy="Failed Delivery";
-
- o.cancellationCharge=
- Math.max(
-  0,
-  Number(failedDeliveryCharge||0)
- );
-
- o.cancellationChargePaid=false;
-
- if(o.cancellationCharge>0){
-
-  addCustomerDue(
-   o.phone,
-   o.cancellationCharge
+  const order=orders.find(
+    o=>String(o.id)===String(id)
   );
- }
 
- save();
+  if(!order)return;
 
- renderAdminOrders();
- renderOrders();
- renderAdminDue();
+  order.cancellationChargePaid=true;
 
- alert(
-  "Order cancelled. Cancellation charge has been added as Due."
- );
+  save("gb_orders",orders);
+
+  renderAdminOrders();
+  renderOrders();
+
 }
 
 
 /* =========================================================
-   MARK CHARGE PAID
+   ADMIN SETTINGS
 ========================================================= */
 
-function markOrderChargePaid(id){
+function loadAdminSettings(){
 
- const o=
- orders.find(
-  x=>String(x.id)===String(id)
- );
+  const mode=
+    localStorage.getItem("gb_delivery_mode")||"30";
 
- if(!o)return;
+  const custom=
+    localStorage.getItem("gb_custom_delivery")||"";
 
- const charge=
- Number(o.cancellationCharge||0);
+  const failed=
+    localStorage.getItem(
+      "gb_failed_delivery_charge"
+    )||"30";
 
- if(charge<=0){
+  const modeEl=document.getElementById("deliveryMode");
 
-  o.cancellationChargePaid=true;
+  if(modeEl){
+    modeEl.value=mode;
+  }
 
-  save();
+  const customEl=
+    document.getElementById("customDelivery");
 
-  renderAdminOrders();
-  renderAdminDue();
+  if(customEl){
+    customEl.value=custom;
+  }
 
-  return;
- }
+  const failedEl=
+    document.getElementById("failedDeliveryCharge");
 
- if(o.cancellationChargePaid){
+  if(failedEl){
+    failedEl.value=failed;
+  }
 
-  alert(
-   "This charge is already marked as paid."
+  deliveryModeChanged();
+
+}
+
+function deliveryModeChanged(){
+
+  const mode=
+    document.getElementById("deliveryMode")?.value;
+
+  const box=
+    document.getElementById("customDeliveryBox");
+
+  if(box){
+
+    box.classList.toggle(
+      "hidden",
+      mode!=="custom"
+    );
+
+  }
+
+}
+
+function saveSettings(){
+
+  const mode=
+    document.getElementById("deliveryMode")?.value
+    ||"30";
+
+  const custom=
+    Number(
+      document.getElementById("customDelivery")?.value
+    )||0;
+
+  const failed=
+    Number(
+      document.getElementById("failedDeliveryCharge")?.value
+    )||0;
+
+  localStorage.setItem(
+    "gb_delivery_mode",
+    mode
   );
 
-  return;
- }
+  localStorage.setItem(
+    "gb_custom_delivery",
+    String(custom)
+  );
 
- if(!confirm(
-  "Mark ₹"+charge+
-  " cancellation charge as Paid?"
-  )){
-  return;
- }
+  localStorage.setItem(
+    "gb_failed_delivery_charge",
+    String(failed)
+  );
 
- payCustomerDue(
-  o.phone,
-  charge
- );
+  const msg=
+    document.getElementById("settingsMsg");
 
- o.cancellationChargePaid=true;
+  if(msg){
 
- save();
+    msg.textContent=
+      "Settings saved successfully.";
 
- renderAdminOrders();
- renderOrders();
- renderAdminDue();
+    msg.style.color="green";
 
- alert(
-  "Cancellation charge marked as Paid."
- );
+  }
+
+  renderCart();
+  renderCheckout();
+
 }
 
 
@@ -3343,451 +3443,248 @@ function markOrderChargePaid(id){
 
 function renderAdminDue(){
 
- const box=
- document.getElementById(
-  "adminDueList"
- );
+  const box=
+    document.getElementById("adminDueList");
 
- if(!box)return;
+  if(!box)return;
 
- const keys=
- Object.keys(customerDues)
- .filter(
-  k=>Number(customerDues[k]||0)>0
- );
+  const keys=Object.keys(customerDues);
 
- if(!keys.length){
+  if(keys.length===0){
 
-  box.innerHTML=
-  `<div class="infoBox">
+    box.innerHTML=`
+      <div class="card">
+        No customer due.
+      </div>
+    `;
 
-   No unpaid cancellation charges.
+    return;
+  }
 
-  </div>`;
+  box.innerHTML=keys.map(phone=>{
 
-  return;
- }
+    const due=getCustomerDue(phone);
 
- box.innerHTML=
- keys.map(phone=>{
+    return `
 
-  const due=
-  getCustomerDue(phone);
+      <div class="card">
 
-  const related=
-  orders.filter(o=>
-   normalizePhone(o.phone)===phone&&
-   Number(o.cancellationCharge||0)>0&&
-   !o.cancellationChargePaid
-  );
+        <strong>
+          ${escapeHTML(phone)}
+        </strong>
 
-  return `
+        <div style="
+          font-size:22px;
+          color:var(--danger);
+          margin:8px 0;
+        ">
+          ₹${due.toFixed(2)}
+        </div>
 
-  <div class="orderBox">
+        <button
+          class="btn btnPrimary"
+          onclick="payCustomerDue('${escapeHTML(phone)}')">
+          Pay Due
+        </button>
 
-   <b>
-    Mobile: ${escapeHTML(phone)}
-   </b>
+      </div>
 
-   <p>
-    Total Cancellation Due:
-    <b>₹${due}</b>
-   </p>
+    `;
 
-   ${
-    related.map(o=>
-     `<p style="font-size:12px">
+  }).join("");
 
-      ${escapeHTML(o.id)}
-      —
-      ₹${Number(o.cancellationCharge||0)}
+}
 
-     </p>`
-    ).join("")
-   }
+function markAllDuePaid(){
 
-   <button class="primary"
-    onclick="markAllDuePaid('${escapeHTML(phone)}')">
+  Object.keys(customerDues)
+    .forEach(phone=>{
+      customerDues[phone]=0;
+    });
 
-    💰 Mark All Paid
+  save("gb_customer_dues",customerDues);
 
-   </button>
+  renderAdminDue();
 
-  </div>`;
-
- }).join("");
 }
 
 
 /* =========================================================
-   MARK ALL DUE PAID
+   ESCAPE HTML
 ========================================================= */
 
-function markAllDuePaid(phone){
+function escapeHTML(value){
 
- const due=
- getCustomerDue(phone);
+  return String(value??"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
- if(due<=0)return;
-
- if(!confirm(
-  "Mark ₹"+due+" due as Paid?"
-  )){
-  return;
- }
-
- payCustomerDue(
-  phone,
-  due
- );
-
- orders.forEach(o=>{
-
-  if(
-   normalizePhone(o.phone)===phone&&
-   Number(o.cancellationCharge||0)>0&&
-   !o.cancellationChargePaid
-  ){
-
-   o.cancellationChargePaid=true;
-  }
-
- });
-
- save();
-
- renderAdminDue();
- renderAdminOrders();
- renderOrders();
-
- alert(
-  "Due marked as Paid."
- );
 }
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-function loadAdminSettings(){
-
- const deliverySelect=
- document.getElementById("deliveryMode");
-
- const failedInput=
- document.getElementById("failedDeliveryCharge");
-
- if(deliverySelect){
-
-  deliverySelect.value=
-  deliveryMode;
- }
-
- if(failedInput){
-
-  failedInput.value=
-  failedDeliveryCharge;
- }
-
- deliveryModeChanged();
-}
-
-
-function deliveryModeChanged(){
-
- const select=
- document.getElementById("deliveryMode");
-
- const box=
- document.getElementById(
-  "customDeliveryBox"
- );
-
- if(!select||!box)return;
-
- const mode=select.value;
-
- if(mode==="custom"){
-
-  box.style.display="block";
-
-  const customInput=
-  document.getElementById("customDelivery");
-
-  if(customInput){
-   customInput.value=
-   customDelivery;
-  }
-
- }else{
-
-  box.style.display="none";
- }
-}
-
-
-function saveSettings(){
-
- const select=
- document.getElementById("deliveryMode");
-
- if(!select)return;
-
- const mode=select.value;
-
- deliveryMode=mode;
-
- const customInput=
- document.getElementById("customDelivery");
-
- customDelivery=
- mode==="custom"
- ?Math.max(
-  0,
-  Number(customInput?.value||0)
- )
- :0;
-
- const failedInput=
- document.getElementById(
-  "failedDeliveryCharge"
- );
-
- failedDeliveryCharge=
- Math.max(
-  0,
-  Number(failedInput?.value||0)
- );
-
- save();
-
- renderCart();
- renderCheckout();
-
- alert(
-  "Settings saved"
- );
-}
-
-
-/* =========================================================
-   INSTALL APP
-========================================================= */
-
-window.addEventListener(
- "beforeinstallprompt",
- event=>{
-
-  event.preventDefault();
-
-  deferredInstallPrompt=event;
-
-  const btn=
-  document.getElementById(
-   "installBtn"
-  );
-
-  if(btn){
-   btn.style.display="block";
-  }
-
- }
-);
-
-
-async function installApp(){
-
- if(deferredInstallPrompt){
-
-  deferredInstallPrompt.prompt();
-
-  try{
-
-   await deferredInstallPrompt.userChoice;
-
-  }catch(e){}
-
-  deferredInstallPrompt=null;
-
-  const btn=
-  document.getElementById(
-   "installBtn"
-  );
-
-  if(btn){
-   btn.style.display="none";
-  }
-
-  return;
- }
-
- alert(
-  "If the install option is not shown, open your browser menu and choose 'Add to Home screen' or 'Install app'."
- );
-}
-
-
-window.addEventListener(
- "appinstalled",
- ()=>{
-
-  const btn=
-  document.getElementById(
-   "installBtn"
-  );
-
-  if(btn){
-   btn.style.display="none";
-  }
-
- }
-);
 
 
 /* =========================================================
    ADMIN LONG PRESS
 ========================================================= */
 
-let pressTimer=null;
+let adminPressTimer=null;
 
-const brandElement=
-document.querySelector(".brand");
+const brandAdmin=
+  document.getElementById("brandAdmin");
 
-if(brandElement){
+if(brandAdmin){
 
- brandElement.addEventListener(
-  "pointerdown",
-  ()=>{
+  brandAdmin.addEventListener(
+    "pointerdown",
+    ()=>{
+      adminPressTimer=setTimeout(()=>{
+        openPage("adminLogin");
+      },1200);
+    }
+  );
 
-   clearTimeout(pressTimer);
+  ["pointerup","pointercancel","pointerleave"]
+  .forEach(event=>{
 
-   pressTimer=
-   setTimeout(
-    ()=>openPage("adminLogin"),
-    900
-   );
+    brandAdmin.addEventListener(
+      event,
+      ()=>{
+        clearTimeout(adminPressTimer);
+      }
+    );
 
-  }
- );
+  });
 
- brandElement.addEventListener(
-  "pointerup",
-  ()=>{
-   clearTimeout(pressTimer);
-  }
- );
-
- brandElement.addEventListener(
-  "pointerleave",
-  ()=>{
-   clearTimeout(pressTimer);
-  }
- );
-
- brandElement.addEventListener(
-  "pointercancel",
-  ()=>{
-   clearTimeout(pressTimer);
-  }
- );
 }
 
 
 /* =========================================================
-   SECURITY / HTML ESCAPE
+   STARTUP
 ========================================================= */
 
-function escapeHTML(value){
+function startApp(){
 
- return String(value??"")
- .replace(/&/g,"&amp;")
- .replace(/</g,"&lt;")
- .replace(/>/g,"&gt;")
- .replace(/"/g,"&quot;")
- .replace(/'/g,"&#039;");
+  try{
+
+    renderCategories();
+
+    renderProducts();
+
+    renderProductsPage();
+
+    renderCart();
+
+    renderOrders();
+
+    renderCheckout();
+
+    renderAdminProducts();
+
+    loadAdminSettings();
+
+    updateCartCount();
+
+    applyLanguage();
+
+  }catch(error){
+
+    console.error(
+      "Application startup error:",
+      error
+    );
+
+  }
+
 }
 
 
 /* =========================================================
-   START APP
+   SPLASH SAFETY
+========================================================= */
+
+function hideSplash(){
+
+  const splash=
+    document.getElementById("splash");
+
+  if(!splash)return;
+
+  splash.style.transition=
+    "opacity .5s ease";
+
+  splash.style.opacity="0";
+
+  setTimeout(()=>{
+
+    splash.style.display="none";
+
+  },500);
+
+}
+
+
+/* =========================================================
+   SERVICE WORKER
+========================================================= */
+
+if("serviceWorker" in navigator){
+
+  window.addEventListener(
+    "load",
+    ()=>{
+
+      navigator.serviceWorker
+      .register("./sw.js")
+      .catch(error=>{
+        console.warn(
+          "Service worker registration failed:",
+          error
+        );
+      });
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   WINDOW LOAD
 ========================================================= */
 
 window.addEventListener(
- "load",
- ()=>{
+  "load",
+  ()=>{
 
-  setTimeout(
-   ()=>{
-
-    const splash=
-    document.getElementById(
-     "splash"
-    );
-
-    if(splash){
-     splash.style.opacity="0";
-    }
+    startApp();
 
     setTimeout(
-     ()=>{
-
-      const splash=
-      document.getElementById(
-       "splash"
-      );
-
-      if(splash){
-       splash.remove();
-      }
-
-     },
-     600
+      hideSplash,
+      700
     );
 
-   },
-   1900
-  );
-
-
-  /* Initial rendering */
-
-  renderCategories();
-
-  renderProducts();
-
-  renderProductsPage();
-
-  renderCart();
-
-  renderOrders();
-
-  renderCheckout();
-
-  updateCartCount();
-
-  applyLanguage();
-
-
-  /* Service Worker */
-
-  if(
-   "serviceWorker" in navigator
-  ){
-
-   navigator.serviceWorker
-   .register("./sw.js")
-   .catch(
-    error=>{
-     console.warn(
-      "Service worker registration failed:",
-      error
-     );
-    }
-   );
   }
+);
 
- }
+
+/* =========================================================
+   CHECKOUT LIVE DUE UPDATE
+========================================================= */
+
+document.addEventListener(
+  "input",
+  event=>{
+
+    if(event.target?.id==="customerPhone"){
+
+      renderCheckoutDue();
+      renderCheckout();
+
+    }
+
+  }
 );
 
 </script>
