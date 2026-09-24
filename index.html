@@ -953,12 +953,12 @@ th{
       পণ্য
     </button>
 
-    <button class="adminTile" onclick="openPage('adminঅর্ডার')">
+    <button class="adminTile" onclick="openPage('adminOrders')">
       <span>🧾</span>
       অর্ডার
     </button>
 
-    <button class="adminTile" onclick="openPage('adminসেটিংস')">
+    <button class="adminTile" onclick="openPage('adminSettings')">
       <span>⚙️</span>
       সেটিংস
     </button>
@@ -1061,19 +1061,19 @@ th{
 
 <!-- ================= ADMIN ORDERS ================= -->
 
-<section id="adminঅর্ডার" class="page">
+<section id="adminOrders" class="page">
 
   <div class="sectionTitle">
     <h2>অর্ডার ব্যবস্থাপনা</h2>
   </div>
 
-  <div id="adminঅর্ডারList"></div>
+  <div id="adminOrdersList"></div>
 
 </section>
 
 <!-- ================= ADMIN SETTINGS ================= -->
 
-<section id="adminসেটিংস" class="page">
+<section id="adminSettings" class="page">
 
   <div class="sectionTitle">
     <h2>সেটিংস</h2>
@@ -1137,7 +1137,7 @@ th{
 
     <button
       class="btn btnPrimary"
-      onclick="saveসেটিংস()">
+      onclick="saveSettings()">
       Save সেটিংস
     </button>
 
@@ -1151,4 +1151,2794 @@ th{
 
 <section id="adminDue" class="page">
 
-  <div class="s
+  <div class="sectionTitle">
+    <h2>ক্রেতার বকেয়া</h2>
+  </div>
+
+  <div class="card">
+
+    <div class="formGroup">
+      <label>Customer মোবাইল নম্বর</label>
+      <input id="duePhone" type="tel">
+    </div>
+
+    <div class="formGroup">
+      <label>বকেয়া টাকা</label>
+      <input id="dueAmount" type="number" min="0">
+    </div>
+
+    <button
+      class="btn btnPrimary"
+      onclick="addCustomerDue()">
+      বকেয়া যোগ করুন
+    </button>
+
+  </div>
+
+  <div id="adminDueList"></div>
+
+</section>
+
+</main>
+
+<!-- ================= BOTTOM NAV ================= -->
+
+<nav class="bottomNav">
+
+  <div class="navInner">
+
+    <button class="navBtn active" onclick="openPage('home',this)">
+      <span>🏠</span>
+      হোম
+    </button>
+
+    <button class="navBtn" onclick="openPage('products',this)">
+      <span>📦</span>
+      পণ্য
+    </button>
+
+    <button class="navBtn" onclick="openPage('orders',this)">
+      <span>🧾</span>
+      অর্ডার
+    </button>
+
+    <button class="navBtn" onclick="openPage('cart',this)">
+      <span>🛒</span>
+      কার্ট
+    </button>
+
+  </div>
+
+</nav>
+
+<script>
+
+/* =========================================================
+   BASIC SETTINGS
+========================================================= */
+
+const SHOP_NAME="Ma Manosha Stationery";
+const SHOP_PHONE="6294172197";
+const SHOP_EMAIL="parisubhajit@gmail.com";
+const ADMIN_PIN="2580";
+
+const ONLINE_PAYMENT_ENABLED=false;
+
+const categories=[
+  ["🛒","Grocery","মুদিখানা"],
+  ["🍚","Rice","চাল"],
+  ["🫘","Dal","ডাল"],
+  ["🫗","Oil","তেল"],
+  ["🌶️","Spices","মশলা"],
+  ["🍪","Snacks","বিস্কুট"],
+  ["🧼","Personal Care","সাবান"],
+  ["🏠","Household","ঘরোয়া"]
+];
+
+
+/* =========================================================
+   DEFAULT PRODUCTS
+========================================================= */
+
+const defaultপণ্য=[
+  {
+    id:1,
+    name:"Rice",
+    bn:"চাল",
+    price:60,
+    unit:"1 kg",
+    emoji:"🍚",
+    cat:"Rice",
+    stock:true,
+    image:""
+  },
+  {
+    id:2,
+    name:"Lentil",
+    bn:"ডাল",
+    price:100,
+    unit:"1 kg",
+    emoji:"🫘",
+    cat:"Dal",
+    stock:true,
+    image:""
+  },
+  {
+    id:3,
+    name:"Cooking Oil",
+    bn:"তেল",
+    price:150,
+    unit:"1 litre",
+    emoji:"🫗",
+    cat:"Oil",
+    stock:true,
+    image:""
+  },
+  {
+    id:4,
+    name:"Salt",
+    bn:"নুন",
+    price:25,
+    unit:"1 kg",
+    emoji:"🧂",
+    cat:"Grocery",
+    stock:true,
+    image:""
+  },
+  {
+    id:5,
+    name:"Biscuit",
+    bn:"বিস্কুট",
+    price:20,
+    unit:"1 packet",
+    emoji:"🍪",
+    cat:"Snacks",
+    stock:true,
+    image:""
+  },
+  {
+    id:6,
+    name:"Soap",
+    bn:"সাবান",
+    price:35,
+    unit:"1 piece",
+    emoji:"🧼",
+    cat:"Personal Care",
+    stock:true,
+    image:""
+  },
+  {
+    id:7,
+    name:"Tea",
+    bn:"চা",
+    price:50,
+    unit:"250 g",
+    emoji:"🍵",
+    cat:"Grocery",
+    stock:true,
+    image:""
+  },
+  {
+    id:8,
+    name:"Sugar",
+    bn:"চিনি",
+    price:50,
+    unit:"1 kg",
+    emoji:"🍬",
+    cat:"Grocery",
+    stock:true,
+    image:""
+  }
+];
+
+
+/* =========================================================
+   SAFE LOCAL STORAGE
+========================================================= */
+
+function loadJSON(key,fallback){
+
+  try{
+
+    const raw=localStorage.getItem(key);
+
+    if(!raw){
+      return fallback;
+    }
+
+    const parsed=JSON.parse(raw);
+
+    if(parsed===null || parsed===undefined){
+      return fallback;
+    }
+
+    return parsed;
+
+  }catch(error){
+
+    console.warn("Invalid localStorage:",key,error);
+
+    try{
+      localStorage.removeItem(key);
+    }catch(e){}
+
+    return fallback;
+  }
+}
+
+function save(key,value){
+
+  try{
+    localStorage.setItem(key,JSON.stringify(value));
+  }catch(error){
+    console.warn("Could not save:",key,error);
+  }
+
+}
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+let products=loadJSON("gb_products",defaultপণ্য);
+
+if(!Array.isArray(products)){
+  products=defaultপণ্য;
+}
+
+products=products
+.filter(p=>p && typeof p==="object")
+.map((p,index)=>({
+
+  id:Number(p.id)||Date.now()+index,
+
+  name:String(p.name||"Product"),
+
+  bn:String(p.bn||p.name||"Product"),
+
+  price:Number(p.price)||0,
+
+  unit:String(p.unit||"1 piece"),
+
+  emoji:String(p.emoji||"🛒"),
+
+  cat:String(p.cat||"Grocery"),
+
+  stock:p.stock!==false,
+
+  image:typeof p.image==="string"?p.image:""
+
+}));
+
+
+let cart=loadJSON("gb_cart",[]);
+
+if(!Array.isArray(cart)){
+  cart=[];
+}
+
+cart=cart
+.filter(item=>
+  item &&
+  typeof item==="object" &&
+  Number(item.id)>0 &&
+  Number(item.qty)>0
+)
+.map(item=>({
+
+  id:Number(item.id),
+
+  qty:Math.max(1,Number(item.qty)||1)
+
+}));
+
+
+let orders=loadJSON("gb_orders",[]);
+
+if(!Array.isArray(orders)){
+  orders=[];
+}
+
+orders=orders
+.filter(o=>o && typeof o==="object")
+.map(o=>({
+
+  ...o,
+
+  id:String(o.id||("GB"+Date.now())),
+
+  name:String(o.name||""),
+
+  phone:String(o.phone||""),
+
+  address:String(o.address||""),
+
+  status:String(o.status||"Pending"),
+
+  date:String(o.date||""),
+
+  payment:String(o.payment||"COD"),
+
+  subtotal:Number(o.subtotal)||0,
+
+  deliveryCharge:Number(o.deliveryCharge)||0,
+
+  total:Number(o.total)||0,
+
+  previousDue:Number(o.previousDue)||0,
+
+  payableTotal:Number(
+    o.payableTotal ||
+    ((Number(o.total)||0)+(Number(o.previousDue)||0))
+  ),
+
+  deliveryAttempt:Number(o.deliveryAttempt)||0,
+
+  redeliveryScheduled:!!o.redeliveryScheduled,
+
+  cancellationCharge:Number(o.cancellationCharge)||0,
+
+  cancellationChargePaid:!!o.cancellationChargePaid,
+  expectedDelivery:String(o.expectedDelivery||""),
+  createdAt:Number(o.createdAt)||Date.now(),
+
+  location:o.location||null,
+
+  items:Array.isArray(o.items)
+    ?o.items.filter(i=>i&&typeof i==="object")
+    :[]
+
+}));
+
+
+let customerDues=loadJSON("gb_customer_dues",{});
+
+if(
+  !customerDues ||
+  typeof customerDues!=="object" ||
+  Array.isArray(customerDues)
+){
+  customerDues={};
+}
+
+Object.keys(customerDues).forEach(key=>{
+
+  const amount=Number(customerDues[key]);
+
+  if(!Number.isFinite(amount)||amount<0){
+    delete customerDues[key];
+  }else{
+    customerDues[key]=amount;
+  }
+
+});
+
+
+save("gb_products",products);
+save("gb_cart",cart);
+save("gb_orders",orders);
+save("gb_customer_dues",customerDues);
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+let lang=localStorage.getItem("gb_lang")||"bn";
+
+function toggleLang(){
+
+  lang=lang==="en"?"bn":"en";
+
+  localStorage.setItem("gb_lang",lang);
+
+  applyLanguage();
+
+  renderCategories();
+  renderProducts();
+  renderProductsPage();
+  renderCart();
+  renderOrders();
+
+}
+
+function applyLanguage(){
+
+  document.documentElement.lang=lang;
+
+  const btn=document.getElementById("langBtn");
+
+  if(btn){
+    btn.textContent=lang==="en"?"বাংলা":"English";
+  }
+
+}
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+function openPage(id,navButton){
+
+  document.querySelectorAll(".page")
+  .forEach(page=>page.classList.remove("active"));
+
+  const page=document.getElementById(id);
+
+  if(page){
+    page.classList.add("active");
+  }
+
+  document.querySelectorAll(".navBtn")
+  .forEach(btn=>btn.classList.remove("active"));
+
+  if(navButton){
+    navButton.classList.add("active");
+  }
+
+  const toolbar=document.getElementById("pageToolbar");
+  if(toolbar) toolbar.classList.toggle("hidden",id==="home");
+
+  if(id==="home"){
+    renderCategories();
+    renderProducts();
+  }
+
+  if(id==="products"){
+    renderProductsPage();
+  }
+
+  if(id==="cart"){
+    renderCart();
+  }
+
+  if(id==="checkout"){
+    renderCheckout();
+  }
+
+  if(id==="orders"){
+    renderOrders();
+  }
+
+  if(id==="adminProducts"){
+    renderAdminProducts();
+  }
+
+  if(id==="adminOrders"){
+    renderAdminOrders();
+  }
+
+  if(id==="adminSettings"){
+    loadAdminSettings();
+  }
+
+  if(id==="adminDue"){
+    renderAdminDue();
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+function renderCategories(){
+
+  const box=document.getElementById("categories");
+
+  if(!box)return;
+
+  box.innerHTML="";
+
+  categories.forEach(c=>{
+
+    const div=document.createElement("button");
+
+    div.className="category";
+
+    div.onclick=()=>filterCategory(c[1]);
+
+    div.innerHTML=`
+      <div class="emoji">${escapeHTML(c[0])}</div>
+      <small>${lang==="bn"
+        ?escapeHTML(c[2])
+        :escapeHTML(c[1])}</small>
+    `;
+
+    box.appendChild(div);
+
+  });
+
+}
+
+function filterCategory(cat){
+
+  openPage("products");
+
+  const search=document.getElementById("productSearch");
+
+  if(search){
+    search.value="";
+  }
+
+  window.selectedক্যাটাগরি=cat;
+
+  renderProductsPage();
+
+}
+
+
+/* =========================================================
+   PRODUCT HTML
+========================================================= */
+
+function productHTML(p){
+
+  if(!p || typeof p!=="object"){
+    return "";
+  }
+
+  const name=lang==="bn"
+    ?(p.bn||p.name)
+    :p.name;
+
+  const image=p.image
+    ?`<img src="${escapeHTML(p.image)}" alt="${escapeHTML(name)}">`
+    :escapeHTML(p.emoji||"🛒");
+
+  return `
+
+    <div class="product">
+
+      <div class="productImage">
+        ${image}
+      </div>
+
+      <div class="productBody">
+
+        <div class="productName">
+          ${escapeHTML(name)}
+        </div>
+
+        <div class="productএকক">
+          ${escapeHTML(p.unit||"")}
+        </div>
+
+        <div class="productদাম">
+          ₹${Number(p.price||0).toFixed(2)}
+        </div>
+
+        ${
+          p.stock!==false
+
+          ?
+
+          `<div class="productActions">
+
+            <button
+              class="btn btnPrimary"
+              style="flex:1"
+              onclick="addToCart(${Number(p.id)})">
+              Add to কার্ট
+            </button>
+
+          </div>`
+
+          :
+
+          `<div class="outStock">
+            স্টক নেই
+          </div>`
+        }
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+function renderProducts(){
+
+  const box=document.getElementById("homeপণ্য");
+
+  if(!box)return;
+
+  const search=(
+    document.getElementById("homeSearch")?.value||""
+  ).toLowerCase().trim();
+
+  let list=products.filter(p=>{
+
+    const text=(
+      p.name+" "+
+      p.bn+" "+
+      p.cat
+    ).toLowerCase();
+
+    return !search || text.includes(search);
+
+  });
+
+  box.innerHTML=list
+    .slice(0,8)
+    .map(productHTML)
+    .join("");
+
+}
+
+function renderProductsPage(){
+
+  const box=document.getElementById("productsPage");
+
+  if(!box)return;
+
+  const search=(
+    document.getElementById("productSearch")?.value||""
+  ).toLowerCase().trim();
+
+  let list=products.filter(p=>{
+
+    const text=(
+      p.name+" "+
+      p.bn+" "+
+      p.cat
+    ).toLowerCase();
+
+    const matchSearch=!search||text.includes(search);
+
+    const matchCat=
+      !window.selectedক্যাটাগরি||
+      p.cat===window.selectedক্যাটাগরি;
+
+    return matchSearch&&matchCat;
+
+  });
+
+  box.innerHTML=list.length
+
+    ?
+
+    list.map(productHTML).join("")
+
+    :
+
+    `<div class="card">
+      কোনো পণ্য পাওয়া যায়নি।
+    </div>`;
+
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+function addToCart(id){
+
+  const product=products.find(p=>Number(p.id)===Number(id));
+
+  if(!product || product.stock===false){
+    return;
+  }
+
+  const existing=cart.find(
+    item=>Number(item.id)===Number(id)
+  );
+
+  if(existing){
+    existing.qty++;
+  }else{
+    cart.push({
+      id:Number(id),
+      qty:1
+    });
+  }
+
+  save("gb_cart",cart);
+
+  updateCartCount();
+
+  renderCart();
+
+}
+
+function updateCartCount(){
+
+  const count=cart.reduce(
+    (sum,item)=>sum+(Number(item.qty)||0),
+    0
+  );
+
+  const el=document.getElementById("cartCount");
+
+  if(el){
+    el.textContent=count;
+  }
+
+}
+
+function changeQty(id,delta){
+
+  const item=cart.find(
+    x=>Number(x.id)===Number(id)
+  );
+
+  if(!item)return;
+
+  item.qty+=delta;
+
+  if(item.qty<=0){
+
+    cart=cart.filter(
+      x=>Number(x.id)!==Number(id)
+    );
+
+  }
+
+  save("gb_cart",cart);
+
+  renderCart();
+  updateCartCount();
+
+}
+
+function getTotal(){
+
+  return cart.reduce((sum,item)=>{
+
+    const p=products.find(
+      x=>Number(x.id)===Number(item.id)
+    );
+
+    if(!p)return sum;
+
+    return sum+
+      Number(p.price||0)*
+      Number(item.qty||0);
+
+  },0);
+
+}
+
+function getDeliveryCharge(subtotal){
+
+  if(subtotal>=149){
+    return 0;
+  }
+
+  const mode=
+    localStorage.getItem("gb_delivery_mode")||"30";
+
+  if(mode==="free"){
+    return 0;
+  }
+
+  if(mode==="custom"){
+    return Number(
+      localStorage.getItem("gb_custom_delivery")
+    )||0;
+  }
+
+  return Number(mode)||0;
+
+}
+
+function renderCart(){
+
+  const box=document.getElementById("cartContent");
+
+  if(!box)return;
+
+  if(cart.length===0){
+
+    box.innerHTML=`
+      <div class="card">
+        <h3>আপনার কার্ট খালি।</h3>
+        <button
+          class="btn btnPrimary"
+          onclick="openPage('products')">
+          কেনাকাটা চালিয়ে যান
+        </button>
+      </div>
+    `;
+
+    return;
+  }
+
+  let html="";
+
+  cart.forEach(item=>{
+
+    const p=products.find(
+      x=>Number(x.id)===Number(item.id)
+    );
+
+    if(!p)return;
+
+    const name=lang==="bn"
+      ?(p.bn||p.name)
+      :p.name;
+
+    const total=
+      Number(p.price||0)*
+      Number(item.qty||0);
+
+    html+=`
+
+      <div class="card cartItem">
+
+        <div style="font-size:32px">
+          ${escapeHTML(p.emoji||"🛒")}
+        </div>
+
+        <div class="cartInfo">
+
+          <strong>
+            ${escapeHTML(name)}
+          </strong>
+
+          <div>
+            ₹${Number(p.price||0).toFixed(2)}
+            × ${Number(item.qty)}
+          </div>
+
+          <strong>
+            ₹${total.toFixed(2)}
+          </strong>
+
+        </div>
+
+        <div class="qty">
+
+          <button
+            onclick="changeQty(${p.id},-1)">
+            −
+          </button>
+
+          <b>${item.qty}</b>
+
+          <button
+            onclick="changeQty(${p.id},1)">
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  const subtotal=getTotal();
+
+  const delivery=getDeliveryCharge(subtotal);
+
+  const total=subtotal+delivery;
+
+  html+=`
+
+    <div class="card">
+
+      <div class="summaryRow">
+        <span>সাবটোটাল</span>
+        <strong>₹${subtotal.toFixed(2)}</strong>
+      </div>
+
+      <div class="summaryRow">
+        <span>ডেলিভারি চার্জ</span>
+        <strong>
+          ${delivery===0?"FREE":"₹"+delivery.toFixed(2)}
+        </strong>
+      </div>
+
+      <div class="summaryRow summaryTotal">
+        <span>Total</span>
+        <strong>₹${total.toFixed(2)}</strong>
+      </div>
+
+      <br>
+
+      <button
+        class="btn btnPrimary btnBlock"
+        onclick="openPage('checkout')">
+        অর্ডার করতে এগিয়ে যান
+      </button>
+
+    </div>
+
+  `;
+
+  box.innerHTML=html;
+
+}
+
+
+/* =========================================================
+   CUSTOMER DUE
+========================================================= */
+
+function normalizePhone(phone){
+
+  return String(phone||"")
+    .replace(/\D/g,"")
+    .slice(-10);
+
+}
+
+function getCustomerDue(phone){
+
+  const p=normalizePhone(phone);
+
+  if(!p)return 0;
+
+  return Number(customerDues[p])||0;
+
+}
+
+function addCustomerDue(){
+
+  const phone=normalizePhone(
+    document.getElementById("duePhone")?.value
+  );
+
+  const amount=Number(
+    document.getElementById("dueAmount")?.value
+  );
+
+  if(phone.length<10){
+    alert("Enter valid mobile number.");
+    return;
+  }
+
+  if(!amount || amount<=0){
+    alert("Enter valid due amount.");
+    return;
+  }
+
+  customerDues[phone]=
+    getCustomerDue(phone)+amount;
+
+  save("gb_customer_dues",customerDues);
+
+  document.getElementById("duePhone").value="";
+  document.getElementById("dueAmount").value="";
+
+  renderAdminDue();
+
+}
+
+function payCustomerDue(phone){
+
+  const due=getCustomerDue(phone);
+
+  if(due<=0){
+    return;
+  }
+
+  const amount=prompt(
+    "Enter amount paid:",
+    due
+  );
+
+  if(amount===null)return;
+
+  const paid=Number(amount);
+
+  if(!Number.isFinite(paid)||paid<=0){
+    return;
+  }
+
+  customerDues[phone]=Math.max(
+    0,
+    due-paid
+  );
+
+  save("gb_customer_dues",customerDues);
+
+  renderAdminDue();
+
+}
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+function renderCheckoutDue(){
+
+  const box=document.getElementById("checkoutDue");
+
+  if(!box)return;
+
+  const phone=document.getElementById("customerPhone")?.value||"";
+
+  const due=getCustomerDue(phone);
+
+  if(due>0){
+
+    box.innerHTML=`
+
+      <div class="notice">
+        আগের বকেয়া:
+        <strong>₹${due.toFixed(2)}</strong>
+      </div>
+
+    `;
+
+  }else{
+
+    box.innerHTML="";
+
+  }
+
+}
+
+function renderCheckout(){
+
+  renderCheckoutDue();
+  const phone=document.getElementById("customerPhone")?.value||"";
+  renderSavedAddresses(phone);
+
+  const box=document.getElementById("checkoutSummary");
+
+  if(!box)return;
+
+  const subtotal=getTotal();
+
+  const delivery=getDeliveryCharge(subtotal);
+
+  const total=subtotal+delivery;
+
+  const due=getCustomerDue(phone);
+
+  const payable=total+due;
+
+  box.innerHTML=`
+
+    <h3>অর্ডারের সারাংশ</h3>
+
+    <div class="summaryRow">
+      <span>সাবটোটাল</span>
+      <strong>₹${subtotal.toFixed(2)}</strong>
+    </div>
+
+    <div class="summaryRow">
+      <span>ডেলিভারি চার্জ</span>
+      <strong>
+        ${delivery===0?"FREE":"₹"+delivery.toFixed(2)}
+      </strong>
+    </div>
+
+    <div class="summaryRow">
+      <span>Current Order Total</span>
+      <strong>₹${total.toFixed(2)}</strong>
+    </div>
+
+    <div class="summaryRow">
+      <span>আগের বকেয়া</span>
+      <strong>₹${due.toFixed(2)}</strong>
+    </div>
+
+    <div class="summaryRow summaryTotal">
+      <span>পরিশোধযোগ্য মোট</span>
+      <strong>₹${payable.toFixed(2)}</strong>
+    </div>
+
+  `;
+
+}
+
+function shareCustomerLocation(){
+
+  const status=document.getElementById("locationStatus");
+
+  if(!navigator.geolocation){
+
+    if(status){
+      status.innerHTML=
+        `<div class="notice">
+          Location sharing is not supported.
+        </div>`;
+    }
+
+    return;
+  }
+
+  if(status){
+    status.innerHTML=
+      `<div class="notice">
+        Getting location...
+      </div>`;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+
+    position=>{
+
+      const lat=position.coords.latitude;
+      const lng=position.coords.longitude;
+
+      window.customerLocation={
+        lat,
+        lng
+      };
+
+      if(status){
+
+        status.innerHTML=`
+
+          <div class="locationBox">
+            📍 Location captured successfully.<br>
+            <a
+              href="https://www.google.com/maps?q=${lat},${lng}"
+              target="_blank">
+              View Location
+            </a>
+          </div>
+
+        `;
+
+      }
+
+    },
+
+    error=>{
+
+      if(status){
+
+        status.innerHTML=`
+          <div class="notice">
+            Location permission was not granted.
+          </div>
+        `;
+
+      }
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   PLACE ORDER
+========================================================= */
+
+function placeOrder(){
+
+  if(cart.length===0){
+    alert("আপনার কার্ট খালি।");
+    return;
+  }
+
+  const name=
+    document.getElementById("customerName")?.value.trim();
+
+  const phone=
+    document.getElementById("customerPhone")?.value.trim();
+
+  const address=
+    document.getElementById("customerAddress")?.value.trim();
+
+  if(!name){
+    alert("Please enter customer name.");
+    return;
+  }
+
+  if(normalizePhone(phone).length<10){
+    alert("Please enter valid mobile number.");
+    return;
+  }
+
+  if(!address){
+    alert("Please enter delivery address.");
+    return;
+  }
+
+  const subtotal=getTotal();
+
+  const delivery=getDeliveryCharge(subtotal);
+
+  const total=subtotal+delivery;
+
+  const previousDue=getCustomerDue(phone);
+
+  const payableTotal=total+previousDue;
+
+  const orderId=
+    "GB"+Date.now();
+
+  const items=cart.map(item=>{
+
+    const p=products.find(
+      x=>Number(x.id)===Number(item.id)
+    );
+
+    return {
+
+      id:p?.id||item.id,
+
+      name:p?.name||"Product",
+
+      bn:p?.bn||p?.name||"Product",
+
+      price:Number(p?.price)||0,
+
+      qty:Number(item.qty)||1,
+
+      unit:p?.unit||""
+
+    };
+
+  });
+
+  const order={
+
+    id:orderId,
+
+    name,
+
+    phone:normalizePhone(phone),
+
+    address,
+
+    location:window.customerLocation||null,
+
+    items,
+
+    subtotal,
+
+    deliveryCharge:delivery,
+
+    total,
+
+    previousDue,
+
+    payableTotal,
+
+    payment:"COD",
+
+    status:"Pending",
+
+    date:new Date().toLocaleString(),
+
+    deliveryAttempt:0,
+
+    redeliveryScheduled:false,
+
+    cancellationCharge:0,
+
+    cancellationChargePaid:false,
+    expectedDelivery:getExpectedDeliveryLabel(),
+    createdAt:Date.now()
+
+  };
+
+  orders.unshift(order);
+
+  save("gb_orders",orders);
+
+  cart=[];
+
+  save("gb_cart",cart);
+
+  updateCartCount();
+
+  renderOrders();
+
+  sendOrderWhatsApp(order);
+
+  alert(
+    "অর্ডার সফলভাবে দেওয়া হয়েছে।\nঅর্ডার ID: "+orderId
+  );
+
+  openPage("orders");
+
+}
+
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+function sendOrderWhatsApp(order){
+
+  let text=
+`New Ghare Bazar Order
+
+অর্ডার ID: ${order.id}
+
+Customer: ${order.name}
+
+Phone: ${order.phone}
+
+Address: ${order.address}
+
+Payment: Cash on Delivery
+Expected ডেলিভারি: ${order.expectedDelivery||"To be confirmed"}
+
+`;
+
+  if(order.location){
+
+    text+=
+`Location:
+https://www.google.com/maps?q=${order.location.lat},${order.location.lng}
+
+`;
+
+  }
+
+  text+="Items:\n";
+
+  order.items.forEach(item=>{
+
+    text+=
+`${item.name} × ${item.qty} = ₹${(
+      Number(item.price)*Number(item.qty)
+    ).toFixed(2)}\n`;
+
+  });
+
+  text+=
+`
+সাবটোটাল: ₹${order.subtotal.toFixed(2)}
+ডেলিভারি: ₹${order.deliveryCharge.toFixed(2)}
+বর্তমান অর্ডারের মোট: ₹${order.total.toFixed(2)}
+আগের বকেয়া: ₹${order.previousDue.toFixed(2)}
+পরিশোধযোগ্য মোট: ₹${order.payableTotal.toFixed(2)}
+`;
+
+  const url=
+    "https://wa.me/91"+
+    SHOP_PHONE+
+    "?text="+
+    encodeURIComponent(text);
+
+  window.open(url,"_blank");
+
+}
+
+
+/* =========================================================
+   ORDER ITEMS
+========================================================= */
+
+function renderOrderItems(order){
+
+  if(!Array.isArray(order.items)){
+    return "";
+  }
+
+  return order.items.map(item=>`
+
+    <div class="orderItemLine">
+
+      <span>
+        ${escapeHTML(item.name||"Product")}
+        × ${Number(item.qty||1)}
+      </span>
+
+      <strong>
+        ₹${(
+          Number(item.price||0)*
+          Number(item.qty||1)
+        ).toFixed(2)}
+      </strong>
+
+    </div>
+
+  `).join("");
+
+}
+
+function locationHTML(order){
+
+  if(!order.location){
+    return "";
+  }
+
+  return `
+
+    <div class="locationBox">
+
+      📍 ডেলিভারি Location<br>
+
+      <a
+        href="https://www.google.com/maps?q=${order.location.lat},${order.location.lng}"
+        target="_blank">
+        Open in Google Maps
+      </a>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* =========================================================
+   CUSTOMER EXPERIENCE ENHANCEMENTS
+========================================================= */
+
+const translations={
+  bn:{
+    back:"পিছনে",home:"হোম",deliveryAddress:"ডেলিভারি ঠিকানা",address:"ঠিকানা",
+    heroText:"দৈনন্দিন মুদিখানা ও গৃহস্থালির পণ্য সহজে অর্ডার করুন।",
+    search:"পণ্য খুঁজুন...",categories:"ক্যাটাগরি",products:"পণ্য",orders:"অর্ডার",
+    cart:"কার্ট",viewAll:"সব দেখুন",addToCart:"কার্টে যোগ করুন",outStock:"স্টক নেই",
+    subtotal:"সাবটোটাল",delivery:"ডেলিভারি চার্জ",total:"মোট",payable:"পরিশোধযোগ্য",
+    noঅর্ডার:"এখনও কোনো অর্ডার নেই।",orderSummary:"অর্ডারের সারাংশ"
+  },
+  en:{
+    back:"Back",home:"হোম",deliveryAddress:"ডেলিভারি Address",address:"Address",
+    heroText:"Order daily grocery and household products easily.",
+    search:"পণ্য খুঁজুন...",categories:"ক্যাটাগরি",products:"পণ্য",orders:"অর্ডার",
+    cart:"কার্ট",viewAll:"সব দেখুন",addToCart:"Add to কার্ট",outStock:"স্টক নেই",
+    subtotal:"সাবটোটাল",delivery:"ডেলিভারি চার্জ",total:"Total",payable:"Payable",
+    noঅর্ডার:"এখনও কোনো অর্ডার নেই।",orderSummary:"অর্ডারের সারাংশ"
+  }
+};
+
+function t(key){
+  return translations[lang]?.[key] || translations.bn[key] || key;
+}
+
+function updateDeliveryCriteria(){
+  const el=document.getElementById("deliveryCriteria");
+  if(!el)return;
+  const mode=localStorage.getItem("gb_delivery_mode")||"30";
+  const charge=mode==="free" ? 0 : mode==="custom"
+    ? Number(localStorage.getItem("gb_custom_delivery")||0)
+    : Number(mode)||0;
+  el.innerHTML=charge===0
+    ? "🚚 <strong>ডেলিভারি:</strong> ₹149 বা তার বেশি অর্ডারে ফ্রি ডেলিভারি।"
+    : `🚚 <strong>ডেলিভারি:</strong> ₹149 বা তার বেশি অর্ডারে ফ্রি। এর নিচে ডেলিভারি চার্জ ₹${charge}.`;
+}
+
+function getExpectedDeliveryLabel(){
+  const mode=localStorage.getItem("gb_expected_delivery")||"2-4";
+  const map={
+    "2-4":"প্রায় ২–৪ ঘণ্টার মধ্যে",
+    "4-6":"প্রায় ৪–৬ ঘণ্টার মধ্যে",
+    "same-day":"আজকের মধ্যে",
+    "next-day":"পরের দিন"
+  };
+  return map[mode]||map["2-4"];
+}
+
+function orderTrackingHTML(order){
+  const steps=["Pending","Confirmed","Processing","Out for Delivery","Delivered"];
+  const status=order.status==="Delivery Failed" ? "Processing" : order.status;
+  const idx=steps.indexOf(status);
+  if(order.status==="Cancelled"){
+    return `<div class="tracking cancelled"><strong>❌ অর্ডার বাতিল</strong></div>`;
+  }
+  return `<div class="tracking">
+    ${steps.map((s,i)=>`<div class="trackStep ${i<=idx?"done":""}">
+      <span>${i<idx?"✓":i===idx?"●":"○"}</span>
+      <small>${({
+        Pending:"অপেক্ষমাণ",Confirmed:"নিশ্চিত",Processing:"প্রস্তুত হচ্ছে",
+        "Out for Delivery":"ডেলিভারির পথে",Delivered:"ডেলিভারি সম্পন্ন"
+      })[s]}</small>
+    </div>`).join("")}
+  </div>`;
+}
+
+function getSavedAddresses(phone){
+  const all=loadJSON("gb_saved_addresses",{});
+  return all[normalizePhone(phone)]||[];
+}
+
+function saveCurrentAddress(){
+  const phone=normalizePhone(document.getElementById("customerPhone")?.value);
+  const address=document.getElementById("customerAddress")?.value.trim();
+  if(phone.length<10){ alert("আগে সঠিক মোবাইল নম্বর দিন।"); return; }
+  if(!address){ alert("ঠিকানা লিখুন।"); return; }
+  const all=loadJSON("gb_saved_addresses",{});
+  const list=Array.isArray(all[phone])?all[phone]:[];
+  if(!list.includes(address)) list.unshift(address);
+  all[phone]=list.slice(0,5);
+  save("gb_saved_addresses",all);
+  renderSavedAddresses(phone);
+  alert("ঠিকানা সংরক্ষণ হয়েছে।");
+}
+
+function renderSavedAddresses(phone){
+  const sel=document.getElementById("savedAddressSelect");
+  if(!sel)return;
+  const list=getSavedAddresses(phone);
+  sel.innerHTML='<option value="">-- সংরক্ষিত ঠিকানা নির্বাচন করুন --</option>'+
+    list.map((a,i)=>`<option value="${i}">${escapeHTML(a)}</option>`).join("");
+}
+
+function useSavedAddress(index){
+  if(index==="")return;
+  const phone=normalizePhone(document.getElementById("customerPhone")?.value);
+  const list=getSavedAddresses(phone);
+  if(list[index]) document.getElementById("customerAddress").value=list[index];
+}
+
+async function searchLocation(){
+  const q=document.getElementById("locationSearch")?.value.trim();
+  const status=document.getElementById("locationStatus");
+  if(!q){ alert("এলাকা/গ্রাম/পিনকোড লিখুন।"); return; }
+  if(status) status.innerHTML='<div class="notice">🔎 লোকেশন খোঁজা হচ্ছে...</div>';
+  try{
+    const url="https://nominatim.openstreetmap.org/search?format=json&limit=5&countrycodes=in&q="+encodeURIComponent(q);
+    const res=await fetch(url,{headers:{Accept:"application/json"}});
+    const data=await res.json();
+    if(!data.length){ if(status)status.innerHTML='<div class="notice">লোকেশন পাওয়া যায়নি।</div>'; return; }
+    const first=data[0];
+    window.customerLocation={lat:Number(first.lat),lng:Number(first.lon)};
+    const addr=first.display_name||q;
+    document.getElementById("customerAddress").value=addr;
+    if(status)status.innerHTML=`<div class="locationBox">📍 ${escapeHTML(addr)}<br>
+      <a href="https://www.google.com/maps?q=${first.lat},${first.lon}" target="_blank">Google Maps-এ দেখুন</a></div>`;
+  }catch(e){
+    if(status)status.innerHTML='<div class="notice">লোকেশন সার্ভিস এখন কাজ করছে না। ঠিকানা লিখে চেষ্টা করুন।</div>';
+  }
+}
+
+function downloadOrder(id){
+  const order=orders.find(o=>String(o.id)===String(id));
+  if(!order)return;
+  const rows=order.items.map(i=>`<tr><td>${escapeHTML(i.name)}</td><td>${i.qty}</td><td>₹${(Number(i.price)*Number(i.qty)).toFixed(2)}</td></tr>`).join("");
+  const doc=`<!doctype html><html lang="bn"><head><meta charset="utf-8"><title>${order.id}</title>
+  <style>body{font-family:Arial;padding:25px;max-width:700px;margin:auto}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:8px;text-align:left}.total{font-size:18px;font-weight:bold}</style></head>
+  <body><h1>Ghare Bazar</h1><p>অর্ডার ID: <b>${escapeHTML(order.id)}</b></p>
+  <p>তারিখ: ${escapeHTML(order.date)}</p><p>নাম: ${escapeHTML(order.name)}<br>মোবাইল: ${escapeHTML(order.phone)}<br>ঠিকানা: ${escapeHTML(order.address)}</p>
+  <table><tr><th>পণ্য</th><th>পরিমাণ</th><th>মূল্য</th></tr>${rows}</table>
+  <p>সাবটোটাল: ₹${Number(order.subtotal).toFixed(2)}<br>ডেলিভারি: ₹${Number(order.deliveryCharge).toFixed(2)}<br>আগের বকেয়া: ₹${Number(order.previousDue).toFixed(2)}</p>
+  <p class="total">পরিশোধযোগ্য: ₹${Number(order.payableTotal).toFixed(2)}</p>
+  <p>স্ট্যাটাস: ${escapeHTML(order.status)}<br>সম্ভাব্য ডেলিভারি: ${escapeHTML(order.expectedDelivery||"")}</p></body></html>`;
+  const blob=new Blob([doc],{type:"text/html;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download=`Ghare-Bazar-${order.id}.html`; a.click(); URL.revokeObjectURL(a.href);
+}
+
+let pageHistory=["home"];
+function goBack(){
+  if(pageHistory.length>1){
+    pageHistory.pop();
+    const prev=pageHistory[pageHistory.length-1];
+    openPage(prev,null,true);
+  }else openPage("home",document.querySelector(".navBtn"),true);
+}
+
+/* =========================================================
+   CUSTOMER ORDERS
+========================================================= */
+
+function renderOrders(){
+
+  const box=document.getElementById("ordersContent");
+
+  if(!box)return;
+
+  if(orders.length===0){
+
+    box.innerHTML=`
+      <div class="card">
+        <h3>এখনও কোনো অর্ডার নেই।</h3>
+      </div>
+    `;
+
+    return;
+  }
+
+  box.innerHTML=orders.map(order=>`
+
+    <div class="orderCard">
+
+      <div class="orderHeader">
+
+        <div>
+
+          <strong>
+            ${escapeHTML(order.id)}
+          </strong>
+
+          <div style="font-size:12px;color:#777">
+            ${escapeHTML(order.date)}
+          </div>
+
+        </div>
+
+        <span class="status">
+          ${escapeHTML(order.status)}
+        </span>
+
+      </div>
+
+      <hr>
+
+      <div>
+        <strong>${escapeHTML(order.name)}</strong><br>
+        ${escapeHTML(order.phone)}<br>
+        ${escapeHTML(order.address)}
+      </div>
+
+      ${locationHTML(order)}
+
+      <div class="orderItems">
+        ${renderOrderItems(order)}
+      </div>
+
+      <div class="summaryRow">
+        <span>সাবটোটাল</span>
+        <strong>₹${Number(order.subtotal).toFixed(2)}</strong>
+      </div>
+
+      <div class="summaryRow">
+        <span>ডেলিভারি</span>
+        <strong>₹${Number(order.deliveryCharge).toFixed(2)}</strong>
+      </div>
+
+      <div class="summaryRow">
+        <span>আগের বকেয়া</span>
+        <strong>₹${Number(order.previousDue).toFixed(2)}</strong>
+      </div>
+
+      <div class="summaryRow summaryTotal">
+        <span>Payable</span>
+        <strong>₹${Number(order.payableTotal).toFixed(2)}</strong>
+      </div>
+
+      ${order.expectedDelivery ? `
+      <div class="notice">
+        🕒 <strong>সম্ভাব্য ডেলিভারি:</strong> ${escapeHTML(order.expectedDelivery)}
+      </div>` : ""}
+
+      ${orderTrackingHTML(order)}
+
+      <div class="orderActions">
+        <button class="btn btnLight" onclick="downloadOrder('${escapeHTML(order.id)}')">⬇️ অর্ডার ডাউনলোড</button>
+      </div>
+
+      ${
+        order.status!=="Cancelled"
+        && order.status!=="Delivered"
+
+        ?
+
+        `<br>
+        <button
+          class="btn btnDanger"
+          onclick="customerCancelOrder('${escapeHTML(order.id)}')">
+          Cancel Order
+        </button>`
+
+        :
+
+        ""
+
+      }
+
+    </div>
+
+  `).join("");
+
+}
+
+
+/* =========================================================
+   CUSTOMER CANCEL
+========================================================= */
+
+function customerCancelOrder(id){
+
+  const order=orders.find(
+    o=>String(o.id)===String(id)
+  );
+
+  if(!order)return;
+
+  if(
+    !confirm(
+      "Are you sure you want to cancel this order?"
+    )
+  ){
+    return;
+  }
+
+  order.status="Cancelled";
+
+  save("gb_orders",orders);
+
+  renderOrders();
+
+}
+
+
+/* =========================================================
+   ADMIN LOGIN
+========================================================= */
+
+let adminLoggedIn=false;
+
+function adminLogin(){
+
+  const pin=
+    document.getElementById("adminPin")?.value;
+
+  const msg=
+    document.getElementById("adminLoginMsg");
+
+  if(String(pin)===ADMIN_PIN){
+
+    adminLoggedIn=true;
+
+    if(msg){
+      msg.textContent="লগইন successful.";
+      msg.style.color="green";
+    }
+
+    openPage("admin");
+
+  }else{
+
+    if(msg){
+      msg.textContent="PIN ভুল হয়েছে।";
+      msg.style.color="red";
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   ADMIN PRODUCTS
+========================================================= */
+
+function adminProducts(){
+
+  if(!adminLoggedIn){
+    openPage("adminLogin");
+    return;
+  }
+
+  openPage("adminProducts");
+
+}
+
+function renderCategoryOptions(){
+
+  const select=document.getElementById("pCat");
+
+  if(!select)return;
+
+  select.innerHTML=categories.map(c=>`
+
+    <option value="${escapeHTML(c[1])}">
+      ${escapeHTML(c[1])}
+    </option>
+
+  `).join("");
+
+}
+
+function readImageFile(file){
+
+  return new Promise((resolve,reject)=>{
+
+    if(!file){
+      resolve("");
+      return;
+    }
+
+    const reader=new FileReader();
+
+    reader.onload=()=>resolve(reader.result);
+
+    reader.onerror=reject;
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+
+function previewProductImage(event){
+
+  const file=event.target.files?.[0];
+
+  const box=document.getElementById("imagePreview");
+
+  if(!file||!box){
+    return;
+  }
+
+  const reader=new FileReader();
+
+  reader.onload=()=>{
+
+    box.innerHTML=`
+
+      <img
+        src="${reader.result}"
+        style="
+          width:100px;
+          height:100px;
+          object-fit:cover;
+          border-radius:10px;
+          border:1px solid #ddd;
+        "
+      >
+
+    `;
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+async function saveProduct(){
+
+  const name=
+    document.getElementById("pName")?.value.trim();
+
+  const bn=
+    document.getElementById("pBn")?.value.trim();
+
+  const price=Number(
+    document.getElementById("pদাম")?.value
+  );
+
+  const unit=
+    document.getElementById("pএকক")?.value.trim();
+
+  const cat=
+    document.getElementById("pCat")?.value;
+
+  const emoji=
+    document.getElementById("pEmoji")?.value.trim()
+    ||"🛒";
+
+  const stock=
+    document.getElementById("pStock")?.checked!==false;
+
+  const editId=
+    document.getElementById("editProductId")?.value;
+
+  if(!name){
+    alert("Enter product name.");
+    return;
+  }
+
+  if(!Number.isFinite(price)||price<0){
+    alert("Enter valid price.");
+    return;
+  }
+
+  let image="";
+
+  const file=
+    document.getElementById("pImage")?.files?.[0];
+
+  if(file){
+    image=await readImageFile(file);
+  }
+
+  if(editId){
+
+    const p=products.find(
+      x=>String(x.id)===String(editId)
+    );
+
+    if(p){
+
+      p.name=name;
+      p.bn=bn||name;
+      p.price=price;
+      p.unit=unit||"1 piece";
+      p.cat=cat||"Grocery";
+      p.emoji=emoji;
+      p.stock=stock;
+
+      if(image){
+        p.image=image;
+      }
+
+    }
+
+  }else{
+
+    products.push({
+
+      id:Date.now(),
+
+      name,
+
+      bn:bn||name,
+
+      price,
+
+      unit:unit||"1 piece",
+
+      emoji,
+
+      cat:cat||"Grocery",
+
+      stock,
+
+      image
+
+    });
+
+  }
+
+  save("gb_products",products);
+
+  clearProductForm();
+
+  renderAdminProducts();
+
+  renderProducts();
+
+  renderProductsPage();
+
+}
+
+function finishProductSave(){
+  saveProduct();
+}
+
+function clearProductForm(){
+
+  const ids=[
+    "editProductId",
+    "pName",
+    "pBn",
+    "pদাম",
+    "pএকক",
+    "pEmoji"
+  ];
+
+  ids.forEach(id=>{
+
+    const el=document.getElementById(id);
+
+    if(el){
+      el.value="";
+    }
+
+  });
+
+  const stock=document.getElementById("pStock");
+
+  if(stock){
+    stock.checked=true;
+  }
+
+  const file=document.getElementById("pImage");
+
+  if(file){
+    file.value="";
+  }
+
+  const preview=document.getElementById("imagePreview");
+
+  if(preview){
+    preview.innerHTML="";
+  }
+
+}
+
+function editProduct(id){
+
+  const p=products.find(
+    x=>Number(x.id)===Number(id)
+  );
+
+  if(!p)return;
+
+  document.getElementById("editProductId").value=p.id;
+  document.getElementById("pName").value=p.name||"";
+  document.getElementById("pBn").value=p.bn||"";
+  document.getElementById("pদাম").value=p.price||"";
+  document.getElementById("pএকক").value=p.unit||"";
+  document.getElementById("pCat").value=p.cat||"Grocery";
+  document.getElementById("pEmoji").value=p.emoji||"🛒";
+  document.getElementById("pStock").checked=p.stock!==false;
+
+  const preview=document.getElementById("imagePreview");
+
+  if(preview && p.image){
+
+    preview.innerHTML=`
+
+      <img
+        src="${escapeHTML(p.image)}"
+        style="
+          width:100px;
+          height:100px;
+          object-fit:cover;
+          border-radius:10px;
+        "
+      >
+
+    `;
+
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+function renderAdminProducts(){
+
+  renderCategoryOptions();
+
+  const box=
+    document.getElementById("adminProductsList");
+
+  if(!box)return;
+
+  box.innerHTML=products.map(p=>`
+
+    <div class="card">
+
+      <div style="
+        display:flex;
+        gap:12px;
+        align-items:center;
+      ">
+
+        <div style="font-size:35px">
+          ${
+            p.image
+            ?`<img
+                src="${escapeHTML(p.image)}"
+                style="
+                  width:55px;
+                  height:55px;
+                  object-fit:cover;
+                  border-radius:9px;
+                "
+              >`
+            :escapeHTML(p.emoji||"🛒")
+          }
+        </div>
+
+        <div style="flex:1">
+
+          <strong>
+            ${escapeHTML(p.name)}
+          </strong>
+
+          <div>
+            ₹${Number(p.price).toFixed(2)}
+            / ${escapeHTML(p.unit)}
+          </div>
+
+          <small>
+            ${p.stock!==false
+              ?"স্টকে আছে"
+              :"স্টক নেই"}
+          </small>
+
+        </div>
+
+      </div>
+
+      <br>
+
+      <button
+        class="btn btnYellow"
+        onclick="editProduct(${p.id})">
+        Edit
+      </button>
+
+      <button
+        class="btn btnLight"
+        onclick="toggleStock(${p.id})">
+        Toggle Stock
+      </button>
+
+      <button
+        class="btn btnDanger"
+        onclick="deleteProduct(${p.id})">
+        Delete
+      </button>
+
+    </div>
+
+  `).join("");
+
+}
+
+function toggleStock(id){
+
+  const p=products.find(
+    x=>Number(x.id)===Number(id)
+  );
+
+  if(!p)return;
+
+  p.stock=!p.stock;
+
+  save("gb_products",products);
+
+  renderAdminProducts();
+  renderProducts();
+  renderProductsPage();
+
+}
+
+function deleteProduct(id){
+
+  if(!confirm("এই পণ্যটি মুছে ফেলবেন?")){
+    return;
+  }
+
+  products=products.filter(
+    p=>Number(p.id)!==Number(id)
+  );
+
+  cart=cart.filter(
+    item=>products.some(
+      p=>Number(p.id)===Number(item.id)
+    )
+  );
+
+  save("gb_products",products);
+  save("gb_cart",cart);
+
+  renderAdminProducts();
+  renderProducts();
+  renderProductsPage();
+  renderCart();
+  updateCartCount();
+
+}
+
+
+/* =========================================================
+   ADMIN ORDERS
+========================================================= */
+
+function renderAdminOrders(){
+
+  const box=
+    document.getElementById("adminOrdersList");
+
+  if(!box)return;
+
+  if(orders.length===0){
+
+    box.innerHTML=`
+      <div class="card">
+        No orders.
+      </div>
+    `;
+
+    return;
+  }
+
+  box.innerHTML=orders.map(order=>`
+
+    <div class="orderCard">
+
+      <div class="orderHeader">
+
+        <div>
+          <strong>${escapeHTML(order.id)}</strong>
+
+          <div style="font-size:12px;color:#777">
+            ${escapeHTML(order.date)}
+          </div>
+        </div>
+
+        <span class="status">
+          ${escapeHTML(order.status)}
+        </span>
+
+      </div>
+
+      <hr>
+
+      <strong>
+        ${escapeHTML(order.name)}
+      </strong>
+
+      <br>
+
+      📞 ${escapeHTML(order.phone)}
+
+      <br>
+
+      📍 ${escapeHTML(order.address)}
+
+      ${locationHTML(order)}
+
+      <div class="orderItems">
+        ${renderOrderItems(order)}
+      </div>
+
+      <div class="summaryRow">
+        <span>সাবটোটাল</span>
+        <strong>₹${Number(order.subtotal).toFixed(2)}</strong>
+      </div>
+
+      <div class="summaryRow">
+        <span>ডেলিভারি</span>
+        <strong>₹${Number(order.deliveryCharge).toFixed(2)}</strong>
+      </div>
+
+      <div class="summaryRow">
+        <span>আগের বকেয়া</span>
+        <strong>₹${Number(order.previousDue).toFixed(2)}</strong>
+      </div>
+
+      <div class="summaryRow summaryTotal">
+        <span>Payable</span>
+        <strong>₹${Number(order.payableTotal).toFixed(2)}</strong>
+      </div>
+
+      ${order.expectedDelivery ? `<div class="notice">🕒 সম্ভাব্য ডেলিভারি: <strong>${escapeHTML(order.expectedDelivery)}</strong></div>` : ""}
+      ${orderTrackingHTML(order)}
+
+      <button class="btn btnLight" onclick="downloadOrder('${escapeHTML(order.id)}')">⬇️ অর্ডার ডাউনলোড</button>
+
+      <br><br>
+
+      <div class="formGroup">
+
+        <label>Order Status</label>
+
+        <select
+          onchange="changeOrderStatus('${escapeHTML(order.id)}',this.value)">
+
+          ${[
+            "Pending",
+            "Confirmed",
+            "Processing",
+            "Out for Delivery",
+            "Delivered",
+            "Cancelled"
+          ].map(s=>`
+
+            <option
+              value="${escapeHTML(s)}"
+              ${order.status===s?"selected":""}>
+              ${escapeHTML(s)}
+            </option>
+
+          `).join("")}
+
+        </select>
+
+      </div>
+
+      <button
+        class="btn btnYellow"
+        onclick="firstDeliveryFailed('${escapeHTML(order.id)}')">
+        First Delivery Failed
+      </button>
+
+      <button
+        class="btn btnYellow"
+        onclick="secondDeliveryFailed('${escapeHTML(order.id)}')">
+        Second Delivery Failed
+      </button>
+
+      <button
+        class="btn btnDanger"
+        onclick="adminCancelOrder('${escapeHTML(order.id)}')">
+        Cancel Order
+      </button>
+
+      ${
+        Number(order.cancellationCharge)>0
+
+        ?
+
+        `<button
+          class="btn btnPrimary"
+          onclick="markOrderChargePaid('${escapeHTML(order.id)}')">
+          Mark Charge Paid
+        </button>`
+
+        :
+
+        ""
+
+      }
+
+    </div>
+
+  `).join("");
+
+}
+
+function changeOrderStatus(id,status){
+
+  const order=orders.find(
+    o=>String(o.id)===String(id)
+  );
+
+  if(!order)return;
+
+  order.status=status;
+
+  save("gb_orders",orders);
+
+  renderAdminOrders();
+  renderOrders();
+
+}
+
+
+/* =========================================================
+   DELIVERY FAILURE
+========================================================= */
+
+function firstDeliveryFailed(id){
+
+  const order=orders.find(
+    o=>String(o.id)===String(id)
+  );
+
+  if(!order)return;
+
+  order.deliveryAttempt=1;
+  order.status="Delivery Failed";
+  order.redeliveryScheduled=true;
+
+  save("gb_orders",orders);
+
+  renderAdminOrders();
+  renderOrders();
+
+  alert(
+    "First delivery failed. Redelivery can be scheduled."
+  );
+
+}
+
+function secondDeliveryFailed(id){
+
+  const order=orders.find(
+    o=>String(o.id)===String(id)
+  );
+
+  if(!order)return;
+
+  const charge=
+    Number(
+      localStorage.getItem(
+        "gb_failed_delivery_charge"
+      )
+    )||30;
+
+  order.deliveryAttempt=2;
+  order.status="Cancelled";
+  order.redeliveryScheduled=false;
+  order.cancellationCharge=charge;
+  order.cancellationChargePaid=false;
+
+  save("gb_orders",orders);
+
+  renderAdminOrders();
+  renderOrders();
+
+  alert(
+    "Second delivery failed.\nCancellation charge: ₹"+charge
+  );
+
+}
+
+function markOrderChargePaid(id){
+
+  const order=orders.find(
+    o=>String(o.id)===String(id)
+  );
+
+  if(!order)return;
+
+  order.cancellationChargePaid=true;
+
+  save("gb_orders",orders);
+
+  renderAdminOrders();
+  renderOrders();
+
+}
+
+
+/* =========================================================
+   ADMIN SETTINGS
+========================================================= */
+
+function loadAdminSettings(){
+
+  const mode=
+    localStorage.getItem("gb_delivery_mode")||"30";
+
+  const custom=
+    localStorage.getItem("gb_custom_delivery")||"";
+
+  const failed=
+    localStorage.getItem(
+      "gb_failed_delivery_charge"
+    )||"30";
+
+  const expected=
+    localStorage.getItem("gb_expected_delivery")||"2-4";
+
+  const modeEl=document.getElementById("deliveryMode");
+
+  if(modeEl){
+    modeEl.value=mode;
+  }
+
+  const customEl=
+    document.getElementById("customDelivery");
+
+  if(customEl){
+    customEl.value=custom;
+  }
+
+  const failedEl=
+    document.getElementById("failedDeliveryCharge");
+
+  if(failedEl){
+    failedEl.value=failed;
+  }
+
+  const expectedEl=document.getElementById("expectedDelivery");
+  if(expectedEl) expectedEl.value=expected;
+
+  deliveryModeChanged();
+
+}
+
+function deliveryModeChanged(){
+
+  const mode=
+    document.getElementById("deliveryMode")?.value;
+
+  const box=
+    document.getElementById("customDeliveryBox");
+
+  if(box){
+
+    box.classList.toggle(
+      "hidden",
+      mode!=="custom"
+    );
+
+  }
+
+}
+
+function saveSettings(){
+
+  const mode=
+    document.getElementById("deliveryMode")?.value
+    ||"30";
+
+  const custom=
+    Number(
+      document.getElementById("customDelivery")?.value
+    )||0;
+
+  const failed=
+    Number(
+      document.getElementById("failedDeliveryCharge")?.value
+    )||0;
+
+  localStorage.setItem(
+    "gb_delivery_mode",
+    mode
+  );
+
+  localStorage.setItem(
+    "gb_custom_delivery",
+    String(custom)
+  );
+
+  localStorage.setItem(
+    "gb_failed_delivery_charge",
+    String(failed)
+  );
+
+  const expected=document.getElementById("expectedDelivery")?.value||"2-4";
+  localStorage.setItem("gb_expected_delivery",expected);
+
+  const msg=
+    document.getElementById("settingsMsg");
+
+  if(msg){
+
+    msg.textContent=
+      "সেটিংস saved successfully.";
+
+    msg.style.color="green";
+
+  }
+
+  renderCart();
+  renderCheckout();
+
+}
+
+
+/* =========================================================
+   ADMIN DUE
+========================================================= */
+
+function renderAdminDue(){
+
+  const box=
+    document.getElementById("adminDueList");
+
+  if(!box)return;
+
+  const keys=Object.keys(customerDues);
+
+  if(keys.length===0){
+
+    box.innerHTML=`
+      <div class="card">
+        No customer due.
+      </div>
+    `;
+
+    return;
+  }
+
+  box.innerHTML=keys.map(phone=>{
+
+    const due=getCustomerDue(phone);
+
+    return `
+
+      <div class="card">
+
+        <strong>
+          ${escapeHTML(phone)}
+        </strong>
+
+        <div style="
+          font-size:22px;
+          color:var(--danger);
+          margin:8px 0;
+        ">
+          ₹${due.toFixed(2)}
+        </div>
+
+        <button
+          class="btn btnPrimary"
+          onclick="payCustomerDue('${escapeHTML(phone)}')">
+          Pay Due
+        </button>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+function markAllDuePaid(){
+
+  Object.keys(customerDues)
+    .forEach(phone=>{
+      customerDues[phone]=0;
+    });
+
+  save("gb_customer_dues",customerDues);
+
+  renderAdminDue();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+  return String(value??"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   ADMIN LONG PRESS
+========================================================= */
+
+let adminPressTimer=null;
+
+const brandAdmin=
+  document.getElementById("brandAdmin");
+
+if(brandAdmin){
+
+  brandAdmin.addEventListener(
+    "pointerdown",
+    ()=>{
+      adminPressTimer=setTimeout(()=>{
+        openPage("adminLogin");
+      },1200);
+    }
+  );
+
+  ["pointerup","pointercancel","pointerleave"]
+  .forEach(event=>{
+
+    brandAdmin.addEventListener(
+      event,
+      ()=>{
+        clearTimeout(adminPressTimer);
+      }
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   STARTUP
+========================================================= */
+
+function startApp(){
+
+  try{
+
+    renderCategories();
+
+    renderProducts();
+
+    renderProductsPage();
+
+    renderCart();
+
+    renderOrders();
+
+    renderCheckout();
+
+    renderAdminProducts();
+
+    loadAdminSettings();
+
+    updateCartCount();
+
+    applyLanguage();
+    updateDeliveryCriteria();
+
+  }catch(error){
+
+    console.error(
+      "Application startup error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SPLASH SAFETY
+========================================================= */
+
+function hideSplash(){
+
+  const splash=
+    document.getElementById("splash");
+
+  if(!splash)return;
+
+  splash.style.transition=
+    "opacity .5s ease";
+
+  splash.style.opacity="0";
+
+  setTimeout(()=>{
+
+    splash.style.display="none";
+
+  },500);
+
+}
+
+
+/* =========================================================
+   SERVICE WORKER
+========================================================= */
+
+if("serviceWorker" in navigator){
+
+  window.addEventListener(
+    "load",
+    ()=>{
+
+      navigator.serviceWorker
+      .register("./sw.js")
+      .catch(error=>{
+        console.warn(
+          "Service worker registration failed:",
+          error
+        );
+      });
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   WINDOW LOAD
+========================================================= */
+
+window.addEventListener(
+  "load",
+  ()=>{
+
+    startApp();
+
+    setTimeout(
+      hideSplash,
+      700
+    );
+
+  }
+);
+
+
+/* =========================================================
+   CHECKOUT LIVE DUE UPDATE
+========================================================= */
+
+document.addEventListener(
+  "input",
+  event=>{
+
+    if(event.target?.id==="customerPhone"){
+
+      renderSavedAddresses(event.target.value);
+      renderCheckoutDue();
+      renderCheckout();
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
