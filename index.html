@@ -731,6 +731,10 @@ th{
       বাংলা
     </button>
 
+    <button class="headerBtn" onclick="installGhareBazar()" id="installAppBtn" style="display:none">
+      📲 <span data-t="installApp">অ্যাপ ডাউনলোড</span>
+    </button>
+
     <button class="headerBtn cartBtn" onclick="openPage('cart')">
       🛒
       <span class="cartBadge" id="cartCount">0</span>
@@ -1540,21 +1544,10 @@ function toggleLang(){
   renderProductsPage();
   renderCart();
   renderOrders();
+  applyLanguage();
+  updateDeliveryCriteria();
 
 }
-
-function applyLanguage(){
-
-  document.documentElement.lang=lang;
-
-  const btn=document.getElementById("langBtn");
-
-  if(btn){
-    btn.textContent=lang==="en"?"বাংলা":"English";
-  }
-
-}
-
 
 /* =========================================================
    PAGE NAVIGATION
@@ -1617,6 +1610,9 @@ function openPage(id,navButton){
   if(id==="adminDue"){
     renderAdminDue();
   }
+
+  applyLanguage();
+  updateDeliveryCriteria();
 
   window.scrollTo({
     top:0,
@@ -2579,47 +2575,93 @@ function locationHTML(order){
 
 const translations={
   bn:{
-    back:"পিছনে",home:"হোম",deliveryAddress:"ডেলিভারি ঠিকানা",address:"ঠিকানা",
-    heroText:"দৈনন্দিন মুদিখানা ও গৃহস্থালির পণ্য সহজে অর্ডার করুন।",
-    search:"পণ্য খুঁজুন...",categories:"ক্যাটাগরি",products:"পণ্য",orders:"অর্ডার",
-    cart:"কার্ট",viewAll:"সব দেখুন",addToCart:"কার্টে যোগ করুন",outStock:"স্টক নেই",
-    subtotal:"সাবটোটাল",delivery:"ডেলিভারি চার্জ",total:"মোট",payable:"পরিশোধযোগ্য",
-    noঅর্ডার:"এখনও কোনো অর্ডার নেই।",orderSummary:"অর্ডারের সারাংশ"
+    back:"পিছনে",home:"হোম",installApp:"অ্যাপ ডাউনলোড",search:"পণ্য খুঁজুন...",categories:"ক্যাটাগরি",products:"পণ্য",orders:"অর্ডার",cart:"কার্ট",checkout:"চেকআউট",
+    customerName:"ক্রেতার নাম",mobile:"মোবাইল নম্বর",deliveryAddress:"ডেলিভারি ঠিকানা",address:"ঠিকানা",saveAddress:"ঠিকানা সংরক্ষণ",searchLocation:"লোকেশন খুঁজুন",
+    paymentMethod:"পেমেন্ট পদ্ধতি",myOrders:"আমার অর্ডার",adminLogin:"অ্যাডমিন লগইন",adminPin:"অ্যাডমিন PIN",adminPanel:"অ্যাডমিন প্যানেল",
+    productManagement:"পণ্য ব্যবস্থাপনা",productName:"পণ্যের নাম",bengaliName:"বাংলা নাম",price:"দাম",unit:"একক",category:"ক্যাটাগরি",emoji:"ইমোজি",productImage:"পণ্যের ছবি",orderManagement:"অর্ডার ব্যবস্থাপনা",settings:"সেটিংস",
+    deliveryCharge:"ডেলিভারি চার্জ",below149:"₹149-এর নিচে ডেলিভারি চার্জ",free:"ফ্রি",custom:"নিজস্ব",customDelivery:"নিজস্ব ডেলিভারি চার্জ",expectedDelivery:"সম্ভাব্য ডেলিভারি সময়",failedCharge:"ডেলিভারি ব্যর্থ হলে বাতিল চার্জ",customerDue:"ক্রেতার বকেয়া",customerMobile:"ক্রেতার মোবাইল নম্বর",dueAmount:"বকেয়া টাকা",
+    addToCart:"কার্টে যোগ করুন",outStock:"স্টক নেই",viewAll:"সব দেখুন",emptyCart:"আপনার কার্ট খালি।",subtotal:"সাবটোটাল",delivery:"ডেলিভারি চার্জ",total:"মোট",currentOrderTotal:"বর্তমান অর্ডারের মোট",previousDue:"আগের বকেয়া",payable:"পরিশোধযোগ্য মোট",orderSummary:"অর্ডারের সারাংশ",download:"অর্ডার ডাউনলোড",cancel:"অর্ডার বাতিল",orderStatus:"অর্ডারের স্ট্যাটাস",
+    heroText:"দৈনন্দিন মুদিখানা ও গৃহস্থালির পণ্য সহজে অর্ডার করুন।",noOrders:"এখনও কোনো অর্ডার নেই।",savedAddress:"-- সংরক্ষিত ঠিকানা নির্বাচন করুন --",locationSearching:"লোকেশন খোঁজা হচ্ছে...",locationNotFound:"লোকেশন পাওয়া যায়নি।",locationService:"লোকেশন সার্ভিস এখন কাজ করছে না। ঠিকানা লিখে চেষ্টা করুন।",googleMaps:"Google Maps-এ দেখুন",
+    pending:"অপেক্ষমাণ",confirmed:"নিশ্চিত",processing:"প্রস্তুত হচ্ছে",outForDelivery:"ডেলিভারির পথে",delivered:"ডেলিভারি সম্পন্ন",cancelled:"অর্ডার বাতিল",possibleDelivery:"সম্ভাব্য ডেলিভারি"
   },
   en:{
-    back:"Back",home:"হোম",deliveryAddress:"ডেলিভারি Address",address:"Address",
-    heroText:"Order daily grocery and household products easily.",
-    search:"পণ্য খুঁজুন...",categories:"ক্যাটাগরি",products:"পণ্য",orders:"অর্ডার",
-    cart:"কার্ট",viewAll:"সব দেখুন",addToCart:"Add to কার্ট",outStock:"স্টক নেই",
-    subtotal:"সাবটোটাল",delivery:"ডেলিভারি চার্জ",total:"Total",payable:"Payable",
-    noঅর্ডার:"এখনও কোনো অর্ডার নেই।",orderSummary:"অর্ডারের সারাংশ"
+    back:"Back",home:"Home",installApp:"Download App",search:"Search products...",categories:"Categories",products:"Products",orders:"Orders",cart:"Cart",checkout:"Checkout",
+    customerName:"Customer Name",mobile:"Mobile Number",deliveryAddress:"Delivery Address",address:"Address",saveAddress:"Save Address",searchLocation:"Search Location",
+    paymentMethod:"Payment Method",myOrders:"My Orders",adminLogin:"Admin Login",adminPin:"Admin PIN",adminPanel:"Admin Panel",
+    productManagement:"Product Management",productName:"Product Name",bengaliName:"Bengali Name",price:"Price",unit:"Unit",category:"Category",emoji:"Emoji",productImage:"Product Image",orderManagement:"Order Management",settings:"Settings",
+    deliveryCharge:"Delivery Charge",below149:"Delivery charge below ₹149",free:"Free",custom:"Custom",customDelivery:"Custom Delivery Charge",expectedDelivery:"Expected Delivery Time",failedCharge:"Cancellation charge after delivery failure",customerDue:"Customer Due",customerMobile:"Customer Mobile Number",dueAmount:"Due Amount",
+    addToCart:"Add to Cart",outStock:"Out of Stock",viewAll:"View All",emptyCart:"Your cart is empty.",subtotal:"Subtotal",delivery:"Delivery Charge",total:"Total",currentOrderTotal:"Current Order Total",previousDue:"Previous Due",payable:"Payable Total",orderSummary:"Order Summary",download:"Download Order",cancel:"Cancel Order",orderStatus:"Order Status",
+    heroText:"Order daily grocery and household products easily.",noOrders:"No orders yet.",savedAddress:"-- Select saved address --",locationSearching:"Searching location...",locationNotFound:"Location not found.",locationService:"Location service is unavailable. Please enter the address manually.",googleMaps:"View in Google Maps",
+    pending:"Pending",confirmed:"Confirmed",processing:"Processing",outForDelivery:"Out for Delivery",delivered:"Delivered",cancelled:"Order Cancelled",possibleDelivery:"Expected Delivery"
   }
 };
 
-function t(key){
-  return translations[lang]?.[key] || translations.bn[key] || key;
+function t(key){ return translations[lang]?.[key] ?? translations.bn[key] ?? key; }
+
+function trStatus(status){
+  const m={Pending:"pending",Confirmed:"confirmed",Processing:"processing","Out for Delivery":"outForDelivery",Delivered:"delivered",Cancelled:"cancelled","Delivery Failed":"processing"};
+  return t(m[status]||status);
+}
+
+function translateVisibleUI(){
+  const replacements={
+    "পিছনে":"Back","হোম":"Home","অ্যাপ ডাউনলোড":"Download App","পণ্য খুঁজুন...":"Search products...","ক্যাটাগরি":"Categories","পণ্য":"Products","অর্ডার":"Orders","কার্ট":"Cart","চেকআউট":"Checkout",
+    "ক্রেতার নাম":"Customer Name","মোবাইল নম্বর":"Mobile Number","ডেলিভারি ঠিকানা":"Delivery Address","ঠিকানা":"Address","💾 ঠিকানা সংরক্ষণ":"💾 Save Address","🔎 লোকেশন খুঁজুন":"🔎 Search Location","পেমেন্ট পদ্ধতি":"Payment Method","My অর্ডার":"My Orders","অ্যাডমিন লগইন":"Admin Login","অ্যাডমিন PIN":"Admin PIN","অ্যাডমিন প্যানেল":"Admin Panel",
+    "পণ্য ব্যবস্থাপনা":"Product Management","পণ্যের নাম":"Product Name","বাংলা নাম":"Bengali Name","দাম":"Price","একক":"Unit","ক্যাটাগরি":"Category","পণ্যের ছবি":"Product Image","অর্ডার ব্যবস্থাপনা":"Order Management","সেটিংস":"Settings","ডেলিভারি চার্জ":"Delivery Charge","Below ₹149 ডেলিভারি চার্জ":"Delivery charge below ₹149","Custom ডেলিভারি চার্জ":"Custom Delivery Charge","Expected ডেলিভারি Time":"Expected Delivery Time","ডেলিভারি ব্যর্থ হলে বাতিল চার্জ":"Cancellation charge after delivery failure","ক্রেতার বকেয়া":"Customer Due","Customer মোবাইল নম্বর":"Customer Mobile Number","বকেয়া টাকা":"Due Amount",
+    "সাবটোটাল":"Subtotal","Total":"Total","Current Order Total":"Current Order Total","আগের বকেয়া":"Previous Due","পরিশোধযোগ্য মোট":"Payable Total","অর্ডারের সারাংশ":"Order Summary","⬇️ অর্ডার ডাউনলোড":"⬇️ Download Order","অর্ডার ডাউনলোড":"Download Order","Cancel Order":"Cancel Order","Order Status":"Order Status",
+    "আপনার কার্ট খালি।":"Your cart is empty.","এখনও কোনো অর্ডার নেই।":"No orders yet.","❌ অর্ডার বাতিল":"❌ Order Cancelled","可能":""
+  };
+  const en=lang==='en';
+  const nodes=[];
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n=>{
+    let v=n.nodeValue;
+    if(!v || !v.trim()) return;
+    if(en){
+      for(const [bn,eng] of Object.entries(replacements)) v=v.split(bn).join(eng);
+    }else{
+      const reverse={
+        "Back":"পিছনে","Home":"হোম","Download App":"অ্যাপ ডাউনলোড","Search products...":"পণ্য খুঁজুন...","Categories":"ক্যাটাগরি","Products":"পণ্য","Orders":"অর্ডার","Cart":"কার্ট","Checkout":"চেকআউট","Customer Name":"ক্রেতার নাম","Mobile Number":"মোবাইল নম্বর","Delivery Address":"ডেলিভারি ঠিকানা","Address":"ঠিকানা","💾 Save Address":"💾 ঠিকানা সংরক্ষণ","🔎 Search Location":"🔎 লোকেশন খুঁজুন","Payment Method":"পেমেন্ট পদ্ধতি","My Orders":"আমার অর্ডার","Admin Login":"অ্যাডমিন লগইন","Admin PIN":"অ্যাডমিন PIN","Admin Panel":"অ্যাডমিন প্যানেল","Product Management":"পণ্য ব্যবস্থাপনা","Product Name":"পণ্যের নাম","Bengali Name":"বাংলা নাম","Price":"দাম","Unit":"একক","Category":"ক্যাটাগরি","Product Image":"পণ্যের ছবি","Order Management":"অর্ডার ব্যবস্থাপনা","Settings":"সেটিংস","Delivery Charge":"ডেলিভারি চার্জ","Delivery charge below ₹149":"₹149-এর নিচে ডেলিভারি চার্জ","Custom Delivery Charge":"নিজস্ব ডেলিভারি চার্জ","Expected Delivery Time":"সম্ভাব্য ডেলিভারি সময়","Cancellation charge after delivery failure":"ডেলিভারি ব্যর্থ হলে বাতিল চার্জ","Customer Due":"ক্রেতার বকেয়া","Customer Mobile Number":"ক্রেতার মোবাইল নম্বর","Due Amount":"বকেয়া টাকা","Subtotal":"সাবটোটাল","Total":"মোট","Current Order Total":"বর্তমান অর্ডারের মোট","Previous Due":"আগের বকেয়া","Payable Total":"পরিশোধযোগ্য মোট","Order Summary":"অর্ডারের সারাংশ","⬇️ Download Order":"⬇️ অর্ডার ডাউনলোড","Download Order":"অর্ডার ডাউনলোড","Cancel Order":"অর্ডার বাতিল","Order Status":"অর্ডারের স্ট্যাটাস","Your cart is empty.":"আপনার কার্ট খালি।","No orders yet.":"এখনও কোনো অর্ডার নেই।","❌ Order Cancelled":"❌ অর্ডার বাতিল"};
+      for(const [eng,bn] of Object.entries(reverse)) v=v.split(eng).join(bn);
+    }
+    n.nodeValue=v;
+  });
+  document.querySelectorAll('input[placeholder]').forEach(el=>{
+    if(en){ if(el.placeholder.includes('পণ্য খুঁজুন')) el.placeholder=t('search'); }
+    else if(el.placeholder.includes('Search products')) el.placeholder=t('search');
+  });
+  document.querySelectorAll('option').forEach(o=>{
+    if(o.value==='') o.textContent=t('savedAddress');
+  });
+}
+
+function applyLanguage(){
+  document.documentElement.lang=lang;
+  const btn=document.getElementById('langBtn');
+  if(btn) btn.textContent=lang==='en'?'বাংলা':'English';
+  const installBtn=document.getElementById("installAppBtn");
+  if(installBtn){
+    installBtn.style.display="inline-flex";
+    const label=installBtn.querySelector("[data-t=\"installApp\"]");
+    if(label) label.textContent=t("installApp");
+  }
+  setTimeout(translateVisibleUI,0);
 }
 
 function updateDeliveryCriteria(){
   const el=document.getElementById("deliveryCriteria");
   if(!el)return;
   const mode=localStorage.getItem("gb_delivery_mode")||"30";
-  const charge=mode==="free" ? 0 : mode==="custom"
-    ? Number(localStorage.getItem("gb_custom_delivery")||0)
-    : Number(mode)||0;
+  const charge=mode==="free" ? 0 : mode==="custom" ? Number(localStorage.getItem("gb_custom_delivery")||0) : Number(mode)||0;
   el.innerHTML=charge===0
-    ? "🚚 <strong>ডেলিভারি:</strong> ₹149 বা তার বেশি অর্ডারে ফ্রি ডেলিভারি।"
-    : `🚚 <strong>ডেলিভারি:</strong> ₹149 বা তার বেশি অর্ডারে ফ্রি। এর নিচে ডেলিভারি চার্জ ₹${charge}.`;
+    ? (lang==="en" ? "🚚 <strong>Delivery:</strong> Free delivery on orders of ₹149 or more." : "🚚 <strong>ডেলিভারি:</strong> ₹149 বা তার বেশি অর্ডারে ফ্রি ডেলিভারি।")
+    : (lang==="en" ? `🚚 <strong>Delivery:</strong> Free on orders of ₹149 or more. Below that, delivery charge is ₹${charge}.` : `🚚 <strong>ডেলিভারি:</strong> ₹149 বা তার বেশি অর্ডারে ফ্রি। এর নিচে ডেলিভারি চার্জ ₹${charge}.`);
 }
 
 function getExpectedDeliveryLabel(){
   const mode=localStorage.getItem("gb_expected_delivery")||"2-4";
-  const map={
-    "2-4":"প্রায় ২–৪ ঘণ্টার মধ্যে",
-    "4-6":"প্রায় ৪–৬ ঘণ্টার মধ্যে",
-    "same-day":"আজকের মধ্যে",
-    "next-day":"পরের দিন"
-  };
+  const map=lang==="en" ? {"2-4":"Within about 2–4 hours","4-6":"Within about 4–6 hours","same-day":"By today","next-day":"Next day"} : {"2-4":"প্রায় ২–৪ ঘণ্টার মধ্যে","4-6":"প্রায় ৪–৬ ঘণ্টার মধ্যে","same-day":"আজকের মধ্যে","next-day":"পরের দিন"};
   return map[mode]||map["2-4"];
 }
 
@@ -2627,18 +2669,8 @@ function orderTrackingHTML(order){
   const steps=["Pending","Confirmed","Processing","Out for Delivery","Delivered"];
   const status=order.status==="Delivery Failed" ? "Processing" : order.status;
   const idx=steps.indexOf(status);
-  if(order.status==="Cancelled"){
-    return `<div class="tracking cancelled"><strong>❌ অর্ডার বাতিল</strong></div>`;
-  }
-  return `<div class="tracking">
-    ${steps.map((s,i)=>`<div class="trackStep ${i<=idx?"done":""}">
-      <span>${i<idx?"✓":i===idx?"●":"○"}</span>
-      <small>${({
-        Pending:"অপেক্ষমাণ",Confirmed:"নিশ্চিত",Processing:"প্রস্তুত হচ্ছে",
-        "Out for Delivery":"ডেলিভারির পথে",Delivered:"ডেলিভারি সম্পন্ন"
-      })[s]}</small>
-    </div>`).join("")}
-  </div>`;
+  if(order.status==="Cancelled") return `<div class="tracking cancelled"><strong>❌ ${t('cancelled')}</strong></div>`;
+  return `<div class="tracking">${steps.map((s,i)=>`<div class="trackStep ${i<=idx?"done":""}"><span>${i<idx?"✓":i===idx?"●":"○"}</span><small>${trStatus(s)}</small></div>`).join("")}</div>`;
 }
 
 function getSavedAddresses(phone){
@@ -2699,18 +2731,12 @@ async function searchLocation(){
 function downloadOrder(id){
   const order=orders.find(o=>String(o.id)===String(id));
   if(!order)return;
-  const rows=order.items.map(i=>`<tr><td>${escapeHTML(i.name)}</td><td>${i.qty}</td><td>₹${(Number(i.price)*Number(i.qty)).toFixed(2)}</td></tr>`).join("");
-  const doc=`<!doctype html><html lang="bn"><head><meta charset="utf-8"><title>${order.id}</title>
-  <style>body{font-family:Arial;padding:25px;max-width:700px;margin:auto}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:8px;text-align:left}.total{font-size:18px;font-weight:bold}</style></head>
-  <body><h1>Ghare Bazar</h1><p>অর্ডার ID: <b>${escapeHTML(order.id)}</b></p>
-  <p>তারিখ: ${escapeHTML(order.date)}</p><p>নাম: ${escapeHTML(order.name)}<br>মোবাইল: ${escapeHTML(order.phone)}<br>ঠিকানা: ${escapeHTML(order.address)}</p>
-  <table><tr><th>পণ্য</th><th>পরিমাণ</th><th>মূল্য</th></tr>${rows}</table>
-  <p>সাবটোটাল: ₹${Number(order.subtotal).toFixed(2)}<br>ডেলিভারি: ₹${Number(order.deliveryCharge).toFixed(2)}<br>আগের বকেয়া: ₹${Number(order.previousDue).toFixed(2)}</p>
-  <p class="total">পরিশোধযোগ্য: ₹${Number(order.payableTotal).toFixed(2)}</p>
-  <p>স্ট্যাটাস: ${escapeHTML(order.status)}<br>সম্ভাব্য ডেলিভারি: ${escapeHTML(order.expectedDelivery||"")}</p></body></html>`;
+  const english=lang==="en";
+  const rows=(order.items||[]).map(i=>`<tr><td>${escapeHTML(i.name||"")}</td><td>${i.qty}</td><td>₹${(Number(i.price||0)*Number(i.qty||0)).toFixed(2)}</td></tr>`).join("");
+  const L=english?{id:"Order ID",date:"Date",name:"Name",phone:"Mobile",address:"Address",product:"Product",qty:"Qty",price:"Price",subtotal:"Subtotal",delivery:"Delivery",due:"Previous Due",payable:"Payable Total",status:"Status",expected:"Expected Delivery"}:{id:"অর্ডার ID",date:"তারিখ",name:"নাম",phone:"মোবাইল",address:"ঠিকানা",product:"পণ্য",qty:"পরিমাণ",price:"মূল্য",subtotal:"সাবটোটাল",delivery:"ডেলিভারি",due:"আগের বকেয়া",payable:"পরিশোধযোগ্য",status:"স্ট্যাটাস",expected:"সম্ভাব্য ডেলিভারি"};
+  const doc=`<!doctype html><html lang="${english?"en":"bn"}"><head><meta charset="utf-8"><title>Ghare Bazar - ${order.id}</title><style>body{font-family:Arial;padding:25px;max-width:700px;margin:auto}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:8px;text-align:left}.total{font-size:18px;font-weight:bold}</style></head><body><h1>Ghare Bazar</h1><p>${L.id}: <b>${escapeHTML(order.id)}</b></p><p>${L.date}: ${escapeHTML(order.date)}</p><p>${L.name}: ${escapeHTML(order.name)}<br>${L.phone}: ${escapeHTML(order.phone)}<br>${L.address}: ${escapeHTML(order.address)}</p><table><tr><th>${L.product}</th><th>${L.qty}</th><th>${L.price}</th></tr>${rows}</table><p>${L.subtotal}: ₹${Number(order.subtotal||0).toFixed(2)}<br>${L.delivery}: ₹${Number(order.deliveryCharge||0).toFixed(2)}<br>${L.due}: ₹${Number(order.previousDue||0).toFixed(2)}</p><p class="total">${L.payable}: ₹${Number(order.payableTotal||0).toFixed(2)}</p><p>${L.status}: ${escapeHTML(trStatus(order.status))}<br>${L.expected}: ${escapeHTML(order.expectedDelivery||getExpectedDeliveryLabel())}</p></body></html>`;
   const blob=new Blob([doc],{type:"text/html;charset=utf-8"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
-  a.download=`Ghare-Bazar-${order.id}.html`; a.click(); URL.revokeObjectURL(a.href);
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=`Ghare-Bazar-${order.id}.html`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 
 let pageHistory=["home"];
@@ -2809,7 +2835,7 @@ function renderOrders(){
       ${orderTrackingHTML(order)}
 
       <div class="orderActions">
-        <button class="btn btnLight" onclick="downloadOrder('${escapeHTML(order.id)}')">⬇️ অর্ডার ডাউনলোড</button>
+        <button class="btn btnLight" onclick="downloadOrder('${escapeHTML(order.id)}')">⬇️ <span class="downloadOrderText">অর্ডার ডাউনলোড</span></button>
       </div>
 
       ${
@@ -3400,7 +3426,7 @@ function renderAdminOrders(){
       ${order.expectedDelivery ? `<div class="notice">🕒 সম্ভাব্য ডেলিভারি: <strong>${escapeHTML(order.expectedDelivery)}</strong></div>` : ""}
       ${orderTrackingHTML(order)}
 
-      <button class="btn btnLight" onclick="downloadOrder('${escapeHTML(order.id)}')">⬇️ অর্ডার ডাউনলোড</button>
+      <button class="btn btnLight" onclick="downloadOrder('${escapeHTML(order.id)}')">⬇️ <span class="downloadOrderText">অর্ডার ডাউনলোড</span></button>
 
       <br><br>
 
@@ -3876,6 +3902,52 @@ function hideSplash(){
 
 
 /* =========================================================
+   APP INSTALL / DOWNLOAD
+========================================================= */
+
+let deferredInstallPrompt=null;
+
+function updateInstallButton(){
+  const btn=document.getElementById("installAppBtn");
+  if(!btn)return;
+  btn.style.display=deferredInstallPrompt ? "inline-flex" : "inline-flex";
+  const label=btn.querySelector("[data-t=\"installApp\"]");
+  if(label) label.textContent=t("installApp");
+}
+
+window.addEventListener("beforeinstallprompt", event=>{
+  event.preventDefault();
+  deferredInstallPrompt=event;
+  updateInstallButton();
+});
+
+window.addEventListener("appinstalled", ()=>{
+  deferredInstallPrompt=null;
+  const btn=document.getElementById("installAppBtn");
+  if(btn) btn.style.display="none";
+});
+
+async function installGhareBazar(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    try{ await deferredInstallPrompt.userChoice; }catch(e){}
+    deferredInstallPrompt=null;
+    return;
+  }
+
+  // Fallback: download the current app HTML when PWA install is not available.
+  const copy=document.documentElement.outerHTML;
+  const blob=new Blob(["<!doctype html>\n"+copy],{type:"text/html;charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="Ghare-Bazar-App.html";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
+/* =========================================================
    SERVICE WORKER
 ========================================================= */
 
@@ -3909,6 +3981,8 @@ window.addEventListener(
   ()=>{
 
     startApp();
+    applyLanguage();
+    updateDeliveryCriteria();
 
     setTimeout(
       hideSplash,
@@ -3938,6 +4012,9 @@ document.addEventListener(
   }
 );
 
+
+applyLanguage();
+updateDeliveryCriteria();
 </script>
 
 </body>
