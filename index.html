@@ -35,21 +35,13 @@ html,body{
   color:var(--text);
 }
 
-body{
-  padding-bottom:75px;
-}
+body{padding-bottom:75px}
 
-button,input,textarea,select{
-  font:inherit;
-}
+button,input,textarea,select{font:inherit}
 
-button{
-  cursor:pointer;
-}
+button{cursor:pointer}
 
-.hidden{
-  display:none!important;
-}
+.hidden{display:none!important}
 
 #splash{
   position:fixed;
@@ -63,9 +55,7 @@ button{
   text-align:center;
 }
 
-.splashBox{
-  animation:splashIn .7s ease;
-}
+.splashBox{animation:splashIn .7s ease}
 
 .splashLogo{
   width:90px;
@@ -82,14 +72,8 @@ button{
   box-shadow:0 8px 30px rgba(0,0,0,.2);
 }
 
-.splashBox h1{
-  margin:18px 0 5px;
-}
-
-.splashBox p{
-  margin:0;
-  opacity:.9;
-}
+.splashBox h1{margin:18px 0 5px}
+.splashBox p{margin:0;opacity:.9}
 
 @keyframes splashIn{
   from{opacity:0;transform:scale(.8)}
@@ -133,9 +117,7 @@ header{
   font-weight:bold;
 }
 
-.brandText{
-  min-width:0;
-}
+.brandText{min-width:0}
 
 .brandText strong{
   display:block;
@@ -156,9 +138,7 @@ header{
   padding:8px 10px;
 }
 
-.cartBtn{
-  position:relative;
-}
+.cartBtn{position:relative}
 
 .cartCount{
   position:absolute;
@@ -182,13 +162,9 @@ main{
   padding:12px;
 }
 
-.page{
-  display:none;
-}
+.page{display:none}
 
-.page.active{
-  display:block;
-}
+.page.active{display:block}
 
 .hero{
   background:linear-gradient(135deg,#e8f5e9,#fff8df);
@@ -225,9 +201,7 @@ main{
   margin:12px 0;
 }
 
-.searchBox input{
-  flex:1;
-}
+.searchBox input{flex:1}
 
 input,textarea,select{
   width:100%;
@@ -347,17 +321,9 @@ textarea{
   color:#333;
 }
 
-.btn.danger{
-  background:var(--danger);
-}
-
-.btn.orange{
-  background:var(--orange);
-}
-
-.btn.full{
-  width:100%;
-}
+.btn.danger{background:var(--danger)}
+.btn.orange{background:var(--orange)}
+.btn.full{width:100%}
 
 .btn.small{
   padding:7px 9px;
@@ -377,9 +343,7 @@ textarea{
   color:var(--dark);
 }
 
-.formGroup{
-  margin-bottom:12px;
-}
+.formGroup{margin-bottom:12px}
 
 .formGroup label{
   display:block;
@@ -393,9 +357,7 @@ textarea{
   gap:8px;
 }
 
-.row>*{
-  flex:1;
-}
+.row>*{flex:1}
 
 .cartItem{
   background:white;
@@ -408,9 +370,7 @@ textarea{
   align-items:center;
 }
 
-.cartInfo{
-  flex:1;
-}
+.cartInfo{flex:1}
 
 .qtyBox{
   display:flex;
@@ -486,9 +446,7 @@ textarea{
   gap:10px;
 }
 
-.adminProductTop .adminInfo{
-  flex:1;
-}
+.adminProductTop .adminInfo{flex:1}
 
 .adminActions{
   display:flex;
@@ -601,9 +559,7 @@ hr{
   padding:15px;
 }
 
-.modal.show{
-  display:flex;
-}
+.modal.show{display:flex}
 
 .modalBox{
   background:white;
@@ -615,18 +571,20 @@ hr{
   padding:16px;
 }
 
+.firebaseOffline{
+  color:#c62828;
+  font-weight:bold;
+}
+
+.firebaseOnline{
+  color:#2f7d32;
+  font-weight:bold;
+}
+
 @media(min-width:650px){
-  .categoryGrid{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .productGrid{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .adminMenu{
-    grid-template-columns:repeat(4,1fr);
-  }
+  .categoryGrid{grid-template-columns:repeat(4,1fr)}
+  .productGrid{grid-template-columns:repeat(4,1fr)}
+  .adminMenu{grid-template-columns:repeat(4,1fr)}
 }
 </style>
 </head>
@@ -643,24 +601,36 @@ hr{
 
 <header>
   <div class="headerRow">
-    <div class="brand" onclick="brandLongPress()">
+
+    <div class="brand">
       <div class="brandIcon">G+</div>
+
       <div class="brandText">
         <strong>Ghare Bazar</strong>
         <small>Ma Manosha Stationery</small>
       </div>
     </div>
 
-    <button class="headerBtn" onclick="toggleLanguage()" id="langBtn">English</button>
+    <button class="headerBtn"
+      onclick="toggleLanguage()"
+      id="langBtn">
+      English
+    </button>
 
-    <button class="headerBtn" id="installAppBtn" onclick="installGhareBazar()">
+    <button class="headerBtn"
+      id="installAppBtn"
+      onclick="installGhareBazar()">
       Download
     </button>
 
-    <button class="headerBtn cartBtn" onclick="openPage('cart')">
+    <button class="headerBtn cartBtn"
+      onclick="openPage('cart')">
+
       🛒
       <span class="cartCount" id="cartCount">0</span>
+
     </button>
+
   </div>
 </header>
 
@@ -671,437 +641,936 @@ hr{
 
   <div class="hero">
     <h1>ঘরে বাজার</h1>
-    <p>Ma Manosha Stationery থেকে প্রয়োজনীয় জিনিস সহজে অর্ডার করুন।</p>
-    <p class="muted">বাড়িতে বসে অর্ডার • সহজ ডেলিভারি</p>
+
+    <p>
+      Ma Manosha Stationery থেকে প্রয়োজনীয়
+      জিনিস সহজে অর্ডার করুন।
+    </p>
+
+    <p class="muted">
+      বাড়িতে বসে অর্ডার • সহজ ডেলিভারি
+    </p>
   </div>
 
   <div class="installNotice">
+
     📲 <b>App Download করুন</b><br>
-    মোবাইলে সহজে ব্যবহার করার জন্য Ghare Bazar App ইনস্টল করুন।
+
+    মোবাইলে সহজে ব্যবহার করার জন্য
+    Ghare Bazar App ইনস্টল করুন।
+
     <br><br>
-    <button class="btn small" onclick="installGhareBazar()">Download / Install</button>
+
+    <button class="btn small"
+      onclick="installGhareBazar()">
+      Download / Install
+    </button>
+
   </div>
 
   <div class="notice">
+
     <b>🚚 Delivery Charge</b><br>
-    ₹149 বা তার বেশি বাজার করলে <b>Delivery Free</b>।<br>
-    ₹149-এর কম হলে নির্ধারিত Delivery Charge প্রযোজ্য হবে।
-    <div id="homeDeliveryCriteria" class="muted" style="margin-top:5px"></div>
+
+    ₹149 বা তার বেশি বাজার করলে
+    <b>Delivery Free</b>।<br>
+
+    ₹149-এর কম হলে নির্ধারিত
+    Delivery Charge প্রযোজ্য হবে।
+
+    <div id="homeDeliveryCriteria"
+      class="muted"
+      style="margin-top:5px">
+    </div>
+
   </div>
 
   <div class="searchBox">
-    <input id="homeSearch" placeholder="পণ্য খুঁজুন..." oninput="searchHomeProducts()">
-    <button class="btn" onclick="openPage('products')">খুঁজুন</button>
+
+    <input
+      id="homeSearch"
+      placeholder="পণ্য খুঁজুন..."
+      oninput="searchHomeProducts()">
+
+    <button class="btn"
+      onclick="openPage('products')">
+      খুঁজুন
+    </button>
+
   </div>
 
-  <h2 class="sectionTitle">📂 পণ্যের বিভাগ</h2>
-  <div class="categoryGrid" id="categoryGrid"></div>
+  <h2 class="sectionTitle">
+    📂 পণ্যের বিভাগ
+  </h2>
 
-  <h2 class="sectionTitle">🛍️ জনপ্রিয় পণ্য</h2>
-  <div class="productGrid" id="homeProducts"></div>
+  <div
+    class="categoryGrid"
+    id="categoryGrid">
+  </div>
+
+  <h2 class="sectionTitle">
+    🛍️ জনপ্রিয় পণ্য
+  </h2>
+
+  <div
+    class="productGrid"
+    id="homeProducts">
+  </div>
+
 </section>
+
 
 <!-- PRODUCTS -->
 <section id="page-products" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="goBack()">← Back</button>
+
+    <button
+      class="btn secondary small"
+      onclick="goBack()">
+      ← Back
+    </button>
+
     <h2>🛍️ সব পণ্য</h2>
-    <button class="btn secondary small" onclick="openPage('home')">Home</button>
+
+    <button
+      class="btn secondary small"
+      onclick="openPage('home')">
+      Home
+    </button>
+
   </div>
 
   <div class="searchBox">
-    <input id="productSearch" placeholder="পণ্যের নাম লিখুন..." oninput="renderProductsPage()">
+
+    <input
+      id="productSearch"
+      placeholder="পণ্যের নাম লিখুন..."
+      oninput="renderProductsPage()">
+
   </div>
 
-  <div class="productGrid" id="productsPageGrid"></div>
+  <div
+    class="productGrid"
+    id="productsPageGrid">
+  </div>
+
 </section>
+
 
 <!-- CART -->
 <section id="page-cart" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="goBack()">← Back</button>
+
+    <button
+      class="btn secondary small"
+      onclick="goBack()">
+      ← Back
+    </button>
+
     <h2>🛒 আপনার Cart</h2>
-    <button class="btn secondary small" onclick="openPage('home')">Home</button>
+
+    <button
+      class="btn secondary small"
+      onclick="openPage('home')">
+      Home
+    </button>
+
   </div>
 
   <div id="cartItems"></div>
+
   <div id="cartSummary"></div>
+
 </section>
+
 
 <!-- CHECKOUT -->
 <section id="page-checkout" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="goBack()">← Back</button>
+
+    <button
+      class="btn secondary small"
+      onclick="goBack()">
+      ← Back
+    </button>
+
     <h2>📦 Order করুন</h2>
+
   </div>
 
   <div class="card">
 
     <div class="formGroup">
+
       <label>নাম</label>
-      <input id="customerName" placeholder="আপনার নাম">
+
+      <input
+        id="customerName"
+        placeholder="আপনার নাম">
+
     </div>
 
     <div class="formGroup">
+
       <label>মোবাইল নম্বর</label>
-      <input id="customerPhone" type="tel" inputmode="numeric" placeholder="10 digit mobile number"
-             oninput="loadSavedAddresses()">
+
+      <input
+        id="customerPhone"
+        type="tel"
+        inputmode="numeric"
+        placeholder="10 digit mobile number"
+        oninput="loadSavedAddresses()">
+
     </div>
 
     <div class="formGroup">
+
       <label>Saved Address</label>
-      <select id="savedAddressSelect" onchange="useSavedAddress()">
-        <option value="">নতুন Address লিখুন</option>
+
+      <select
+        id="savedAddressSelect"
+        onchange="useSavedAddress()">
+
+        <option value="">
+          নতুন Address লিখুন
+        </option>
+
       </select>
+
     </div>
 
     <div class="formGroup">
+
       <label>ঠিকানা</label>
-      <textarea id="customerAddress" placeholder="বাড়ি/গ্রাম/পোস্ট/থানা/জেলা লিখুন"></textarea>
+
+      <textarea
+        id="customerAddress"
+        placeholder="বাড়ি/গ্রাম/পোস্ট/থানা/জেলা লিখুন">
+      </textarea>
+
     </div>
 
     <div class="row">
-      <button class="btn secondary" onclick="saveCustomerAddress()">💾 Address Save</button>
-      <button class="btn secondary" onclick="clearAddress()">Clear</button>
+
+      <button
+        class="btn secondary"
+        onclick="saveCustomerAddress()">
+        💾 Address Save
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="clearAddress()">
+        Clear
+      </button>
+
     </div>
 
-    <div class="formGroup" style="margin-top:14px">
+    <div class="formGroup"
+      style="margin-top:14px">
+
       <label>📍 Location</label>
+
       <div class="locationBox">
-        <button class="btn secondary" onclick="searchLocation()">🔎 Location Search</button>
-        <button class="btn secondary" onclick="getCurrentLocation()">📍 Current Location</button>
+
+        <button
+          class="btn secondary"
+          onclick="searchLocation()">
+          🔎 Location Search
+        </button>
+
+        <button
+          class="btn secondary"
+          onclick="getCurrentLocation()">
+          📍 Current Location
+        </button>
+
       </div>
-      <div id="locationResult" class="muted" style="margin-top:7px"></div>
+
+      <div
+        id="locationResult"
+        class="muted"
+        style="margin-top:7px">
+      </div>
+
     </div>
 
     <div class="formGroup">
+
       <label>Payment Method</label>
+
       <select id="paymentMethod">
-        <option value="COD">Cash on Delivery</option>
-        <option value="UPI">UPI Payment</option>
+
+        <option value="COD">
+          Cash on Delivery
+        </option>
+
+        <option value="UPI">
+          UPI Payment
+        </option>
+
       </select>
+
     </div>
 
-    <div id="upiBox" class="notice hidden">
-      UPI payment করার পরে payment screenshot WhatsApp-এ পাঠাতে হবে।
+    <div
+      id="upiBox"
+      class="notice hidden">
+
+      UPI payment করার পরে payment screenshot
+      WhatsApp-এ পাঠাতে হবে।
+
     </div>
 
     <div id="checkoutSummary"></div>
 
-    <button class="btn full" onclick="placeOrder()">✅ Order Place করুন</button>
+    <button
+      class="btn full"
+      onclick="placeOrder()">
+      ✅ Order Place করুন
+    </button>
+
   </div>
+
 </section>
+
 
 <!-- ORDERS -->
 <section id="page-orders" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="goBack()">← Back</button>
+
+    <button
+      class="btn secondary small"
+      onclick="goBack()">
+      ← Back
+    </button>
+
     <h2>📦 My Orders</h2>
-    <button class="btn secondary small" onclick="openPage('home')">Home</button>
+
+    <button
+      class="btn secondary small"
+      onclick="openPage('home')">
+      Home
+    </button>
+
   </div>
 
   <div id="ordersList"></div>
+
 </section>
+
 
 <!-- ADMIN LOGIN -->
 <section id="page-adminLogin" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="goBack()">← Back</button>
+
+    <button
+      class="btn secondary small"
+      onclick="goBack()">
+      ← Back
+    </button>
+
     <h2>🔐 অ্যাডমিন লগইন</h2>
+
   </div>
 
   <div class="card">
+
     <div class="formGroup">
+
       <label>Admin Email</label>
-      <input id="adminEmail" type="email" value="parisubhajit1999@gmail.com"
-             autocomplete="username">
+
+      <input
+        id="adminEmail"
+        type="email"
+        value="parisubhajit1999@gmail.com"
+        autocomplete="username">
+
     </div>
 
     <div class="formGroup">
+
       <label>Password</label>
-      <input id="adminPassword" type="password"
-             autocomplete="current-password"
-             placeholder="Firebase password">
+
+      <input
+        id="adminPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Firebase password">
+
     </div>
 
-    <button class="btn full" onclick="adminLogin()">🔐 লগইন</button>
+    <button
+      class="btn full"
+      onclick="adminLogin()">
+      🔐 লগইন
+    </button>
 
-    <div id="adminLoginMsg" class="muted" style="margin-top:10px"></div>
+    <div
+      id="adminLoginMsg"
+      class="muted"
+      style="margin-top:10px">
+    </div>
+
   </div>
+
 </section>
+
 
 <!-- ADMIN -->
 <section id="page-admin" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="openPage('home')">Home</button>
+
+    <button
+      class="btn secondary small"
+      onclick="openPage('home')">
+      Home
+    </button>
+
     <h2>⚙️ Admin Panel</h2>
-    <button class="btn danger small" onclick="adminLogout()">Logout</button>
+
+    <button
+      class="btn danger small"
+      onclick="adminLogout()">
+      Logout
+    </button>
+
   </div>
 
   <div class="card">
-    <p><b>Admin:</b> <span id="adminLoggedEmail"></span></p>
-    <p class="muted">Firebase Product Sync: <b id="firebaseStatus">Checking...</b></p>
+
+    <p>
+      <b>Admin:</b>
+      <span id="adminLoggedEmail"></span>
+    </p>
+
+    <p class="muted">
+      Firebase Status:
+      <b id="firebaseStatus">
+        Checking...
+      </b>
+    </p>
+
   </div>
 
   <div class="adminMenu">
-    <button onclick="openPage('adminProducts')">🛍️<br>Product Management</button>
-    <button onclick="openPage('adminOrders')">📦<br>Orders</button>
-    <button onclick="openPage('adminSettings')">⚙️<br>Settings</button>
-    <button onclick="openPage('adminDue')">💰<br>Customer Due</button>
+
+    <button onclick="openPage('adminProducts')">
+      🛍️<br>
+      Product Management
+    </button>
+
+    <button onclick="openPage('adminOrders')">
+      📦<br>
+      Orders
+    </button>
+
+    <button onclick="openPage('adminSettings')">
+      ⚙️<br>
+      Settings
+    </button>
+
+    <button onclick="openPage('adminDue')">
+      💰<br>
+      Customer Due
+    </button>
+
   </div>
+
 </section>
+
 
 <!-- ADMIN PRODUCTS -->
 <section id="page-adminProducts" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="openPage('admin')">← Admin</button>
+
+    <button
+      class="btn secondary small"
+      onclick="openPage('admin')">
+      ← Admin
+    </button>
+
     <h2>🛍️ Products</h2>
+
   </div>
 
   <div class="card">
-    <h3 id="productFormTitle">নতুন Product যোগ করুন</h3>
 
-    <input type="hidden" id="editProductId">
+    <h3 id="productFormTitle">
+      নতুন Product যোগ করুন
+    </h3>
+
+    <input
+      type="hidden"
+      id="editProductId">
 
     <div class="formGroup">
+
       <label>Product Name (English)</label>
-      <input id="pName" placeholder="Rice">
+
+      <input
+        id="pName"
+        placeholder="Rice">
+
     </div>
 
     <div class="formGroup">
+
       <label>Product Name (বাংলা)</label>
-      <input id="pBn" placeholder="চাল">
+
+      <input
+        id="pBn"
+        placeholder="চাল">
+
     </div>
 
     <div class="row">
+
       <div class="formGroup">
+
         <label>Price ₹</label>
-        <input id="pPrice" type="number" min="0">
+
+        <input
+          id="pPrice"
+          type="number"
+          min="0">
+
       </div>
 
       <div class="formGroup">
+
         <label>Quantity / Unit</label>
-        <input id="pUnit" placeholder="200 gm / 500 gm / 1 kg">
+
+        <input
+          id="pUnit"
+          placeholder="200 gm / 500 gm / 1 kg">
+
       </div>
+
     </div>
 
     <div class="row">
+
       <div class="formGroup">
+
         <label>Category</label>
-        <input id="pCat" placeholder="Grocery">
+
+        <input
+          id="pCat"
+          placeholder="Grocery">
+
       </div>
 
       <div class="formGroup">
+
         <label>Emoji</label>
-        <input id="pEmoji" placeholder="🍚">
+
+        <input
+          id="pEmoji"
+          placeholder="🍚">
+
       </div>
+
     </div>
 
     <div class="formGroup">
-      <label>Product Image URL (optional)</label>
-      <input id="pImage" placeholder="https://...">
-    </div>
 
-    <div class="formGroup">
       <label>
-        <input id="pStock" type="checkbox" checked style="width:auto">
-        Stock Available
+        Product Image URL (optional)
       </label>
+
+      <input
+        id="pImage"
+        placeholder="https://...">
+
+    </div>
+
+    <div class="formGroup">
+
+      <label>
+
+        <input
+          id="pStock"
+          type="checkbox"
+          checked
+          style="width:auto">
+
+        Stock Available
+
+      </label>
+
     </div>
 
     <div class="row">
-      <button class="btn" onclick="saveProduct()">💾 Save Product</button>
-      <button class="btn secondary" onclick="resetProductForm()">Clear</button>
+
+      <button
+        class="btn"
+        onclick="saveProduct()">
+        💾 Save Product
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="resetProductForm()">
+        Clear
+      </button>
+
     </div>
 
-    <div id="productSaveMsg" class="muted" style="margin-top:8px"></div>
+    <div
+      id="productSaveMsg"
+      class="muted"
+      style="margin-top:8px">
+    </div>
+
   </div>
 
-  <h3 class="sectionTitle">বর্তমান Products</h3>
+  <h3 class="sectionTitle">
+    বর্তমান Products
+  </h3>
+
   <div id="adminProductsList"></div>
+
 </section>
+
 
 <!-- ADMIN ORDERS -->
 <section id="page-adminOrders" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="openPage('admin')">← Admin</button>
+
+    <button
+      class="btn secondary small"
+      onclick="openPage('admin')">
+      ← Admin
+    </button>
+
     <h2>📦 Orders</h2>
+
   </div>
 
   <div id="adminOrdersList"></div>
+
 </section>
+
 
 <!-- ADMIN SETTINGS -->
 <section id="page-adminSettings" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="openPage('admin')">← Admin</button>
+
+    <button
+      class="btn secondary small"
+      onclick="openPage('admin')">
+      ← Admin
+    </button>
+
     <h2>⚙️ Settings</h2>
+
   </div>
 
   <div class="card">
 
     <div class="formGroup">
-      <label>Free Delivery Above / Equal ₹</label>
-      <input id="settingFreeAmount" type="number">
+
+      <label>
+        Free Delivery Above / Equal ₹
+      </label>
+
+      <input
+        id="settingFreeAmount"
+        type="number">
+
     </div>
 
     <div class="formGroup">
-      <label>Below Free Delivery Charge</label>
+
+      <label>
+        Below Free Delivery Charge
+      </label>
+
       <select id="settingDeliveryMode">
+
         <option value="free">Free</option>
         <option value="10">₹10</option>
         <option value="20">₹20</option>
         <option value="30">₹30</option>
         <option value="custom">Custom</option>
+
       </select>
+
     </div>
 
     <div class="formGroup">
-      <label>Custom Delivery Charge</label>
-      <input id="settingCustomDelivery" type="number">
+
+      <label>
+        Custom Delivery Charge
+      </label>
+
+      <input
+        id="settingCustomDelivery"
+        type="number">
+
     </div>
 
     <div class="formGroup">
-      <label>Expected Delivery</label>
+
+      <label>
+        Expected Delivery
+      </label>
+
       <select id="settingExpectedDelivery">
-        <option value="2-4">2–4 Hours</option>
-        <option value="4-6">4–6 Hours</option>
-        <option value="same-day">Same Day</option>
-        <option value="next-day">Next Day</option>
+
+        <option value="2-4">
+          2–4 Hours
+        </option>
+
+        <option value="4-6">
+          4–6 Hours
+        </option>
+
+        <option value="same-day">
+          Same Day
+        </option>
+
+        <option value="next-day">
+          Next Day
+        </option>
+
       </select>
+
     </div>
 
     <div class="formGroup">
-      <label>Failed Delivery Cancellation Charge</label>
-      <input id="settingFailedCharge" type="number">
+
+      <label>
+        Failed Delivery Cancellation Charge
+      </label>
+
+      <input
+        id="settingFailedCharge"
+        type="number">
+
     </div>
 
-    <button class="btn full" onclick="saveSettings()">💾 Settings Save</button>
-    <div id="settingsMsg" class="muted" style="margin-top:8px"></div>
+    <button
+      class="btn full"
+      onclick="saveSettings()">
+      💾 Settings Save
+    </button>
+
+    <div
+      id="settingsMsg"
+      class="muted"
+      style="margin-top:8px">
+    </div>
+
   </div>
+
 </section>
+
 
 <!-- ADMIN DUE -->
 <section id="page-adminDue" class="page">
+
   <div class="toolbar">
-    <button class="btn secondary small" onclick="openPage('admin')">← Admin</button>
+
+    <button
+      class="btn secondary small"
+      onclick="openPage('admin')">
+      ← Admin
+    </button>
+
     <h2>💰 Customer Due</h2>
+
   </div>
 
   <div class="card">
+
     <div class="formGroup">
+
       <label>Customer Phone</label>
+
       <input id="duePhone">
+
     </div>
 
     <div class="formGroup">
+
       <label>Due Amount ₹</label>
-      <input id="dueAmount" type="number">
+
+      <input
+        id="dueAmount"
+        type="number">
+
     </div>
 
     <div class="formGroup">
+
       <label>Note</label>
+
       <input id="dueNote">
+
     </div>
 
-    <button class="btn full" onclick="saveDue()">Save Due</button>
+    <button
+      class="btn full"
+      onclick="saveDue()">
+      Save Due
+    </button>
+
   </div>
 
-  <div id="dueList" style="margin-top:12px"></div>
+  <div
+    id="dueList"
+    style="margin-top:12px">
+  </div>
+
 </section>
 
 </main>
 
+
 <nav class="bottomNav">
-  <button id="navHome" onclick="openPage('home')">🏠<br>Home</button>
-  <button id="navProducts" onclick="openPage('products')">🛍️<br>Products</button>
-  <button id="navOrders" onclick="openPage('orders')">📦<br>Orders</button>
-  <button id="navCart" onclick="openPage('cart')">🛒<br>Cart</button>
+
+  <button
+    id="navHome"
+    onclick="openPage('home')">
+    🏠<br>Home
+  </button>
+
+  <button
+    id="navProducts"
+    onclick="openPage('products')">
+    🛍️<br>Products
+  </button>
+
+  <button
+    id="navOrders"
+    onclick="openPage('orders')">
+    📦<br>Orders
+  </button>
+
+  <button
+    id="navCart"
+    onclick="openPage('cart')">
+    🛒<br>Cart
+  </button>
+
 </nav>
 
-<div id="toast" class="toast hidden"></div>
 
-<div id="modal" class="modal">
-  <div class="modalBox" id="modalContent"></div>
+<div
+  id="toast"
+  class="toast hidden">
 </div>
 
-<!-- FIREBASE -->
+
+<div
+  id="modal"
+  class="modal">
+
+  <div
+    class="modalBox"
+    id="modalContent">
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-database-compat.js"></script>
 
+
 <script>
 
 /* =========================================================
-   FIREBASE
+   FIREBASE CONFIG
 ========================================================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDKW5OPum-vuNZghmDJIvYHCtTtFUtS_4M",
-  authDomain: "ghare-bazar-7236e.firebaseapp.com",
-  databaseURL: "https://ghare-bazar-7236e-default-rtdb.firebaseio.com",
-  projectId: "ghare-bazar-7236e",
-  storageBucket: "ghare-bazar-7236e.firebasestorage.app",
-  messagingSenderId: "1003591868003",
-  appId: "1:1003591868003:web:196ea5410a6af649eea256",
-  measurementId: "G-6J2R504L7S"
+
+  apiKey:
+  "AIzaSyDKW5OPum-vuNZghmDJIvYHCpTtFUtS_4M",
+
+  authDomain:
+  "ghare-bazar-7236e.firebaseapp.com",
+
+  databaseURL:
+  "https://ghare-bazar-7236e-default-rtdb.firebaseio.com",
+
+  projectId:
+  "ghare-bazar-7236e",
+
+  storageBucket:
+  "ghare-bazar-7236e.firebasestorage.app",
+
+  messagingSenderId:
+  "1003591868003",
+
+  appId:
+  "1:1003591868003:web:196ea5410a6af649eea256",
+
+  measurementId:
+  "G-6J2R504L7S"
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
-const db = firebase.database();
+const auth=firebase.auth();
 
-const ADMIN_UID = "MLWrwaM2CYdAWqRP91zf41S5S8I3";
-const ADMIN_EMAIL = "parisubhajit1999@gmail.com";
-
-const productsRef = db.ref("products");
+const db=firebase.database();
 
 
 /* =========================================================
-   BASIC HELPERS
+   ADMIN
 ========================================================= */
 
-function save(key,value){
-  localStorage.setItem(key,JSON.stringify(value));
-}
+const ADMIN_UID=
+"MLWrwaM2CYdAWqRP91zf41S5S8I3";
 
-function loadJSON(key,fallback){
-  try{
-    const x=localStorage.getItem(key);
-    return x ? JSON.parse(x) : fallback;
-  }catch(e){
-    return fallback;
-  }
-}
-
-function esc(value){
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-function toast(msg){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.classList.remove("hidden");
-  clearTimeout(window.toastTimer);
-  window.toastTimer=setTimeout(()=>{
-    t.classList.add("hidden");
-  },2500);
-}
+const ADMIN_EMAIL=
+"parisubhajit1999@gmail.com";
 
 
 /* =========================================================
-   DEFAULT PRODUCTS
+   DATABASE REFERENCES
+========================================================= */
+
+const productsRef=
+db.ref("products");
+
+const ordersRef=
+db.ref("orders");
+
+const settingsRef=
+db.ref("settings");
+
+const duesRef=
+db.ref("customerDues");
+
+
+/* =========================================================
+   LOCAL DATA
 ========================================================= */
 
 const defaultProducts=[
+
   {
-    id:1,
+    id:"1",
     name:"Rice",
     bn:"চাল",
     price:60,
@@ -1111,8 +1580,9 @@ const defaultProducts=[
     stock:true,
     image:""
   },
+
   {
-    id:2,
+    id:"2",
     name:"Lentil",
     bn:"ডাল",
     price:100,
@@ -1122,8 +1592,9 @@ const defaultProducts=[
     stock:true,
     image:""
   },
+
   {
-    id:3,
+    id:"3",
     name:"Cooking Oil",
     bn:"তেল",
     price:150,
@@ -1133,8 +1604,9 @@ const defaultProducts=[
     stock:true,
     image:""
   },
+
   {
-    id:4,
+    id:"4",
     name:"Salt",
     bn:"নুন",
     price:25,
@@ -1144,8 +1616,9 @@ const defaultProducts=[
     stock:true,
     image:""
   },
+
   {
-    id:5,
+    id:"5",
     name:"Biscuit",
     bn:"বিস্কুট",
     price:20,
@@ -1155,8 +1628,9 @@ const defaultProducts=[
     stock:true,
     image:""
   },
+
   {
-    id:6,
+    id:"6",
     name:"Soap",
     bn:"সাবান",
     price:35,
@@ -1166,8 +1640,9 @@ const defaultProducts=[
     stock:true,
     image:""
   },
+
   {
-    id:7,
+    id:"7",
     name:"Tea",
     bn:"চা",
     price:50,
@@ -1177,8 +1652,9 @@ const defaultProducts=[
     stock:true,
     image:""
   },
+
   {
-    id:8,
+    id:"8",
     name:"Sugar",
     bn:"চিনি",
     price:50,
@@ -1188,208 +1664,586 @@ const defaultProducts=[
     stock:true,
     image:""
   }
+
 ];
 
-let products=loadJSON("gb_products",defaultProducts);
 
-let cart=loadJSON("gb_cart",[]);
-let orders=loadJSON("gb_orders",[]);
-let savedAddresses=loadJSON("gb_saved_addresses",{});
-let customerDues=loadJSON("gb_customer_dues",{});
+let products=
+loadJSON("gb_products",defaultProducts);
 
-let settings=loadJSON("gb_settings",{
+let cart=
+loadJSON("gb_cart",[]);
+
+let orders=
+loadJSON("gb_orders",[]);
+
+let savedAddresses=
+loadJSON("gb_saved_addresses",{});
+
+let customerDues=
+loadJSON("gb_customer_dues",{});
+
+let settings=
+loadJSON("gb_settings",{
+
   freeAmount:149,
+
   deliveryMode:"30",
+
   customDelivery:30,
+
   expectedDelivery:"2-4",
+
   failedCharge:30
+
 });
 
+
 let currentPage="home";
+
 let previousPage="home";
+
 let adminLoggedIn=false;
+
 let deferredInstallPrompt=null;
+
 let currentLat=null;
+
 let currentLng=null;
 
 
 /* =========================================================
-   PRODUCT NORMALIZE
+   HELPERS
 ========================================================= */
 
+function save(key,value){
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(value)
+  );
+
+}
+
+
+function loadJSON(key,fallback){
+
+  try{
+
+    const x=
+      localStorage.getItem(key);
+
+    return x
+      ? JSON.parse(x)
+      : fallback;
+
+  }catch(e){
+
+    return fallback;
+
+  }
+
+}
+
+
+function esc(value){
+
+  return String(value ?? "")
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function toast(msg){
+
+  const t=
+    document.getElementById("toast");
+
+  t.textContent=msg;
+
+  t.classList.remove("hidden");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer=
+    setTimeout(()=>{
+
+      t.classList.add("hidden");
+
+    },2500);
+
+}
+
+
 function normalizeProduct(p){
+
   return {
-    id:p.id ?? Date.now(),
+
+    id:String(p.id ?? Date.now()),
+
     name:p.name ?? "",
+
     bn:p.bn ?? p.name ?? "",
+
     price:Number(p.price)||0,
+
     unit:p.unit ?? "",
+
     emoji:p.emoji ?? "🛒",
+
     cat:p.cat ?? "Grocery",
+
     stock:p.stock!==false,
+
     image:p.image ?? ""
+
   };
+
 }
 
 
 /* =========================================================
-   FIREBASE PRODUCT SYNC
+   FIREBASE STATUS
 ========================================================= */
 
-productsRef.on("value",snap=>{
-  try{
-    const data=snap.val();
+function setFirebaseStatus(text,online){
 
-    if(data && typeof data==="object"){
-      products=Object.values(data)
-        .map(normalizeProduct);
+  const el=
+    document.getElementById("firebaseStatus");
 
-      save("gb_products",products);
+  if(!el)return;
 
-      renderCategories();
-      renderHomeProducts();
-      renderProductsPage();
-      renderCart();
-      renderAdminProducts();
+  el.textContent=text;
 
-      document.getElementById("firebaseStatus").textContent="Connected";
-    }else{
-      document.getElementById("firebaseStatus").textContent="Cloud empty";
-    }
-  }catch(e){
-    console.error(e);
+  el.className=
+    online
+    ? "firebaseOnline"
+    : "firebaseOffline";
+
+}
+
+
+/* =========================================================
+   FIREBASE PRODUCTS
+========================================================= */
+
+productsRef.on("value",snapshot=>{
+
+  const data=snapshot.val();
+
+  if(data && typeof data==="object"){
+
+    products=
+      Object.values(data)
+      .map(normalizeProduct);
+
+    save("gb_products",products);
+
+    setFirebaseStatus(
+      "Connected",
+      true
+    );
+
   }
-},err=>{
-  console.error(err);
-  document.getElementById("firebaseStatus").textContent="Connection Error";
+
+  renderCategories();
+
+  renderHomeProducts();
+
+  renderProductsPage();
+
+  renderCart();
+
+  renderAdminProducts();
+
+},error=>{
+
+  console.error(error);
+
+  setFirebaseStatus(
+    "Connection Error",
+    false
+  );
+
+});
+
+
+/* =========================================================
+   FIREBASE SETTINGS
+========================================================= */
+
+settingsRef.on("value",snapshot=>{
+
+  const data=snapshot.val();
+
+  if(data){
+
+    settings={
+
+      freeAmount:
+        Number(data.freeAmount)||149,
+
+      deliveryMode:
+        data.deliveryMode||"30",
+
+      customDelivery:
+        Number(data.customDelivery)||0,
+
+      expectedDelivery:
+        data.expectedDelivery||"2-4",
+
+      failedCharge:
+        Number(data.failedCharge)||30
+
+    };
+
+    save("gb_settings",settings);
+
+  }
+
+  updateHomeDeliveryCriteria();
+
+});
+
+
+/* =========================================================
+   FIREBASE ORDERS
+========================================================= */
+
+ordersRef.on("value",snapshot=>{
+
+  const data=snapshot.val();
+
+  if(data && typeof data==="object"){
+
+    orders=
+      Object.values(data)
+      .sort((a,b)=>
+        new Date(b.date)-new Date(a.date)
+      );
+
+    save("gb_orders",orders);
+
+  }
+
+  renderOrders();
+
+  renderAdminOrders();
+
+});
+
+
+/* =========================================================
+   FIREBASE DUES
+========================================================= */
+
+duesRef.on("value",snapshot=>{
+
+  const data=snapshot.val();
+
+  if(data){
+
+    customerDues=data;
+
+    save(
+      "gb_customer_dues",
+      customerDues
+    );
+
+  }
+
+  renderDues();
+
 });
 
 
 /* =========================================================
    SEED PRODUCTS
-   Only verified admin can seed if cloud is empty.
 ========================================================= */
 
 async function ensureProductsSeeded(){
 
-  const snap=await productsRef.once("value");
+  const snap=
+    await productsRef.once("value");
 
-  if(!snap.exists() && products.length){
+  if(
+    !snap.exists() &&
+    products.length
+  ){
 
     const updates={};
 
     products.forEach(p=>{
-      updates[String(p.id)]=normalizeProduct(p);
+
+      updates[String(p.id)] =
+        normalizeProduct(p);
+
     });
 
     await productsRef.update(updates);
+
   }
+
 }
 
 
 /* =========================================================
-   AUTH
+   AUTH STATE
 ========================================================= */
 
 auth.onAuthStateChanged(async user=>{
 
-  adminLoggedIn=!!user && user.uid===ADMIN_UID;
+  if(user){
 
-  const emailEl=document.getElementById("adminLoggedEmail");
+    if(user.uid!==ADMIN_UID){
 
-  if(emailEl){
-    emailEl.textContent=adminLoggedIn ? user.email : "";
-  }
-
-  if(user && user.uid!==ADMIN_UID){
-    await auth.signOut();
-    adminLoggedIn=false;
-    toast("এই account-এ Admin access নেই।");
-  }
-});
-
-
-async function adminLogin(){
-
-  const email=(document.getElementById("adminEmail")?.value||"").trim();
-  const password=document.getElementById("adminPassword")?.value||"";
-  const msg=document.getElementById("adminLoginMsg");
-
-  if(!email){
-    msg.textContent="Email দিন।";
-    msg.style.color="red";
-    return;
-  }
-
-  if(!password){
-    msg.textContent="Password দিন।";
-    msg.style.color="red";
-    return;
-  }
-
-  msg.textContent="লগইন হচ্ছে...";
-  msg.style.color="#555";
-
-  try{
-
-    const credential=
-      await auth.signInWithEmailAndPassword(email,password);
-
-    if(credential.user.uid!==ADMIN_UID){
+      adminLoggedIn=false;
 
       await auth.signOut();
 
-      msg.textContent="এই account-এর Admin permission নেই।";
-      msg.style.color="red";
+      toast(
+        "এই account-এর Admin access নেই।"
+      );
+
       return;
+
     }
 
     adminLoggedIn=true;
 
+    document.getElementById(
+      "adminLoggedEmail"
+    ).textContent=
+      user.email||ADMIN_EMAIL;
+
+    setFirebaseStatus(
+      "Admin Connected",
+      true
+    );
+
+  }else{
+
+    adminLoggedIn=false;
+
+    document.getElementById(
+      "adminLoggedEmail"
+    ).textContent="";
+
+  }
+
+});
+
+
+/* =========================================================
+   ADMIN LOGIN
+========================================================= */
+
+async function adminLogin(){
+
+  const email=
+    (
+      document.getElementById(
+        "adminEmail"
+      ).value||""
+    ).trim();
+
+  const password=
+    document.getElementById(
+      "adminPassword"
+    ).value||"";
+
+  const msg=
+    document.getElementById(
+      "adminLoginMsg"
+    );
+
+
+  if(!email){
+
+    msg.textContent=
+      "Admin Email দিন।";
+
+    msg.style.color="red";
+
+    return;
+
+  }
+
+
+  if(!password){
+
+    msg.textContent=
+      "Password দিন।";
+
+    msg.style.color="red";
+
+    return;
+
+  }
+
+
+  msg.textContent=
+    "Firebase Login হচ্ছে...";
+
+  msg.style.color="#555";
+
+
+  try{
+
+    const credential=
+      await auth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+
+
+    if(
+      credential.user.uid!==ADMIN_UID
+    ){
+
+      await auth.signOut();
+
+      msg.textContent=
+        "এই account-এর Admin permission নেই।";
+
+      msg.style.color="red";
+
+      return;
+
+    }
+
+
+    adminLoggedIn=true;
+
+
     await ensureProductsSeeded();
 
-    msg.textContent="লগইন successful.";
+
+    msg.textContent=
+      "Login successful.";
+
     msg.style.color="green";
 
-    document.getElementById("adminPassword").value="";
+
+    document.getElementById(
+      "adminPassword"
+    ).value="";
+
 
     openPage("admin");
+
+
+    toast("Admin Login successful।");
+
 
   }catch(error){
 
     console.error(error);
 
-    let message="লগইন হয়নি।";
+    let message=
+      "Login করা যায়নি।";
 
-    if(error.code==="auth/invalid-credential"){
-      message="Email অথবা Password ভুল।";
-    }else if(error.code==="auth/wrong-password"){
-      message="Password ভুল।";
-    }else if(error.code==="auth/user-not-found"){
-      message="এই Email-এ Firebase account নেই।";
-    }else if(error.code==="auth/invalid-api-key"){
-      message="Firebase API key ভুল।";
-    }else if(error.code==="auth/operation-not-allowed"){
-      message="Firebase Console-এ Email/Password Login Enable করুন।";
-    }else{
-      message="Firebase Error: "+error.message;
+
+    if(
+      error.code===
+      "auth/invalid-credential"
+    ){
+
+      message=
+        "Email অথবা Password ভুল।";
+
     }
 
+    else if(
+      error.code===
+      "auth/wrong-password"
+    ){
+
+      message=
+        "Password ভুল।";
+
+    }
+
+    else if(
+      error.code===
+      "auth/user-not-found"
+    ){
+
+      message=
+        "এই Email-এ Firebase account নেই।";
+
+    }
+
+    else if(
+      error.code===
+      "auth/operation-not-allowed"
+    ){
+
+      message=
+        "Firebase Console-এ Email/Password Login Enable করুন।";
+
+    }
+
+    else if(
+      error.code===
+      "auth/invalid-api-key"
+    ){
+
+      message=
+        "Firebase API key ভুল।";
+
+    }
+
+    else{
+
+      message=
+        error.message||"Firebase Login Error";
+
+    }
+
+
     msg.textContent=message;
+
     msg.style.color="red";
+
   }
+
 }
 
+
+/* =========================================================
+   ADMIN LOGOUT
+========================================================= */
 
 async function adminLogout(){
 
   try{
+
     await auth.signOut();
-  }catch(e){}
+
+  }catch(e){
+
+    console.error(e);
+
+  }
 
   adminLoggedIn=false;
+
   openPage("home");
-  toast("Admin Logout হয়েছে।");
+
+  toast(
+    "Admin Logout হয়েছে।"
+  );
+
 }
 
 
@@ -1404,61 +2258,127 @@ function openPage(page){
     page!=="adminLogin" &&
     !adminLoggedIn
   ){
+
     page="adminLogin";
+
   }
+
 
   previousPage=currentPage;
+
   currentPage=page;
 
-  document.querySelectorAll(".page").forEach(p=>{
-    p.classList.remove("active");
-  });
 
-  const el=document.getElementById("page-"+page);
+  document
+    .querySelectorAll(".page")
+    .forEach(p=>{
+      p.classList.remove("active");
+    });
+
+
+  const el=
+    document.getElementById(
+      "page-"+page
+    );
+
 
   if(el){
+
     el.classList.add("active");
+
   }
 
-  window.scrollTo({top:0,behavior:"smooth"});
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
 
   updateBottomNav();
 
-  if(page==="cart") renderCart();
-  if(page==="orders") renderOrders();
-  if(page==="products") renderProductsPage();
-  if(page==="adminProducts") renderAdminProducts();
-  if(page==="adminOrders") renderAdminOrders();
-  if(page==="adminSettings") loadSettingsForm();
-  if(page==="adminDue") renderDues();
-  if(page==="checkout") renderCheckoutSummary();
+
+  if(page==="cart")
+    renderCart();
+
+  if(page==="orders")
+    renderOrders();
+
+  if(page==="products")
+    renderProductsPage();
+
+  if(page==="checkout")
+    renderCheckoutSummary();
+
+  if(page==="adminProducts")
+    renderAdminProducts();
+
+  if(page==="adminOrders")
+    renderAdminOrders();
+
+  if(page==="adminSettings")
+    loadSettingsForm();
+
+  if(page==="adminDue")
+    renderDues();
+
 }
 
 
 function goBack(){
-  openPage(previousPage==="home" ? "home" : previousPage);
+
+  openPage(
+    previousPage==="home"
+      ? "home"
+      : previousPage
+  );
+
 }
 
 
 function updateBottomNav(){
 
-  ["Home","Products","Orders","Cart"].forEach(x=>{
-    const id="nav"+x;
-    const el=document.getElementById(id);
-    if(el)el.classList.remove("active");
+  [
+    "Home",
+    "Products",
+    "Orders",
+    "Cart"
+  ].forEach(x=>{
+
+    const el=
+      document.getElementById(
+        "nav"+x
+      );
+
+    if(el)
+      el.classList.remove("active");
+
   });
 
+
   const map={
+
     home:"navHome",
+
     products:"navProducts",
+
     orders:"navOrders",
+
     cart:"navCart"
+
   };
 
+
   if(map[currentPage]){
-    document.getElementById(map[currentPage])
+
+    document
+      .getElementById(
+        map[currentPage]
+      )
       .classList.add("active");
+
   }
+
 }
 
 
@@ -1468,24 +2388,46 @@ function updateBottomNav(){
 
 function renderCategories(){
 
-  const box=document.getElementById("categoryGrid");
+  const box=
+    document.getElementById(
+      "categoryGrid"
+    );
+
   if(!box)return;
 
-  const cats=[...new Set(
-    products.map(p=>p.cat).filter(Boolean)
-  )];
+
+  const cats=[
+    ...new Set(
+      products
+      .map(p=>p.cat)
+      .filter(Boolean)
+    )
+  ];
+
 
   if(!cats.length){
-    box.innerHTML="<div class='muted'>কোনও category নেই।</div>";
+
+    box.innerHTML=
+      "<div class='muted'>কোনও category নেই।</div>";
+
     return;
+
   }
 
-  box.innerHTML=cats.map(cat=>`
-    <button class="categoryBtn"
-      onclick="openCategory('${esc(cat).replace(/'/g,"\\'")}')">
-      🛍️ ${esc(cat)}
-    </button>
-  `).join("");
+
+  box.innerHTML=
+    cats.map(cat=>`
+
+      <button
+        class="categoryBtn"
+        onclick='openCategory(${JSON.stringify(cat)})'>
+
+        🛍️ ${esc(cat)}
+
+      </button>
+
+    `).join("");
+
 }
 
 
@@ -1493,13 +2435,16 @@ function openCategory(cat){
 
   openPage("products");
 
-  const input=document.getElementById("productSearch");
+  const input=
+    document.getElementById(
+      "productSearch"
+    );
 
-  if(input){
+  if(input)
     input.value=cat;
-  }
 
   renderProductsPage();
+
 }
 
 
@@ -1509,23 +2454,42 @@ function openCategory(cat){
 
 function productCard(p){
 
-  const title=p.bn || p.name;
+  const title=
+    language==="en"
+      ? (p.name||p.bn)
+      : (p.bn||p.name);
+
 
   let visual="";
 
+
   if(p.image){
+
     visual=`
-      <img class="productImage"
-           src="${esc(p.image)}"
-           onerror="this.style.display='none'">
+
+      <img
+        class="productImage"
+        src="${esc(p.image)}"
+        alt="${esc(title)}"
+        onerror="this.style.display='none'">
+
     `;
+
   }else{
+
     visual=`
-      <div class="productEmoji">${esc(p.emoji||"🛒")}</div>
+
+      <div class="productEmoji">
+        ${esc(p.emoji||"🛒")}
+      </div>
+
     `;
+
   }
 
+
   return `
+
     <div class="card">
 
       ${visual}
@@ -1544,22 +2508,37 @@ function productCard(p){
 
       ${
         p.stock
-        ? `
-          <button class="btn full small"
-            style="margin-top:8px"
-            onclick="addToCart('${String(p.id).replace(/'/g,"\\'")}')">
-            🛒 Add to Cart
-          </button>
+        ?
         `
-        : `
-          <div class="outStock" style="margin-top:8px">
-            Stock নেই
-          </div>
+
+        <button
+          class="btn full small"
+          style="margin-top:8px"
+          onclick='addToCart(${JSON.stringify(String(p.id))})'>
+
+          🛒 Add to Cart
+
+        </button>
+
+        `
+        :
+        `
+
+        <div
+          class="outStock"
+          style="margin-top:8px">
+
+          Stock নেই
+
+        </div>
+
         `
       }
 
     </div>
+
   `;
+
 }
 
 
@@ -1569,38 +2548,85 @@ function productCard(p){
 
 function renderHomeProducts(list=products){
 
-  const box=document.getElementById("homeProducts");
+  const box=
+    document.getElementById(
+      "homeProducts"
+    );
+
   if(!box)return;
 
-  const available=list.filter(p=>p.stock).slice(0,8);
+
+  const available=
+    list
+    .filter(p=>p.stock)
+    .slice(0,8);
+
 
   if(!available.length){
-    box.innerHTML=`<div class="empty">কোনও product পাওয়া যায়নি।</div>`;
+
+    box.innerHTML=
+      `<div class="empty">
+        কোনও product পাওয়া যায়নি।
+      </div>`;
+
     return;
+
   }
 
-  box.innerHTML=available.map(productCard).join("");
+
+  box.innerHTML=
+    available
+    .map(productCard)
+    .join("");
+
 }
 
 
 function searchHomeProducts(){
 
-  const q=(document.getElementById("homeSearch")?.value||"")
+  const q=
+    (
+      document.getElementById(
+        "homeSearch"
+      )?.value||""
+    )
     .toLowerCase()
     .trim();
 
+
   if(!q){
+
     renderHomeProducts();
+
     return;
+
   }
 
-  const result=products.filter(p=>
-    String(p.name).toLowerCase().includes(q) ||
-    String(p.bn).toLowerCase().includes(q) ||
-    String(p.cat).toLowerCase().includes(q)
-  );
+
+  const result=
+    products.filter(p=>
+
+      String(p.name)
+        .toLowerCase()
+        .includes(q)
+
+      ||
+
+      String(p.bn)
+        .toLowerCase()
+        .includes(q)
+
+      ||
+
+      String(p.cat)
+        .toLowerCase()
+        .includes(q)
+
+    );
+
 
   renderHomeProducts(result);
+
 }
 
 
@@ -1610,33 +2636,80 @@ function searchHomeProducts(){
 
 function renderProductsPage(){
 
-  const box=document.getElementById("productsPageGrid");
+  const box=
+    document.getElementById(
+      "productsPageGrid"
+    );
+
   if(!box)return;
 
-  const q=(document.getElementById("productSearch")?.value||"")
+
+  const q=
+    (
+      document.getElementById(
+        "productSearch"
+      )?.value||""
+    )
     .toLowerCase()
     .trim();
 
-  const list=products.filter(p=>{
 
-    if(!q)return true;
+  const list=
+    products.filter(p=>{
 
-    return String(p.name).toLowerCase().includes(q) ||
-      String(p.bn).toLowerCase().includes(q) ||
-      String(p.cat).toLowerCase().includes(q) ||
-      String(p.unit).toLowerCase().includes(q);
-  });
+      if(!q)return true;
+
+
+      return (
+
+        String(p.name)
+          .toLowerCase()
+          .includes(q)
+
+        ||
+
+        String(p.bn)
+          .toLowerCase()
+          .includes(q)
+
+        ||
+
+        String(p.cat)
+          .toLowerCase()
+          .includes(q)
+
+        ||
+
+        String(p.unit)
+          .toLowerCase()
+          .includes(q)
+
+      );
+
+    });
+
 
   if(!list.length){
+
     box.innerHTML=`
+
       <div class="empty">
-        🔎 এই নামে কোনও product পাওয়া যায়নি।
+
+        🔎 এই নামে কোনও
+        product পাওয়া যায়নি।
+
       </div>
+
     `;
+
     return;
+
   }
 
-  box.innerHTML=list.map(productCard).join("");
+
+  box.innerHTML=
+    list.map(productCard).join("");
+
 }
 
 
@@ -1646,211 +2719,385 @@ function renderProductsPage(){
 
 function addToCart(id){
 
-  const p=products.find(x=>String(x.id)===String(id));
+  const p=
+    products.find(
+      x=>String(x.id)===String(id)
+    );
+
 
   if(!p){
-    toast("Product পাওয়া যায়নি।");
+
+    toast(
+      "Product পাওয়া যায়নি।"
+    );
+
     return;
+
   }
+
 
   if(!p.stock){
-    toast("এই product এখন Stock-এ নেই।");
+
+    toast(
+      "এই product এখন Stock-এ নেই।"
+    );
+
     return;
+
   }
 
-  const existing=cart.find(x=>String(x.id)===String(id));
+
+  const existing=
+    cart.find(
+      x=>String(x.id)===String(id)
+    );
+
 
   if(existing){
+
     existing.qty++;
+
   }else{
+
     cart.push({
+
       id:p.id,
+
       name:p.name,
+
       bn:p.bn,
+
       price:Number(p.price),
+
       unit:p.unit,
+
       qty:1
+
     });
+
   }
 
+
   save("gb_cart",cart);
+
   updateCartCount();
-  toast("Cart-এ যোগ হয়েছে।");
+
+  toast(
+    "Cart-এ যোগ হয়েছে।"
+  );
+
 }
 
 
 function changeCartQty(id,delta){
 
-  const item=cart.find(x=>String(x.id)===String(id));
+  const item=
+    cart.find(
+      x=>String(x.id)===String(id)
+    );
+
 
   if(!item)return;
 
+
   item.qty+=delta;
 
+
   if(item.qty<=0){
-    cart=cart.filter(x=>String(x.id)!==String(id));
+
+    cart=
+      cart.filter(
+        x=>String(x.id)!==String(id)
+      );
+
   }
 
+
   save("gb_cart",cart);
+
   renderCart();
+
   updateCartCount();
+
 }
 
 
 function removeFromCart(id){
 
-  cart=cart.filter(x=>String(x.id)!==String(id));
+  cart=
+    cart.filter(
+      x=>String(x.id)!==String(id)
+    );
+
 
   save("gb_cart",cart);
 
   renderCart();
+
   updateCartCount();
+
 }
 
 
 function updateCartCount(){
 
-  const count=cart.reduce((s,x)=>s+Number(x.qty||0),0);
+  const count=
+    cart.reduce(
+      (s,x)=>
+        s+Number(x.qty||0),
+      0
+    );
 
-  const el=document.getElementById("cartCount");
 
-  if(el)el.textContent=count;
+  const el=
+    document.getElementById(
+      "cartCount"
+    );
+
+
+  if(el)
+    el.textContent=count;
+
 }
 
 
 function getSubtotal(){
 
   return cart.reduce(
+
     (sum,item)=>
-      sum+(Number(item.price)||0)*(Number(item.qty)||0),
+
+      sum+
+      (Number(item.price)||0)*
+      (Number(item.qty)||0),
+
     0
+
   );
+
 }
 
 
 function getDeliveryCharge(subtotal){
 
-  const freeAmount=Number(settings.freeAmount)||149;
+  const freeAmount=
+    Number(settings.freeAmount)||149;
+
 
   if(subtotal>=freeAmount){
+
     return 0;
+
   }
 
-  if(settings.deliveryMode==="free"){
+
+  if(
+    settings.deliveryMode==="free"
+  ){
+
     return 0;
+
   }
 
-  if(settings.deliveryMode==="custom"){
-    return Number(settings.customDelivery)||0;
+
+  if(
+    settings.deliveryMode==="custom"
+  ){
+
+    return Number(
+      settings.customDelivery
+    )||0;
+
   }
 
-  return Number(settings.deliveryMode)||0;
+
+  return Number(
+    settings.deliveryMode
+  )||0;
+
 }
 
 
 function renderCart(){
 
-  const box=document.getElementById("cartItems");
-  const summary=document.getElementById("cartSummary");
+  const box=
+    document.getElementById(
+      "cartItems"
+    );
 
-  if(!box || !summary)return;
+  const summary=
+    document.getElementById(
+      "cartSummary"
+    );
+
+
+  if(!box||!summary)return;
+
 
   if(!cart.length){
 
     box.innerHTML=`
+
       <div class="empty">
-        🛒 Cart খালি আছে।<br><br>
-        <button class="btn" onclick="openPage('products')">
+
+        🛒 Cart খালি আছে।
+
+        <br><br>
+
+        <button
+          class="btn"
+          onclick="openPage('products')">
+
           Product দেখুন
+
         </button>
+
       </div>
+
     `;
 
     summary.innerHTML="";
+
     return;
+
   }
 
-  box.innerHTML=cart.map(item=>`
 
-    <div class="cartItem">
+  box.innerHTML=
+    cart.map(item=>`
 
-      <div class="cartInfo">
+      <div class="cartItem">
 
-        <b>${esc(item.bn||item.name)}</b>
+        <div class="cartInfo">
 
-        <div class="muted">
-          ₹${Number(item.price).toFixed(2)}
-          × ${item.qty}
+          <b>
+            ${esc(item.bn||item.name)}
+          </b>
+
+          <div class="muted">
+            ₹${Number(item.price).toFixed(2)}
+            × ${item.qty}
+          </div>
+
+          <div class="muted">
+            Unit: ${esc(item.unit)}
+          </div>
+
         </div>
 
-        <div class="muted">
-          Unit: ${esc(item.unit)}
+        <div>
+
+          <div class="qtyBox">
+
+            <button
+              onclick='changeCartQty(${JSON.stringify(String(item.id))},-1)'>
+              −
+            </button>
+
+            <b>${item.qty}</b>
+
+            <button
+              onclick='changeCartQty(${JSON.stringify(String(item.id))},1)'>
+              +
+            </button>
+
+          </div>
+
+          <button
+            class="btn danger small"
+            style="margin-top:6px"
+            onclick='removeFromCart(${JSON.stringify(String(item.id))})'>
+
+            Remove
+
+          </button>
+
         </div>
 
       </div>
 
-      <div>
-        <div class="qtyBox">
-          <button onclick="changeCartQty('${String(item.id)}',-1)">−</button>
-          <b>${item.qty}</b>
-          <button onclick="changeCartQty('${String(item.id)}',1)">+</button>
-        </div>
+    `).join("");
 
-        <button
-          class="btn danger small"
-          style="margin-top:6px"
-          onclick="removeFromCart('${String(item.id)}')">
-          Remove
-        </button>
-      </div>
 
-    </div>
+  const subtotal=
+    getSubtotal();
 
-  `).join("");
+  const delivery=
+    getDeliveryCharge(subtotal);
 
-  const subtotal=getSubtotal();
-  const delivery=getDeliveryCharge(subtotal);
-  const total=subtotal+delivery;
+  const total=
+    subtotal+delivery;
+
 
   summary.innerHTML=`
 
     <div class="summary">
 
       <div class="summaryRow">
+
         <span>Subtotal</span>
-        <b>₹${subtotal.toFixed(2)}</b>
+
+        <b>
+          ₹${subtotal.toFixed(2)}
+        </b>
+
       </div>
 
       <div class="summaryRow">
+
         <span>Delivery Charge</span>
-        <b>${delivery===0?"FREE":"₹"+delivery.toFixed(2)}</b>
+
+        <b>
+          ${
+            delivery===0
+            ? "FREE"
+            : "₹"+delivery.toFixed(2)
+          }
+        </b>
+
       </div>
 
       <div class="summaryRow total">
+
         <span>Total</span>
-        <span>₹${total.toFixed(2)}</span>
+
+        <span>
+          ₹${total.toFixed(2)}
+        </span>
+
       </div>
 
-      <button class="btn full" style="margin-top:12px"
+      <button
+        class="btn full"
+        style="margin-top:12px"
         onclick="openCheckout()">
+
         Proceed to Checkout
+
       </button>
 
     </div>
+
   `;
+
 }
 
 
 function openCheckout(){
 
   if(!cart.length){
+
     toast("Cart খালি।");
+
     return;
+
   }
+
 
   loadCustomerInfo();
 
   openPage("checkout");
+
 }
 
 
@@ -1859,122 +3106,231 @@ function openCheckout(){
 ========================================================= */
 
 function normalizePhone(phone){
-  return String(phone||"").replace(/\D/g,"").slice(-10);
+
+  return String(phone||"")
+    .replace(/\D/g,"")
+    .slice(-10);
+
 }
 
 
 function loadSavedAddresses(){
 
-  const phone=normalizePhone(
-    document.getElementById("customerPhone")?.value
-  );
+  const phone=
+    normalizePhone(
+      document.getElementById(
+        "customerPhone"
+      )?.value
+    );
 
-  const select=document.getElementById("savedAddressSelect");
+
+  const select=
+    document.getElementById(
+      "savedAddressSelect"
+    );
+
 
   if(!select)return;
 
-  select.innerHTML=
-    `<option value="">নতুন Address লিখুন</option>`;
 
-  const list=savedAddresses[phone]||[];
+  select.innerHTML=
+    `<option value="">
+      নতুন Address লিখুন
+    </option>`;
+
+
+  const list=
+    savedAddresses[phone]||[];
+
 
   list.forEach((a,i)=>{
 
-    const option=document.createElement("option");
+    const option=
+      document.createElement(
+        "option"
+      );
 
     option.value=String(i);
-    option.textContent=a.label || a.address;
+
+    option.textContent=
+      a.label||a.address;
 
     select.appendChild(option);
+
   });
+
 }
 
 
 function useSavedAddress(){
 
-  const phone=normalizePhone(
-    document.getElementById("customerPhone")?.value
-  );
+  const phone=
+    normalizePhone(
+      document.getElementById(
+        "customerPhone"
+      )?.value
+    );
 
-  const index=document.getElementById("savedAddressSelect")?.value;
+
+  const index=
+    document.getElementById(
+      "savedAddressSelect"
+    )?.value;
+
 
   if(index==="")return;
 
-  const list=savedAddresses[phone]||[];
+
+  const list=
+    savedAddresses[phone]||[];
+
 
   if(list[index]){
-    document.getElementById("customerAddress").value=
+
+    document.getElementById(
+      "customerAddress"
+    ).value=
       list[index].address||"";
+
   }
+
 }
 
 
 function saveCustomerAddress(){
 
-  const phone=normalizePhone(
-    document.getElementById("customerPhone")?.value
-  );
+  const phone=
+    normalizePhone(
+      document.getElementById(
+        "customerPhone"
+      ).value
+    );
+
 
   const address=
-    document.getElementById("customerAddress")?.value.trim();
+    document.getElementById(
+      "customerAddress"
+    ).value.trim();
+
 
   if(phone.length!==10){
-    toast("সঠিক 10 digit mobile number দিন।");
+
+    toast(
+      "সঠিক 10 digit mobile number দিন।"
+    );
+
     return;
+
   }
+
 
   if(!address){
+
     toast("Address লিখুন।");
+
     return;
+
   }
+
 
   if(!savedAddresses[phone]){
+
     savedAddresses[phone]=[];
+
   }
 
-  const exists=savedAddresses[phone]
-    .some(x=>x.address===address);
+
+  const exists=
+    savedAddresses[phone]
+    .some(
+      x=>x.address===address
+    );
+
 
   if(!exists){
 
     savedAddresses[phone].push({
+
       address:address,
-      label:"Saved Address "+(savedAddresses[phone].length+1)
+
+      label:
+        "Saved Address "+
+        (
+          savedAddresses[phone]
+            .length+1
+        )
+
     });
 
-    save("gb_saved_addresses",savedAddresses);
+
+    save(
+      "gb_saved_addresses",
+      savedAddresses
+    );
+
   }
+
 
   loadSavedAddresses();
 
-  toast("Address Save হয়েছে।");
+  toast(
+    "Address Save হয়েছে।"
+  );
+
 }
 
 
 function clearAddress(){
 
-  document.getElementById("customerAddress").value="";
-  document.getElementById("savedAddressSelect").value="";
+  document.getElementById(
+    "customerAddress"
+  ).value="";
+
+  document.getElementById(
+    "savedAddressSelect"
+  ).value="";
+
 }
 
 
 function loadCustomerInfo(){
 
-  const info=loadJSON("gb_customer_info",{});
+  const info=
+    loadJSON(
+      "gb_customer_info",
+      {}
+    );
+
 
   if(info.name){
-    document.getElementById("customerName").value=info.name;
+
+    document.getElementById(
+      "customerName"
+    ).value=info.name;
+
   }
+
 
   if(info.phone){
-    document.getElementById("customerPhone").value=info.phone;
+
+    document.getElementById(
+      "customerPhone"
+    ).value=info.phone;
+
   }
+
 
   if(info.address){
-    document.getElementById("customerAddress").value=info.address;
+
+    document.getElementById(
+      "customerAddress"
+    ).value=info.address;
+
   }
 
+
   loadSavedAddresses();
+
 }
 
 
@@ -1984,15 +3340,24 @@ function loadCustomerInfo(){
 
 async function searchLocation(){
 
-  const query=prompt(
-    "আপনার এলাকা / গ্রাম / PIN code লিখুন:"
-  );
+  const query=
+    prompt(
+      "আপনার এলাকা / গ্রাম / PIN code লিখুন:"
+    );
+
 
   if(!query)return;
 
-  const result=document.getElementById("locationResult");
 
-  result.textContent="Location খোঁজা হচ্ছে...";
+  const result=
+    document.getElementById(
+      "locationResult"
+    );
+
+
+  result.textContent=
+    "Location খোঁজা হচ্ছে...";
+
 
   try{
 
@@ -2001,86 +3366,144 @@ async function searchLocation(){
       "?format=json&limit=5&countrycodes=in&q="+
       encodeURIComponent(query);
 
-    const response=await fetch(url,{
-      headers:{
-        "Accept":"application/json"
-      }
-    });
 
-    const data=await response.json();
+    const response=
+      await fetch(url,{
+        headers:{
+          "Accept":
+            "application/json"
+        }
+      });
+
+
+    const data=
+      await response.json();
+
 
     if(!data.length){
-      result.textContent="Location পাওয়া যায়নি।";
+
+      result.textContent=
+        "Location পাওয়া যায়নি.";
+
       return;
+
     }
 
+
     showLocationChoices(data);
+
 
   }catch(e){
 
     console.error(e);
-    result.textContent="Location search করা যায়নি।";
+
+    result.textContent=
+      "Location search করা যায়নি.";
+
   }
+
 }
 
 
 function showLocationChoices(data){
 
-  const result=document.getElementById("locationResult");
+  const result=
+    document.getElementById(
+      "locationResult"
+    );
 
-  result.innerHTML=data.map((x,i)=>`
 
-    <button
-      class="btn secondary full"
-      style="margin-top:5px;text-align:left"
-      onclick="selectLocation(
-        ${Number(x.lat)},
-        ${Number(x.lon)},
-        '${esc(x.display_name).replace(/'/g,"\\'")}'
-      )">
-      📍 ${esc(x.display_name)}
-    </button>
+  result.innerHTML=
+    data.map((x,i)=>`
 
-  `).join("");
+      <button
+        class="btn secondary full"
+        style="margin-top:5px;text-align:left"
+        onclick='selectLocation(
+          ${Number(x.lat)},
+          ${Number(x.lon)},
+          ${JSON.stringify(x.display_name)}
+        )'>
+
+        📍 ${esc(x.display_name)}
+
+      </button>
+
+    `).join("");
+
 }
 
 
-function selectLocation(lat,lng,name){
+function selectLocation(
+  lat,
+  lng,
+  name
+){
 
   currentLat=lat;
+
   currentLng=lng;
 
-  document.getElementById("locationResult").innerHTML=
-    `📍 <b>Location selected</b><br>${esc(name)}`;
 
-  toast("Location Save হয়েছে।");
+  document.getElementById(
+    "locationResult"
+  ).innerHTML=
+    `📍 <b>Location selected</b><br>
+     ${esc(name)}`;
+
+
+  toast(
+    "Location Save হয়েছে।"
+  );
+
 }
 
 
 function getCurrentLocation(){
 
-  const result=document.getElementById("locationResult");
+  const result=
+    document.getElementById(
+      "locationResult"
+    );
+
 
   if(!navigator.geolocation){
-    result.textContent="আপনার browser location support করে না।";
+
+    result.textContent=
+      "Browser location support করে না.";
+
     return;
+
   }
 
-  result.textContent="Current location নেওয়া হচ্ছে...";
+
+  result.textContent=
+    "Current location নেওয়া হচ্ছে...";
+
 
   navigator.geolocation.getCurrentPosition(
 
     position=>{
 
-      currentLat=position.coords.latitude;
-      currentLng=position.coords.longitude;
+      currentLat=
+        position.coords.latitude;
+
+      currentLng=
+        position.coords.longitude;
+
 
       result.innerHTML=
         `📍 Current Location Selected<br>
-         Latitude: ${currentLat.toFixed(6)}<br>
-         Longitude: ${currentLng.toFixed(6)}`;
+         Latitude:
+         ${currentLat.toFixed(6)}<br>
+         Longitude:
+         ${currentLng.toFixed(6)}`;
 
-      toast("Current location পাওয়া গেছে।");
+
+      toast(
+        "Current location পাওয়া গেছে।"
+      );
+
     },
 
     error=>{
@@ -2089,29 +3512,43 @@ function getCurrentLocation(){
 
       result.textContent=
         "Location permission দিন অথবা Location Search ব্যবহার করুন.";
+
     },
 
     {
       enableHighAccuracy:true,
       timeout:10000
     }
+
   );
+
 }
 
 
 /* =========================================================
-   CHECKOUT
+   CHECKOUT SUMMARY
 ========================================================= */
 
 function renderCheckoutSummary(){
 
-  const box=document.getElementById("checkoutSummary");
+  const box=
+    document.getElementById(
+      "checkoutSummary"
+    );
+
 
   if(!box)return;
 
-  const subtotal=getSubtotal();
-  const delivery=getDeliveryCharge(subtotal);
-  const total=subtotal+delivery;
+
+  const subtotal=
+    getSubtotal();
+
+  const delivery=
+    getDeliveryCharge(subtotal);
+
+  const total=
+    subtotal+delivery;
+
 
   box.innerHTML=`
 
@@ -2119,158 +3556,382 @@ function renderCheckoutSummary(){
 
       <h3>Order Summary</h3>
 
-      ${cart.map(item=>`
+      ${
+        cart.map(item=>`
 
-        <div class="summaryRow">
-          <span>
-            ${esc(item.bn||item.name)}
-            × ${item.qty}
-            <small>(${esc(item.unit)})</small>
-          </span>
+          <div class="summaryRow">
 
-          <b>
-            ₹${(item.price*item.qty).toFixed(2)}
-          </b>
-        </div>
+            <span>
 
-      `).join("")}
+              ${esc(item.bn||item.name)}
+              × ${item.qty}
+
+              <small>
+                (${esc(item.unit)})
+              </small>
+
+            </span>
+
+            <b>
+              ₹${(
+                item.price*item.qty
+              ).toFixed(2)}
+            </b>
+
+          </div>
+
+        `).join("")
+      }
 
       <hr>
 
       <div class="summaryRow">
+
         <span>Subtotal</span>
-        <b>₹${subtotal.toFixed(2)}</b>
+
+        <b>
+          ₹${subtotal.toFixed(2)}
+        </b>
+
       </div>
 
       <div class="summaryRow">
+
         <span>Delivery</span>
-        <b>${delivery===0?"FREE":"₹"+delivery.toFixed(2)}</b>
+
+        <b>
+          ${
+            delivery===0
+            ? "FREE"
+            : "₹"+delivery.toFixed(2)
+          }
+        </b>
+
       </div>
 
       <div class="summaryRow total">
+
         <span>Payable</span>
-        <span>₹${total.toFixed(2)}</span>
+
+        <span>
+          ₹${total.toFixed(2)}
+        </span>
+
       </div>
 
     </div>
+
   `;
+
 }
 
 
-document.getElementById("paymentMethod")
-  ?.addEventListener("change",function(){
+/* =========================================================
+   PAYMENT
+========================================================= */
 
-    document.getElementById("upiBox")
-      ?.classList.toggle("hidden",this.value!=="UPI");
-  });
+document
+  .getElementById("paymentMethod")
+  ?.addEventListener(
+    "change",
+    function(){
+
+      document
+        .getElementById("upiBox")
+        ?.classList.toggle(
+          "hidden",
+          this.value!=="UPI"
+        );
+
+    }
+  );
 
 
 /* =========================================================
    PLACE ORDER
 ========================================================= */
 
-function placeOrder(){
+async function placeOrder(){
 
   if(!cart.length){
+
     toast("Cart খালি।");
+
     return;
+
   }
 
+
   const name=
-    document.getElementById("customerName").value.trim();
+    document
+      .getElementById(
+        "customerName"
+      )
+      .value.trim();
+
 
   const phone=
     normalizePhone(
-      document.getElementById("customerPhone").value
+      document
+        .getElementById(
+          "customerPhone"
+        )
+        .value
     );
 
+
   const address=
-    document.getElementById("customerAddress").value.trim();
+    document
+      .getElementById(
+        "customerAddress"
+      )
+      .value.trim();
+
 
   const payment=
-    document.getElementById("paymentMethod").value;
+    document
+      .getElementById(
+        "paymentMethod"
+      )
+      .value;
+
 
   if(!name){
-    toast("নাম লিখুন।");
+
+    toast("নাম লিখুন.");
+
     return;
+
   }
+
 
   if(phone.length!==10){
-    toast("সঠিক 10 digit mobile number দিন।");
+
+    toast(
+      "সঠিক 10 digit mobile number দিন."
+    );
+
     return;
+
   }
+
 
   if(!address){
-    toast("Delivery Address লিখুন।");
+
+    toast(
+      "Delivery Address লিখুন."
+    );
+
     return;
+
   }
 
-  const subtotal=getSubtotal();
-  const delivery=getDeliveryCharge(subtotal);
-  const total=subtotal+delivery;
+
+  const subtotal=
+    getSubtotal();
+
+  const delivery=
+    getDeliveryCharge(subtotal);
+
+  const total=
+    subtotal+delivery;
+
+
+  const orderId=
+    "GB"+Date.now();
+
+
+  const previousDue=
+    Number(
+      customerDues[phone]?.amount||0
+    );
+
 
   const order={
-    id:"GB"+Date.now(),
-    date:new Date().toISOString(),
+
+    id:orderId,
+
+    date:
+      new Date().toISOString(),
 
     customer:{
+
       name:name,
+
       phone:phone,
+
       address:address,
+
       lat:currentLat,
+
       lng:currentLng
+
     },
 
-    items:cart.map(x=>({
-      id:x.id,
-      name:x.name,
-      bn:x.bn,
-      price:Number(x.price),
-      qty:Number(x.qty),
-      unit:x.unit
-    })),
+    items:
+      cart.map(x=>({
+
+        id:x.id,
+
+        name:x.name,
+
+        bn:x.bn,
+
+        price:Number(x.price),
+
+        qty:Number(x.qty),
+
+        unit:x.unit
+
+      })),
 
     subtotal:subtotal,
+
     delivery:delivery,
+
     total:total,
-    previousDue:Number(customerDues[phone]?.amount||0),
-    payable:total+Number(customerDues[phone]?.amount||0),
+
+    previousDue:previousDue,
+
+    payable:
+      total+previousDue,
 
     paymentMethod:payment,
 
     status:"Pending",
+
     tracking:"Pending",
 
-    expectedDelivery:settings.expectedDelivery,
+    expectedDelivery:
+      settings.expectedDelivery,
 
-    failedDeliveryCharge:Number(settings.failedCharge)||30,
+    failedDeliveryCharge:
+      Number(
+        settings.failedCharge
+      )||30,
 
     cancelled:false,
+
     deliveryFailed:false,
+
     duePaid:false
+
   };
 
-  orders.unshift(order);
 
-  save("gb_orders",orders);
+  try{
 
-  save("gb_customer_info",{
-    name:name,
-    phone:phone,
-    address:address
-  });
+    /*
+      Save order to Firebase.
+    */
 
-  cart=[];
+    await ordersRef
+      .child(orderId)
+      .set(order);
 
-  save("gb_cart",cart);
 
-  updateCartCount();
+    /*
+      Local backup.
+    */
 
-  sendOrderWhatsApp(order);
+    orders.unshift(order);
 
-  toast("Order সফলভাবে নেওয়া হয়েছে।");
+    save(
+      "gb_orders",
+      orders
+    );
 
-  openPage("orders");
+
+    save(
+      "gb_customer_info",
+      {
+        name:name,
+        phone:phone,
+        address:address
+      }
+    );
+
+
+    /*
+      Save address automatically.
+    */
+
+    if(!savedAddresses[phone]){
+
+      savedAddresses[phone]=[];
+
+    }
+
+
+    if(
+      !savedAddresses[phone]
+        .some(
+          x=>x.address===address
+        )
+    ){
+
+      savedAddresses[phone].push({
+
+        address:address,
+
+        label:
+          "Saved Address "+
+          (
+            savedAddresses[phone]
+              .length+1
+          )
+
+      });
+
+
+      save(
+        "gb_saved_addresses",
+        savedAddresses
+      );
+
+    }
+
+
+    /*
+      Clear cart.
+    */
+
+    cart=[];
+
+    save(
+      "gb_cart",
+      cart
+    );
+
+    updateCartCount();
+
+
+    /*
+      WhatsApp.
+    */
+
+    sendOrderWhatsApp(order);
+
+
+    toast(
+      "Order সফলভাবে নেওয়া হয়েছে।"
+    );
+
+
+    openPage("orders");
+
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Order Firebase-এ save হয়নি: "+
+      error.message
+    );
+
+  }
+
 }
 
 
@@ -2294,10 +3955,16 @@ ${order.customer.address}
 Items:
 `;
 
+
   order.items.forEach(item=>{
+
     text+=
-`\n• ${item.bn||item.name} × ${item.qty} (${item.unit}) = ₹${(item.price*item.qty).toFixed(2)}`;
+`\n• ${item.bn||item.name} × ${item.qty} (${item.unit}) = ₹${(
+      item.price*item.qty
+    ).toFixed(2)}`;
+
   });
+
 
   text+=
 `\n\nSubtotal: ₹${order.subtotal.toFixed(2)}`+
@@ -2306,173 +3973,300 @@ Items:
 `\nPayment: ${order.paymentMethod}`+
 `\nExpected Delivery: ${order.expectedDelivery}`;
 
-  if(order.customer.lat && order.customer.lng){
+
+  if(
+    order.customer.lat &&
+    order.customer.lng
+  ){
+
     text+=
       `\nLocation: https://maps.google.com/?q=${order.customer.lat},${order.customer.lng}`;
+
   }
 
-  text+=`\n\nPlease confirm this order.`;
+
+  text+=
+    `\n\nPlease confirm this order.`;
+
 
   const url=
     "https://wa.me/916294172197?text="+
     encodeURIComponent(text);
 
-  window.open(url,"_blank");
+
+  window.open(
+    url,
+    "_blank"
+  );
+
 }
 
 
 /* =========================================================
-   ORDERS
+   CUSTOMER ORDERS
 ========================================================= */
 
 function renderOrders(){
 
-  const box=document.getElementById("ordersList");
+  const box=
+    document.getElementById(
+      "ordersList"
+    );
+
 
   if(!box)return;
+
 
   if(!orders.length){
 
     box.innerHTML=`
+
       <div class="empty">
+
         📦 এখনও কোনও Order নেই।
+
       </div>
+
     `;
 
     return;
+
   }
 
-  box.innerHTML=orders.map(order=>{
 
-    let statusClass="";
+  box.innerHTML=
+    orders.map(order=>{
 
-    if(order.status==="Cancelled"){
-      statusClass="cancelled";
-    }
+      let statusClass="";
 
-    if(order.status==="Delivered"){
-      statusClass="delivered";
-    }
 
-    return `
+      if(
+        order.status==="Cancelled"
+      ){
 
-      <div class="orderCard">
+        statusClass="cancelled";
 
-        <div style="display:flex;justify-content:space-between;gap:8px">
-          <b>${esc(order.id)}</b>
-          <span class="status ${statusClass}">
-            ${esc(order.status)}
-          </span>
-        </div>
+      }
 
-        <div class="muted" style="margin-top:6px">
-          ${formatDate(order.date)}
-        </div>
 
-        <hr>
+      if(
+        order.status==="Delivered"
+      ){
 
-        ${order.items.map(item=>`
-          <div class="summaryRow">
-            <span>
-              ${esc(item.bn||item.name)}
-              × ${item.qty}
-              <small>(${esc(item.unit)})</small>
+        statusClass="delivered";
+
+      }
+
+
+      return `
+
+        <div class="orderCard">
+
+          <div
+            style="
+              display:flex;
+              justify-content:space-between;
+              gap:8px">
+
+            <b>
+              ${esc(order.id)}
+            </b>
+
+            <span
+              class="status ${statusClass}">
+
+              ${esc(order.status)}
+
             </span>
-            <b>₹${(item.price*item.qty).toFixed(2)}</b>
+
           </div>
-        `).join("")}
 
-        <hr>
+          <div
+            class="muted"
+            style="margin-top:6px">
 
-        <div class="summaryRow">
-          <span>Subtotal</span>
-          <b>₹${order.subtotal.toFixed(2)}</b>
-        </div>
+            ${formatDate(order.date)}
 
-        <div class="summaryRow">
-          <span>Delivery</span>
-          <b>₹${order.delivery.toFixed(2)}</b>
-        </div>
+          </div>
 
-        <div class="summaryRow total">
-          <span>Total</span>
-          <span>₹${order.total.toFixed(2)}</span>
-        </div>
-
-        <p>
-          <b>Expected Delivery:</b>
-          ${esc(order.expectedDelivery)}
-        </p>
-
-        <p>
-          <b>Tracking:</b>
-          ${esc(order.tracking||order.status)}
-        </p>
-
-        <div class="row">
-
-          <button class="btn secondary small"
-            onclick="showOrderDetails('${order.id}')">
-            Details
-          </button>
-
-          <button class="btn secondary small"
-            onclick="downloadOrder('${order.id}')">
-            Download
-          </button>
+          <hr>
 
           ${
-            !["Delivered","Cancelled"].includes(order.status)
-            ?
-            `<button class="btn danger small"
-              onclick="cancelOrder('${order.id}')">
-              Cancel
-            </button>`
-            :""
+            (order.items||[])
+            .map(item=>`
+
+              <div class="summaryRow">
+
+                <span>
+
+                  ${esc(item.bn||item.name)}
+                  × ${item.qty}
+
+                  <small>
+                    (${esc(item.unit)})
+                  </small>
+
+                </span>
+
+                <b>
+                  ₹${(
+                    item.price*item.qty
+                  ).toFixed(2)}
+                </b>
+
+              </div>
+
+            `).join("")
           }
+
+          <hr>
+
+          <div class="summaryRow">
+
+            <span>Subtotal</span>
+
+            <b>
+              ₹${Number(
+                order.subtotal||0
+              ).toFixed(2)}
+            </b>
+
+          </div>
+
+          <div class="summaryRow">
+
+            <span>Delivery</span>
+
+            <b>
+              ₹${Number(
+                order.delivery||0
+              ).toFixed(2)}
+            </b>
+
+          </div>
+
+          <div class="summaryRow total">
+
+            <span>Total</span>
+
+            <span>
+              ₹${Number(
+                order.total||0
+              ).toFixed(2)}
+            </span>
+
+          </div>
+
+          <p>
+            <b>Expected Delivery:</b>
+            ${esc(
+              order.expectedDelivery||""
+            )}
+          </p>
+
+          <p>
+            <b>Tracking:</b>
+            ${esc(
+              order.tracking||
+              order.status||
+              "Pending"
+            )}
+          </p>
+
+          <div class="row">
+
+            <button
+              class="btn secondary small"
+              onclick='showOrderDetails(${JSON.stringify(order.id)})'>
+
+              Details
+
+            </button>
+
+            <button
+              class="btn secondary small"
+              onclick='downloadOrder(${JSON.stringify(order.id)})'>
+
+              Download
+
+            </button>
+
+          </div>
 
         </div>
 
-      </div>
-    `;
+      `;
 
-  }).join("");
+    }).join("");
+
 }
 
 
 function formatDate(date){
 
   try{
-    return new Date(date).toLocaleString("en-IN",{
-      day:"2-digit",
-      month:"short",
-      year:"numeric",
-      hour:"2-digit",
-      minute:"2-digit"
-    });
+
+    return new Date(date)
+      .toLocaleString(
+        "en-IN",
+        {
+          day:"2-digit",
+          month:"short",
+          year:"numeric",
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      );
+
   }catch(e){
+
     return date;
+
   }
+
 }
 
 
+/* =========================================================
+   ORDER DETAILS
+========================================================= */
+
 function showOrderDetails(id){
 
-  const order=orders.find(x=>x.id===id);
+  const order=
+    orders.find(
+      x=>x.id===id
+    );
+
 
   if(!order)return;
 
-  let html=`
+
+  const html=`
 
     <h2>Order Details</h2>
 
-    <p><b>Order ID:</b> ${esc(order.id)}</p>
-    <p><b>Date:</b> ${formatDate(order.date)}</p>
+    <p>
+      <b>Order ID:</b>
+      ${esc(order.id)}
+    </p>
+
+    <p>
+      <b>Date:</b>
+      ${formatDate(order.date)}
+    </p>
 
     <hr>
 
-    <p><b>Customer:</b> ${esc(order.customer.name)}</p>
-    <p><b>Phone:</b> ${esc(order.customer.phone)}</p>
+    <p>
+      <b>Customer:</b>
+      ${esc(order.customer.name)}
+    </p>
+
+    <p>
+      <b>Phone:</b>
+      ${esc(order.customer.phone)}
+    </p>
 
     <p>
       <b>Address:</b><br>
@@ -2483,75 +4277,103 @@ function showOrderDetails(id){
 
     <h3>Products</h3>
 
-    ${order.items.map(item=>`
+    ${
+      (order.items||[])
+      .map(item=>`
 
-      <div class="summaryRow">
-        <span>
-          ${esc(item.bn||item.name)}
-          × ${item.qty}
-          (${esc(item.unit)})
-        </span>
-        <b>₹${(item.price*item.qty).toFixed(2)}</b>
-      </div>
+        <div class="summaryRow">
 
-    `).join("")}
+          <span>
+
+            ${esc(item.bn||item.name)}
+            × ${item.qty}
+
+            (${esc(item.unit)})
+
+          </span>
+
+          <b>
+            ₹${(
+              item.price*item.qty
+            ).toFixed(2)}
+          </b>
+
+        </div>
+
+      `).join("")
+    }
 
     <hr>
 
     <div class="summaryRow">
+
       <span>Subtotal</span>
-      <b>₹${order.subtotal.toFixed(2)}</b>
+
+      <b>
+        ₹${Number(
+          order.subtotal||0
+        ).toFixed(2)}
+      </b>
+
     </div>
 
     <div class="summaryRow">
+
       <span>Delivery</span>
-      <b>₹${order.delivery.toFixed(2)}</b>
+
+      <b>
+        ₹${Number(
+          order.delivery||0
+        ).toFixed(2)}
+      </b>
+
     </div>
 
     <div class="summaryRow total">
+
       <span>Total</span>
-      <span>₹${order.total.toFixed(2)}</span>
+
+      <span>
+        ₹${Number(
+          order.total||0
+        ).toFixed(2)}
+      </span>
+
     </div>
 
     <p>
-      <b>Payment:</b> ${esc(order.paymentMethod)}
+      <b>Payment:</b>
+      ${esc(order.paymentMethod)}
     </p>
 
     <p>
-      <b>Status:</b> ${esc(order.status)}
+      <b>Status:</b>
+      ${esc(order.status)}
+    </p>
+
+    <p>
+      <b>Tracking:</b>
+      ${esc(order.tracking||"")}
     </p>
 
     <p>
       <b>Expected Delivery:</b>
-      ${esc(order.expectedDelivery)}
+      ${esc(order.expectedDelivery||"")}
     </p>
 
-    <button class="btn full" onclick="closeModal()">
+    <button
+      class="btn full"
+      onclick="closeModal()">
+
       Close
+
     </button>
+
   `;
 
+
   openModal(html);
-}
 
-
-function cancelOrder(id){
-
-  const index=orders.findIndex(x=>x.id===id);
-
-  if(index<0)return;
-
-  if(!confirm("এই Order Cancel করবেন?"))return;
-
-  orders[index].status="Cancelled";
-  orders[index].tracking="Cancelled";
-  orders[index].cancelled=true;
-
-  save("gb_orders",orders);
-
-  renderOrders();
-
-  toast("Order Cancel হয়েছে।");
 }
 
 
@@ -2561,152 +4383,364 @@ function cancelOrder(id){
 
 function downloadOrder(id){
 
-  const order=orders.find(x=>x.id===id);
+  const order=
+    orders.find(
+      x=>x.id===id
+    );
+
 
   if(!order)return;
+
 
   const html=`
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>${order.id}</title>
+<title>${esc(order.id)}</title>
+
 <style>
-body{font-family:Arial;padding:20px}
-table{border-collapse:collapse;width:100%}
-th,td{border:1px solid #ccc;padding:7px;text-align:left}
+
+body{
+  font-family:Arial;
+  padding:20px;
+}
+
+table{
+  border-collapse:collapse;
+  width:100%;
+}
+
+th,td{
+  border:1px solid #ccc;
+  padding:7px;
+  text-align:left;
+}
+
 </style>
+
 </head>
+
 <body>
 
 <h1>Ghare Bazar</h1>
+
 <h3>Ma Manosha Stationery</h3>
 
-<p><b>Order ID:</b> ${esc(order.id)}</p>
-<p><b>Date:</b> ${formatDate(order.date)}</p>
+<p>
+<b>Order ID:</b>
+${esc(order.id)}
+</p>
 
-<p><b>Customer:</b> ${esc(order.customer.name)}</p>
-<p><b>Phone:</b> ${esc(order.customer.phone)}</p>
-<p><b>Address:</b> ${esc(order.customer.address)}</p>
+<p>
+<b>Date:</b>
+${formatDate(order.date)}
+</p>
+
+<p>
+<b>Customer:</b>
+${esc(order.customer.name)}
+</p>
+
+<p>
+<b>Phone:</b>
+${esc(order.customer.phone)}
+</p>
+
+<p>
+<b>Address:</b>
+${esc(order.customer.address)}
+</p>
 
 <table>
+
 <tr>
+
 <th>Product</th>
 <th>Quantity</th>
 <th>Unit</th>
 <th>Price</th>
 <th>Total</th>
+
 </tr>
 
-${order.items.map(item=>`
-<tr>
-<td>${esc(item.bn||item.name)}</td>
-<td>${item.qty}</td>
-<td>${esc(item.unit)}</td>
-<td>₹${item.price.toFixed(2)}</td>
-<td>₹${(item.price*item.qty).toFixed(2)}</td>
-</tr>
-`).join("")}
+${
+  (order.items||[])
+  .map(item=>`
+
+    <tr>
+
+      <td>
+        ${esc(item.bn||item.name)}
+      </td>
+
+      <td>
+        ${item.qty}
+      </td>
+
+      <td>
+        ${esc(item.unit)}
+      </td>
+
+      <td>
+        ₹${Number(
+          item.price
+        ).toFixed(2)}
+      </td>
+
+      <td>
+        ₹${(
+          item.price*item.qty
+        ).toFixed(2)}
+      </td>
+
+    </tr>
+
+  `).join("")
+}
 
 </table>
 
-<h3>Subtotal: ₹${order.subtotal.toFixed(2)}</h3>
-<h3>Delivery: ₹${order.delivery.toFixed(2)}</h3>
-<h2>Total: ₹${order.total.toFixed(2)}</h2>
+<h3>
+Subtotal:
+₹${Number(
+  order.subtotal||0
+).toFixed(2)}
+</h3>
 
-<p>Expected Delivery: ${esc(order.expectedDelivery)}</p>
+<h3>
+Delivery:
+₹${Number(
+  order.delivery||0
+).toFixed(2)}
+</h3>
+
+<h2>
+Total:
+₹${Number(
+  order.total||0
+).toFixed(2)}
+</h2>
+
+<p>
+Expected Delivery:
+${esc(order.expectedDelivery||"")}
+</p>
 
 </body>
 </html>
 `;
 
-  const blob=new Blob([html],{
-    type:"text/html;charset=utf-8"
-  });
 
-  const url=URL.createObjectURL(blob);
+  const blob=
+    new Blob(
+      [html],
+      {
+        type:
+          "text/html;charset=utf-8"
+      }
+    );
 
-  const a=document.createElement("a");
+
+  const url=
+    URL.createObjectURL(blob);
+
+
+  const a=
+    document.createElement("a");
+
 
   a.href=url;
-  a.download=order.id+".html";
+
+  a.download=
+    order.id+".html";
+
 
   document.body.appendChild(a);
+
   a.click();
+
   a.remove();
 
+
   setTimeout(()=>{
+
     URL.revokeObjectURL(url);
+
   },1000);
+
 }
 
 
 /* =========================================================
-   ADMIN PRODUCT MANAGEMENT
+   ADMIN CHECK
 ========================================================= */
 
 function requireAdmin(){
 
   if(!adminLoggedIn){
-    toast("আগে Admin Login করুন।");
+
+    toast(
+      "আগে Admin Login করুন।"
+    );
+
     openPage("adminLogin");
+
     return false;
+
   }
 
   return true;
+
 }
 
+
+/* =========================================================
+   ADMIN PRODUCT SAVE
+========================================================= */
 
 async function saveProduct(){
 
   if(!requireAdmin())return;
 
-  const editId=document.getElementById("editProductId").value;
 
-  const name=document.getElementById("pName").value.trim();
-  const bn=document.getElementById("pBn").value.trim();
-  const price=Number(document.getElementById("pPrice").value);
-  const unit=document.getElementById("pUnit").value.trim();
-  const cat=document.getElementById("pCat").value.trim()||"Grocery";
-  const emoji=document.getElementById("pEmoji").value.trim()||"🛒";
-  const image=document.getElementById("pImage").value.trim();
-  const stock=document.getElementById("pStock").checked;
+  const editId=
+    document.getElementById(
+      "editProductId"
+    ).value;
+
+
+  const name=
+    document.getElementById(
+      "pName"
+    ).value.trim();
+
+
+  const bn=
+    document.getElementById(
+      "pBn"
+    ).value.trim();
+
+
+  const price=
+    Number(
+      document.getElementById(
+        "pPrice"
+      ).value
+    );
+
+
+  const unit=
+    document.getElementById(
+      "pUnit"
+    ).value.trim();
+
+
+  const cat=
+    document.getElementById(
+      "pCat"
+    ).value.trim()
+    ||"Grocery";
+
+
+  const emoji=
+    document.getElementById(
+      "pEmoji"
+    ).value.trim()
+    ||"🛒";
+
+
+  const image=
+    document.getElementById(
+      "pImage"
+    ).value.trim();
+
+
+  const stock=
+    document.getElementById(
+      "pStock"
+    ).checked;
+
 
   if(!name){
-    toast("Product Name দিন।");
+
+    toast(
+      "Product Name দিন।"
+    );
+
     return;
+
   }
+
 
   if(!bn){
-    toast("বাংলা Product Name দিন।");
+
+    toast(
+      "বাংলা Product Name দিন।"
+    );
+
     return;
+
   }
 
-  if(!price || price<0){
-    toast("সঠিক Price দিন।");
+
+  if(price<0 || isNaN(price)){
+
+    toast(
+      "সঠিক Price দিন।"
+    );
+
     return;
+
   }
+
 
   if(!unit){
-    toast("Quantity / Unit দিন।");
+
+    toast(
+      "Quantity / Unit দিন।"
+    );
+
     return;
+
   }
 
-  const id=editId || String(Date.now());
+
+  const id=
+    editId ||
+    String(
+      Date.now()
+    );
+
 
   const product={
+
     id:id,
+
     name:name,
+
     bn:bn,
+
     price:price,
+
     unit:unit,
+
     cat:cat,
+
     emoji:emoji,
+
     image:image,
+
     stock:stock
+
   };
 
-  const msg=document.getElementById("productSaveMsg");
+
+  const msg=
+    document.getElementById(
+      "productSaveMsg"
+    );
+
 
   try{
 
@@ -2714,63 +4748,145 @@ async function saveProduct(){
       .child(String(id))
       .set(product);
 
+
     msg.textContent=
       editId
       ? "Product update হয়েছে।"
       : "Product Firebase-এ save হয়েছে।";
 
+
     msg.style.color="green";
 
+
     resetProductForm();
+
+
+    toast(
+      editId
+      ? "Product update হয়েছে।"
+      : "Product add হয়েছে।"
+    );
+
 
   }catch(error){
 
     console.error(error);
 
     msg.textContent=
-      "Save হয়নি: "+error.message;
+      "Save হয়নি: "+
+      error.message;
 
     msg.style.color="red";
+
   }
+
 }
 
+
+/* =========================================================
+   ADMIN PRODUCT EDIT
+========================================================= */
 
 function editProduct(id){
 
   if(!requireAdmin())return;
 
-  const p=products.find(x=>String(x.id)===String(id));
+
+  const p=
+    products.find(
+      x=>String(x.id)===String(id)
+    );
+
 
   if(!p)return;
 
-  document.getElementById("editProductId").value=p.id;
-  document.getElementById("pName").value=p.name||"";
-  document.getElementById("pBn").value=p.bn||"";
-  document.getElementById("pPrice").value=p.price||"";
-  document.getElementById("pUnit").value=p.unit||"";
-  document.getElementById("pCat").value=p.cat||"";
-  document.getElementById("pEmoji").value=p.emoji||"";
-  document.getElementById("pImage").value=p.image||"";
-  document.getElementById("pStock").checked=p.stock!==false;
 
-  document.getElementById("productFormTitle").textContent=
+  document.getElementById(
+    "editProductId"
+  ).value=p.id;
+
+
+  document.getElementById(
+    "pName"
+  ).value=p.name||"";
+
+
+  document.getElementById(
+    "pBn"
+  ).value=p.bn||"";
+
+
+  document.getElementById(
+    "pPrice"
+  ).value=p.price||"";
+
+
+  document.getElementById(
+    "pUnit"
+  ).value=p.unit||"";
+
+
+  document.getElementById(
+    "pCat"
+  ).value=p.cat||"";
+
+
+  document.getElementById(
+    "pEmoji"
+  ).value=p.emoji||"";
+
+
+  document.getElementById(
+    "pImage"
+  ).value=p.image||"";
+
+
+  document.getElementById(
+    "pStock"
+  ).checked=
+    p.stock!==false;
+
+
+  document.getElementById(
+    "productFormTitle"
+  ).textContent=
     "Product Edit করুন";
 
-  window.scrollTo({top:0,behavior:"smooth"});
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
 }
 
+
+/* =========================================================
+   ADMIN PRODUCT DELETE
+========================================================= */
 
 async function deleteProduct(id){
 
   if(!requireAdmin())return;
 
-  const p=products.find(x=>String(x.id)===String(id));
+
+  const p=
+    products.find(
+      x=>String(x.id)===String(id)
+    );
+
 
   if(!p)return;
 
+
   if(!confirm(
     `"${p.bn||p.name}" Product delete করবেন?`
-  ))return;
+  )){
+
+    return;
+
+  }
+
 
   try{
 
@@ -2778,24 +4894,43 @@ async function deleteProduct(id){
       .child(String(id))
       .remove();
 
-    toast("Product delete হয়েছে।");
+
+    toast(
+      "Product delete হয়েছে।"
+    );
+
 
   }catch(error){
 
     console.error(error);
 
-    toast("Delete হয়নি: "+error.message);
+    toast(
+      "Delete হয়নি: "+
+      error.message
+    );
+
   }
+
 }
 
+
+/* =========================================================
+   STOCK
+========================================================= */
 
 async function toggleStock(id){
 
   if(!requireAdmin())return;
 
-  const p=products.find(x=>String(x.id)===String(id));
+
+  const p=
+    products.find(
+      x=>String(x.id)===String(id)
+    );
+
 
   if(!p)return;
+
 
   try{
 
@@ -2805,107 +4940,207 @@ async function toggleStock(id){
         stock:!p.stock
       });
 
-    toast("Stock status update হয়েছে।");
+
+    toast(
+      "Stock status update হয়েছে।"
+    );
+
 
   }catch(error){
 
-    toast("Update হয়নি।");
+    console.error(error);
+
+    toast(
+      "Update হয়নি।"
+    );
+
   }
+
 }
 
+
+/* =========================================================
+   RESET PRODUCT
+========================================================= */
 
 function resetProductForm(){
 
-  document.getElementById("editProductId").value="";
-  document.getElementById("pName").value="";
-  document.getElementById("pBn").value="";
-  document.getElementById("pPrice").value="";
-  document.getElementById("pUnit").value="";
-  document.getElementById("pCat").value="";
-  document.getElementById("pEmoji").value="";
-  document.getElementById("pImage").value="";
-  document.getElementById("pStock").checked=true;
+  document.getElementById(
+    "editProductId"
+  ).value="";
 
-  document.getElementById("productFormTitle").textContent=
+
+  document.getElementById(
+    "pName"
+  ).value="";
+
+
+  document.getElementById(
+    "pBn"
+  ).value="";
+
+
+  document.getElementById(
+    "pPrice"
+  ).value="";
+
+
+  document.getElementById(
+    "pUnit"
+  ).value="";
+
+
+  document.getElementById(
+    "pCat"
+  ).value="";
+
+
+  document.getElementById(
+    "pEmoji"
+  ).value="";
+
+
+  document.getElementById(
+    "pImage"
+  ).value="";
+
+
+  document.getElementById(
+    "pStock"
+  ).checked=true;
+
+
+  document.getElementById(
+    "productFormTitle"
+  ).textContent=
     "নতুন Product যোগ করুন";
+
 }
 
 
+/* =========================================================
+   ADMIN PRODUCTS LIST
+========================================================= */
+
 function renderAdminProducts(){
 
-  const box=document.getElementById("adminProductsList");
+  const box=
+    document.getElementById(
+      "adminProductsList"
+    );
+
 
   if(!box)return;
+
 
   if(!products.length){
 
     box.innerHTML=
-      `<div class="empty">কোনও Product নেই।</div>`;
+      `<div class="empty">
+        কোনও Product নেই।
+      </div>`;
 
     return;
+
   }
 
-  box.innerHTML=products.map(p=>`
 
-    <div class="adminProduct">
+  box.innerHTML=
+    products.map(p=>`
 
-      <div class="adminProductTop">
+      <div class="adminProduct">
 
-        <div style="font-size:35px">
-          ${esc(p.emoji||"🛒")}
+        <div class="adminProductTop">
+
+          <div style="font-size:35px">
+
+            ${esc(
+              p.emoji||"🛒"
+            )}
+
+          </div>
+
+          <div class="adminInfo">
+
+            <b>
+              ${esc(
+                p.bn||p.name
+              )}
+            </b>
+
+            <div class="muted">
+              ${esc(p.name)}
+            </div>
+
+            <div>
+              ₹${Number(
+                p.price
+              ).toFixed(2)}
+
+              • ${esc(p.unit)}
+            </div>
+
+            <div class="muted">
+              Category:
+              ${esc(p.cat)}
+            </div>
+
+            <div style="margin-top:5px">
+
+              ${
+                p.stock
+                ?
+                `<span class="status">
+                  Stock Available
+                </span>`
+                :
+                `<span class="status cancelled">
+                  Out of Stock
+                </span>`
+              }
+
+            </div>
+
+          </div>
+
         </div>
 
-        <div class="adminInfo">
+        <div class="adminActions">
 
-          <b>${esc(p.bn||p.name)}</b>
+          <button
+            class="btn small"
+            onclick='editProduct(${JSON.stringify(String(p.id))})'>
 
-          <div class="muted">
-            ${esc(p.name)}
-          </div>
+            ✏️ Edit
 
-          <div>
-            ₹${Number(p.price).toFixed(2)}
-            • ${esc(p.unit)}
-          </div>
+          </button>
 
-          <div class="muted">
-            Category: ${esc(p.cat)}
-          </div>
+          <button
+            class="btn yellow small"
+            onclick='toggleStock(${JSON.stringify(String(p.id))})'>
 
-          <div style="margin-top:5px">
             ${
               p.stock
-              ? `<span class="status">Stock Available</span>`
-              : `<span class="status cancelled">Out of Stock</span>`
+              ? "Out of Stock"
+              : "Stock On"
             }
-          </div>
+
+          </button>
+
+          <button
+            class="btn danger small"
+            onclick='deleteProduct(${JSON.stringify(String(p.id))})'>
+
+            🗑️ Delete
+
+          </button>
 
         </div>
 
       </div>
 
-      <div class="adminActions">
+    `).join("");
 
-        <button class="btn small"
-          onclick="editProduct('${String(p.id)}')">
-          ✏️ Edit
-        </button>
-
-        <button class="btn yellow small"
-          onclick="toggleStock('${String(p.id)}')">
-          ${p.stock?"Out of Stock":"Stock On"}
-        </button>
-
-        <button class="btn danger small"
-          onclick="deleteProduct('${String(p.id)}')">
-          🗑️ Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  `).join("");
 }
 
 
@@ -2915,197 +5150,452 @@ function renderAdminProducts(){
 
 function renderAdminOrders(){
 
-  const box=document.getElementById("adminOrdersList");
+  const box=
+    document.getElementById(
+      "adminOrdersList"
+    );
+
 
   if(!box)return;
+
 
   if(!orders.length){
 
     box.innerHTML=
-      `<div class="empty">কোনও Order নেই।</div>`;
+      `<div class="empty">
+        কোনও Order নেই।
+      </div>`;
 
     return;
+
   }
 
-  box.innerHTML=orders.map(order=>`
 
-    <div class="orderCard">
+  box.innerHTML=
+    orders.map(order=>`
 
-      <div style="display:flex;justify-content:space-between">
-        <b>${esc(order.id)}</b>
-        <span class="status">${esc(order.status)}</span>
-      </div>
+      <div class="orderCard">
 
-      <p>
-        <b>Customer:</b>
-        ${esc(order.customer.name)}
-      </p>
-
-      <p>
-        <b>Phone:</b>
-        ${esc(order.customer.phone)}
-      </p>
-
-      <p>
-        <b>Address:</b><br>
-        ${esc(order.customer.address)}
-      </p>
-
-      <hr>
-
-      ${order.items.map(item=>`
-
-        <div class="summaryRow">
-          <span>
-            ${esc(item.bn||item.name)}
-            × ${item.qty}
-            (${esc(item.unit)})
-          </span>
+        <div
+          style="
+            display:flex;
+            justify-content:space-between">
 
           <b>
-            ₹${(item.price*item.qty).toFixed(2)}
+            ${esc(order.id)}
           </b>
+
+          <span class="status">
+
+            ${esc(
+              order.status||
+              "Pending"
+            )}
+
+          </span>
+
         </div>
 
-      `).join("")}
+        <p>
 
-      <hr>
+          <b>Customer:</b>
 
-      <div class="summaryRow">
-        <span>Total</span>
-        <b>₹${order.total.toFixed(2)}</b>
-      </div>
+          ${esc(
+            order.customer?.name||
+            ""
+          )}
 
-      <div class="formGroup">
-        <label>Status</label>
+        </p>
 
-        <select
-          onchange="changeOrderStatus('${order.id}',this.value)">
+        <p>
 
-          ${[
-            "Pending",
-            "Confirmed",
-            "Processing",
-            "Out for Delivery",
-            "Delivered",
-            "Cancelled"
-          ].map(s=>`
-            <option
-              value="${s}"
-              ${order.status===s?"selected":""}>
-              ${s}
-            </option>
-          `).join("")}
+          <b>Phone:</b>
 
-        </select>
-      </div>
+          ${esc(
+            order.customer?.phone||
+            ""
+          )}
 
-      <div class="formGroup">
-        <label>Tracking</label>
+        </p>
 
-        <select
-          onchange="changeOrderTracking('${order.id}',this.value)">
+        <p>
 
-          ${[
-            "Pending",
-            "Confirmed",
-            "Processing",
-            "Out for Delivery",
-            "Delivered",
-            "Cancelled"
-          ].map(s=>`
-            <option
-              value="${s}"
-              ${order.tracking===s?"selected":""}>
-              ${s}
-            </option>
-          `).join("")}
+          <b>Address:</b><br>
 
-        </select>
-      </div>
+          ${esc(
+            order.customer?.address||
+            ""
+          )}
 
-      <div class="row">
+        </p>
+
+        <hr>
 
         ${
-          order.customer.lat && order.customer.lng
-          ?
-          `<button class="btn secondary small"
-            onclick="openOrderLocation(
-              ${order.customer.lat},
-              ${order.customer.lng}
-            )">
-            📍 Location
-          </button>`
-          :""
+          (order.items||[])
+          .map(item=>`
+
+            <div class="summaryRow">
+
+              <span>
+
+                ${esc(
+                  item.bn||
+                  item.name
+                )}
+
+                × ${item.qty}
+
+                (${esc(
+                  item.unit
+                )})
+
+              </span>
+
+              <b>
+
+                ₹${(
+                  Number(item.price||0)*
+                  Number(item.qty||0)
+                ).toFixed(2)}
+
+              </b>
+
+            </div>
+
+          `).join("")
         }
 
-        <button class="btn secondary small"
-          onclick="adminWhatsApp('${order.id}')">
-          WhatsApp
-        </button>
+        <hr>
+
+        <div class="summaryRow">
+
+          <span>Total</span>
+
+          <b>
+            ₹${Number(
+              order.total||0
+            ).toFixed(2)}
+          </b>
+
+        </div>
+
+        <div class="formGroup">
+
+          <label>Status</label>
+
+          <select
+            onchange='changeOrderStatus(
+              ${JSON.stringify(order.id)},
+              this.value
+            )'>
+
+            ${
+              [
+                "Pending",
+                "Confirmed",
+                "Processing",
+                "Out for Delivery",
+                "Delivered",
+                "Cancelled"
+              ]
+              .map(s=>`
+
+                <option
+                  value="${s}"
+                  ${
+                    order.status===s
+                    ?"selected"
+                    :""
+                  }>
+
+                  ${s}
+
+                </option>
+
+              `).join("")
+            }
+
+          </select>
+
+        </div>
+
+        <div class="formGroup">
+
+          <label>Tracking</label>
+
+          <select
+            onchange='changeOrderTracking(
+              ${JSON.stringify(order.id)},
+              this.value
+            )'>
+
+            ${
+              [
+                "Pending",
+                "Confirmed",
+                "Processing",
+                "Out for Delivery",
+                "Delivered",
+                "Cancelled"
+              ]
+              .map(s=>`
+
+                <option
+                  value="${s}"
+                  ${
+                    order.tracking===s
+                    ?"selected"
+                    :""
+                  }>
+
+                  ${s}
+
+                </option>
+
+              `).join("")
+            }
+
+          </select>
+
+        </div>
+
+        <div class="row">
+
+          ${
+            order.customer?.lat &&
+            order.customer?.lng
+            ?
+            `
+
+            <button
+              class="btn secondary small"
+              onclick='openOrderLocation(
+                ${Number(order.customer.lat)},
+                ${Number(order.customer.lng)}
+              )'>
+
+              📍 Location
+
+            </button>
+
+            `
+            :""
+          }
+
+          <button
+            class="btn secondary small"
+            onclick='adminWhatsApp(
+              ${JSON.stringify(order.id)}
+            )'>
+
+            WhatsApp
+
+          </button>
+
+          <button
+            class="btn danger small"
+            onclick='deleteFirebaseOrder(
+              ${JSON.stringify(order.id)}
+            )'>
+
+            🗑️ Delete
+
+          </button>
+
+        </div>
 
       </div>
 
-    </div>
+    `).join("");
 
-  `).join("");
 }
 
 
-function changeOrderStatus(id,status){
+/* =========================================================
+   CHANGE ORDER STATUS
+========================================================= */
 
-  const order=orders.find(x=>x.id===id);
+async function changeOrderStatus(
+  id,
+  status
+){
+
+  if(!requireAdmin())return;
+
+
+  const order=
+    orders.find(
+      x=>x.id===id
+    );
+
 
   if(!order)return;
 
-  order.status=status;
+
+  const updates={
+    status:status,
+    updatedAt:
+      new Date().toISOString()
+  };
+
 
   if(status==="Delivered"){
-    order.tracking="Delivered";
+
+    updates.tracking=
+      "Delivered";
+
   }
+
 
   if(status==="Cancelled"){
-    order.tracking="Cancelled";
+
+    updates.tracking=
+      "Cancelled";
+
   }
 
-  save("gb_orders",orders);
 
-  renderAdminOrders();
+  try{
 
-  toast("Order status update হয়েছে।");
+    await ordersRef
+      .child(id)
+      .update(updates);
+
+
+    toast(
+      "Order status update হয়েছে।"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Status update হয়নি।"
+    );
+
+  }
+
 }
 
 
-function changeOrderTracking(id,tracking){
+/* =========================================================
+   CHANGE TRACKING
+========================================================= */
 
-  const order=orders.find(x=>x.id===id);
+async function changeOrderTracking(
+  id,
+  tracking
+){
 
-  if(!order)return;
+  if(!requireAdmin())return;
 
-  order.tracking=tracking;
 
-  save("gb_orders",orders);
+  try{
 
-  renderAdminOrders();
+    await ordersRef
+      .child(id)
+      .update({
 
-  toast("Tracking update হয়েছে।");
+        tracking:tracking,
+
+        updatedAt:
+          new Date().toISOString()
+
+      });
+
+
+    toast(
+      "Tracking update হয়েছে।"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Tracking update হয়নি।"
+    );
+
+  }
+
 }
 
 
-function openOrderLocation(lat,lng){
+/* =========================================================
+   DELETE FIREBASE ORDER
+========================================================= */
+
+async function deleteFirebaseOrder(id){
+
+  if(!requireAdmin())return;
+
+
+  if(!confirm(
+    "এই Order permanently delete করবেন?"
+  )){
+
+    return;
+
+  }
+
+
+  try{
+
+    await ordersRef
+      .child(id)
+      .remove();
+
+
+    toast(
+      "Order delete হয়েছে।"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Order delete হয়নি।"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   ORDER LOCATION
+========================================================= */
+
+function openOrderLocation(
+  lat,
+  lng
+){
 
   window.open(
     `https://www.google.com/maps?q=${lat},${lng}`,
     "_blank"
   );
+
 }
 
 
+/* =========================================================
+   ADMIN WHATSAPP
+========================================================= */
+
 function adminWhatsApp(id){
 
-  const order=orders.find(x=>x.id===id);
+  const order=
+    orders.find(
+      x=>x.id===id
+    );
+
 
   if(!order)return;
+
 
   let text=
 `Ghare Bazar Order Update
@@ -3114,193 +5604,428 @@ Order ID: ${order.id}
 Customer: ${order.customer.name}
 Status: ${order.status}
 Tracking: ${order.tracking}
-Total: ₹${order.total.toFixed(2)}`;
+Total: ₹${Number(order.total||0).toFixed(2)}`;
+
 
   window.open(
-    "https://wa.me/91"+order.customer.phone+
-    "?text="+encodeURIComponent(text),
+
+    "https://wa.me/91"+
+    order.customer.phone+
+    "?text="+
+    encodeURIComponent(text),
+
     "_blank"
+
   );
+
 }
 
 
 /* =========================================================
-   SETTINGS
+   SETTINGS LOAD
 ========================================================= */
 
 function loadSettingsForm(){
 
-  document.getElementById("settingFreeAmount").value=
+  document.getElementById(
+    "settingFreeAmount"
+  ).value=
     settings.freeAmount;
 
-  document.getElementById("settingDeliveryMode").value=
+
+  document.getElementById(
+    "settingDeliveryMode"
+  ).value=
     settings.deliveryMode;
 
-  document.getElementById("settingCustomDelivery").value=
+
+  document.getElementById(
+    "settingCustomDelivery"
+  ).value=
     settings.customDelivery;
 
-  document.getElementById("settingExpectedDelivery").value=
+
+  document.getElementById(
+    "settingExpectedDelivery"
+  ).value=
     settings.expectedDelivery;
 
-  document.getElementById("settingFailedCharge").value=
+
+  document.getElementById(
+    "settingFailedCharge"
+  ).value=
     settings.failedCharge;
-}
 
-
-function saveSettings(){
-
-  if(!requireAdmin())return;
-
-  settings={
-    freeAmount:
-      Number(document.getElementById("settingFreeAmount").value)||149,
-
-    deliveryMode:
-      document.getElementById("settingDeliveryMode").value,
-
-    customDelivery:
-      Number(document.getElementById("settingCustomDelivery").value)||0,
-
-    expectedDelivery:
-      document.getElementById("settingExpectedDelivery").value,
-
-    failedCharge:
-      Number(document.getElementById("settingFailedCharge").value)||30
-  };
-
-  save("gb_settings",settings);
-
-  updateHomeDeliveryCriteria();
-
-  document.getElementById("settingsMsg").textContent=
-    "Settings Save হয়েছে।";
-
-  document.getElementById("settingsMsg").style.color="green";
-
-  toast("Settings update হয়েছে।");
-}
-
-
-function updateHomeDeliveryCriteria(){
-
-  const el=document.getElementById("homeDeliveryCriteria");
-
-  if(!el)return;
-
-  let charge="Free";
-
-  if(settings.deliveryMode==="custom"){
-    charge="₹"+Number(settings.customDelivery||0);
-  }else if(settings.deliveryMode!=="free"){
-    charge="₹"+Number(settings.deliveryMode||0);
-  }
-
-  el.textContent=
-    `₹${settings.freeAmount} এর কম হলে Delivery Charge: ${charge}`;
 }
 
 
 /* =========================================================
-   DUE
+   SETTINGS SAVE
 ========================================================= */
 
-function saveDue(){
+async function saveSettings(){
 
   if(!requireAdmin())return;
 
-  const phone=normalizePhone(
-    document.getElementById("duePhone").value
-  );
 
-  const amount=
-    Number(document.getElementById("dueAmount").value)||0;
+  settings={
 
-  const note=
-    document.getElementById("dueNote").value.trim();
+    freeAmount:
+      Number(
+        document.getElementById(
+          "settingFreeAmount"
+        ).value
+      )||149,
 
-  if(phone.length!==10){
-    toast("সঠিক customer mobile number দিন।");
-    return;
-  }
+    deliveryMode:
+      document.getElementById(
+        "settingDeliveryMode"
+      ).value,
 
-  if(!amount){
-    toast("Due amount দিন।");
-    return;
-  }
+    customDelivery:
+      Number(
+        document.getElementById(
+          "settingCustomDelivery"
+        ).value
+      )||0,
 
-  customerDues[phone]={
-    amount:amount,
-    note:note,
-    updated:new Date().toISOString()
+    expectedDelivery:
+      document.getElementById(
+        "settingExpectedDelivery"
+      ).value,
+
+    failedCharge:
+      Number(
+        document.getElementById(
+          "settingFailedCharge"
+        ).value
+      )||30
+
   };
 
-  save("gb_customer_dues",customerDues);
 
-  document.getElementById("duePhone").value="";
-  document.getElementById("dueAmount").value="";
-  document.getElementById("dueNote").value="";
+  try{
 
-  renderDues();
+    await settingsRef.set(
+      settings
+    );
 
-  toast("Customer Due Save হয়েছে।");
+
+    save(
+      "gb_settings",
+      settings
+    );
+
+
+    updateHomeDeliveryCriteria();
+
+
+    document.getElementById(
+      "settingsMsg"
+    ).textContent=
+      "Settings Firebase-এ Save হয়েছে।";
+
+
+    document.getElementById(
+      "settingsMsg"
+    ).style.color="green";
+
+
+    toast(
+      "Settings update হয়েছে।"
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById(
+      "settingsMsg"
+    ).textContent=
+      "Settings save হয়নি: "+
+      error.message;
+
+
+    document.getElementById(
+      "settingsMsg"
+    ).style.color="red";
+
+  }
+
 }
 
 
+/* =========================================================
+   HOME DELIVERY
+========================================================= */
+
+function updateHomeDeliveryCriteria(){
+
+  const el=
+    document.getElementById(
+      "homeDeliveryCriteria"
+    );
+
+
+  if(!el)return;
+
+
+  let charge="Free";
+
+
+  if(
+    settings.deliveryMode==="custom"
+  ){
+
+    charge=
+      "₹"+
+      Number(
+        settings.customDelivery||0
+      );
+
+  }
+
+  else if(
+    settings.deliveryMode!=="free"
+  ){
+
+    charge=
+      "₹"+
+      Number(
+        settings.deliveryMode||0
+      );
+
+  }
+
+
+  el.textContent=
+    `₹${settings.freeAmount} এর কম হলে Delivery Charge: ${charge}`;
+
+}
+
+
+/* =========================================================
+   DUE SAVE
+========================================================= */
+
+async function saveDue(){
+
+  if(!requireAdmin())return;
+
+
+  const phone=
+    normalizePhone(
+      document.getElementById(
+        "duePhone"
+      ).value
+    );
+
+
+  const amount=
+    Number(
+      document.getElementById(
+        "dueAmount"
+      ).value
+    )||0;
+
+
+  const note=
+    document.getElementById(
+      "dueNote"
+    ).value.trim();
+
+
+  if(phone.length!==10){
+
+    toast(
+      "সঠিক customer mobile number দিন।"
+    );
+
+    return;
+
+  }
+
+
+  if(!amount){
+
+    toast(
+      "Due amount দিন।"
+    );
+
+    return;
+
+  }
+
+
+  const due={
+
+    amount:amount,
+
+    note:note,
+
+    updated:
+      new Date().toISOString()
+
+  };
+
+
+  try{
+
+    await duesRef
+      .child(phone)
+      .set(due);
+
+
+    document.getElementById(
+      "duePhone"
+    ).value="";
+
+    document.getElementById(
+      "dueAmount"
+    ).value="";
+
+    document.getElementById(
+      "dueNote"
+    ).value="";
+
+
+    toast(
+      "Customer Due Firebase-এ Save হয়েছে।"
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Due save হয়নি: "+
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   DUE LIST
+========================================================= */
+
 function renderDues(){
 
-  const box=document.getElementById("dueList");
+  const box=
+    document.getElementById(
+      "dueList"
+    );
+
 
   if(!box)return;
 
-  const entries=Object.entries(customerDues);
+
+  const entries=
+    Object.entries(
+      customerDues||{}
+    );
+
 
   if(!entries.length){
 
     box.innerHTML=
-      `<div class="empty">কোনও Due নেই।</div>`;
+      `<div class="empty">
+        কোনও Due নেই।
+      </div>`;
 
     return;
+
   }
 
-  box.innerHTML=entries.map(([phone,d])=>`
 
-    <div class="orderCard">
+  box.innerHTML=
+    entries.map(
+      ([phone,d])=>`
 
-      <b>📱 ${esc(phone)}</b>
+        <div class="orderCard">
 
-      <p>
-        Due:
-        <strong>₹${Number(d.amount).toFixed(2)}</strong>
-      </p>
+          <b>
+            📱 ${esc(phone)}
+          </b>
 
-      <p class="muted">
-        ${esc(d.note||"")}
-      </p>
+          <p>
 
-      <button class="btn danger small"
-        onclick="clearDue('${phone}')">
-        Due Clear
-      </button>
+            Due:
 
-    </div>
+            <strong>
+              ₹${Number(
+                d.amount||0
+              ).toFixed(2)}
+            </strong>
 
-  `).join("");
+          </p>
+
+          <p class="muted">
+            ${esc(d.note||"")}
+          </p>
+
+          <button
+            class="btn danger small"
+            onclick='clearDue(
+              ${JSON.stringify(phone)}
+            )'>
+
+            Due Clear
+
+          </button>
+
+        </div>
+
+      `
+    ).join("");
+
 }
 
 
-function clearDue(phone){
+/* =========================================================
+   CLEAR DUE
+========================================================= */
+
+async function clearDue(phone){
 
   if(!requireAdmin())return;
 
-  if(!confirm("এই customer-এর Due clear করবেন?"))return;
 
-  delete customerDues[phone];
+  if(!confirm(
+    "এই customer-এর Due clear করবেন?"
+  )){
 
-  save("gb_customer_dues",customerDues);
+    return;
 
-  renderDues();
+  }
 
-  toast("Due clear হয়েছে।");
+
+  try{
+
+    await duesRef
+      .child(phone)
+      .remove();
+
+
+    toast(
+      "Due clear হয়েছে।"
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Due clear হয়নি।"
+    );
+
+  }
+
 }
 
 
@@ -3310,14 +6035,24 @@ function clearDue(phone){
 
 function openModal(html){
 
-  document.getElementById("modalContent").innerHTML=html;
-  document.getElementById("modal").classList.add("show");
+  document.getElementById(
+    "modalContent"
+  ).innerHTML=html;
+
+
+  document.getElementById(
+    "modal"
+  ).classList.add("show");
+
 }
 
 
 function closeModal(){
 
-  document.getElementById("modal").classList.remove("show");
+  document.getElementById(
+    "modal"
+  ).classList.remove("show");
+
 }
 
 
@@ -3325,92 +6060,185 @@ function closeModal(){
    LANGUAGE
 ========================================================= */
 
-let language=localStorage.getItem("gb_lang")||"bn";
+let language=
+  localStorage.getItem(
+    "gb_lang"
+  )||"bn";
 
-const translations={
-  bn:{
-    home:"Home",
-    products:"Products",
-    orders:"Orders",
-    cart:"Cart"
-  },
-  en:{
-    home:"Home",
-    products:"Products",
-    orders:"Orders",
-    cart:"Cart"
-  }
-};
 
 function toggleLanguage(){
 
-  language=language==="bn"?"en":"bn";
+  language=
+    language==="bn"
+    ?"en"
+    :"bn";
 
-  localStorage.setItem("gb_lang",language);
 
-  document.getElementById("langBtn").textContent=
-    language==="bn"?"English":"বাংলা";
+  localStorage.setItem(
+    "gb_lang",
+    language
+  );
+
+
+  document.getElementById(
+    "langBtn"
+  ).textContent=
+    language==="bn"
+    ?"English"
+    :"বাংলা";
+
 
   if(language==="en"){
+
     document.documentElement.lang="en";
-    document.getElementById("navHome").innerHTML="🏠<br>Home";
-    document.getElementById("navProducts").innerHTML="🛍️<br>Products";
-    document.getElementById("navOrders").innerHTML="📦<br>Orders";
-    document.getElementById("navCart").innerHTML="🛒<br>Cart";
+
+    document.getElementById(
+      "navHome"
+    ).innerHTML=
+      "🏠<br>Home";
+
+    document.getElementById(
+      "navProducts"
+    ).innerHTML=
+      "🛍️<br>Products";
+
+    document.getElementById(
+      "navOrders"
+    ).innerHTML=
+      "📦<br>Orders";
+
+    document.getElementById(
+      "navCart"
+    ).innerHTML=
+      "🛒<br>Cart";
+
   }else{
+
     document.documentElement.lang="bn";
-    document.getElementById("navHome").innerHTML="🏠<br>Home";
-    document.getElementById("navProducts").innerHTML="🛍️<br>পণ্য";
-    document.getElementById("navOrders").innerHTML="📦<br>অর্ডার";
-    document.getElementById("navCart").innerHTML="🛒<br>কার্ট";
+
+    document.getElementById(
+      "navHome"
+    ).innerHTML=
+      "🏠<br>Home";
+
+    document.getElementById(
+      "navProducts"
+    ).innerHTML=
+      "🛍️<br>পণ্য";
+
+    document.getElementById(
+      "navOrders"
+    ).innerHTML=
+      "📦<br>অর্ডার";
+
+    document.getElementById(
+      "navCart"
+    ).innerHTML=
+      "🛒<br>কার্ট";
+
   }
+
+
+  renderHomeProducts();
+
+  renderProductsPage();
+
+  renderCart();
+
 }
 
 
 /* =========================================================
-   ADMIN ACCESS BY LONG PRESS
+   ADMIN LONG PRESS
 ========================================================= */
 
 let pressTimer=null;
 
-function brandLongPress(){
 
-  clearTimeout(pressTimer);
+function startAdminPress(){
 
-  pressTimer=setTimeout(()=>{
+  clearTimeout(
+    pressTimer
+  );
 
-    if(adminLoggedIn){
-      openPage("admin");
-    }else{
-      openPage("adminLogin");
-    }
 
-  },900);
+  pressTimer=
+    setTimeout(()=>{
+
+      if(adminLoggedIn){
+
+        openPage("admin");
+
+      }else{
+
+        openPage("adminLogin");
+
+      }
+
+    },900);
+
 }
 
-document.querySelector(".brand")
-  ?.addEventListener("touchstart",function(){
-    brandLongPress();
-  });
 
-document.querySelector(".brand")
-  ?.addEventListener("touchend",function(){
-    clearTimeout(pressTimer);
-  });
+function stopAdminPress(){
+
+  clearTimeout(
+    pressTimer
+  );
+
+}
+
+
+const brand=
+  document.querySelector(".brand");
+
+
+if(brand){
+
+  brand.addEventListener(
+    "touchstart",
+    startAdminPress,
+    {passive:true}
+  );
+
+  brand.addEventListener(
+    "touchend",
+    stopAdminPress
+  );
+
+  brand.addEventListener(
+    "touchcancel",
+    stopAdminPress
+  );
+
+  brand.addEventListener(
+    "mousedown",
+    startAdminPress
+  );
+
+  brand.addEventListener(
+    "mouseup",
+    stopAdminPress
+  );
+
+}
 
 
 /* =========================================================
-   INSTALL / DOWNLOAD
+   INSTALL
 ========================================================= */
 
-window.addEventListener("beforeinstallprompt",event=>{
+window.addEventListener(
+  "beforeinstallprompt",
+  event=>{
 
-  event.preventDefault();
+    event.preventDefault();
 
-  deferredInstallPrompt=event;
+    deferredInstallPrompt=
+      event;
 
-  updateInstallButton();
-});
+  }
+);
 
 
 async function installGhareBazar(){
@@ -3420,88 +6248,66 @@ async function installGhareBazar(){
     deferredInstallPrompt.prompt();
 
     try{
-      await deferredInstallPrompt.userChoice;
+
+      await deferredInstallPrompt
+        .userChoice;
+
     }catch(e){}
 
     deferredInstallPrompt=null;
 
-    updateInstallButton();
-
     return;
+
   }
 
-  /*
-    Browser install prompt unavailable.
-    Download current page as HTML.
-  */
 
-  try{
+  toast(
+    "Browser menu থেকে Add to Home Screen ব্যবহার করুন।"
+  );
 
-    const html="<!doctype html>\n"+document.documentElement.outerHTML;
-
-    const blob=new Blob([html],{
-      type:"text/html;charset=utf-8"
-    });
-
-    const url=URL.createObjectURL(blob);
-
-    const a=document.createElement("a");
-
-    a.href=url;
-    a.download="Ghare-Bazar.html";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    setTimeout(()=>{
-      URL.revokeObjectURL(url);
-    },1000);
-
-  }catch(e){
-
-    toast("Download করা যায়নি। Browser menu থেকে Add to Home Screen ব্যবহার করুন।");
-  }
 }
 
 
-function updateInstallButton(){
+window.addEventListener(
+  "appinstalled",
+  ()=>{
 
-  const btn=document.getElementById("installAppBtn");
+    deferredInstallPrompt=null;
 
-  if(!btn)return;
+    toast(
+      "Ghare Bazar App install হয়েছে।"
+    );
 
-  btn.style.display="inline-flex";
-}
-
-
-window.addEventListener("appinstalled",()=>{
-
-  deferredInstallPrompt=null;
-
-  updateInstallButton();
-
-  toast("Ghare Bazar App install হয়েছে।");
-});
+  }
+);
 
 
 /* =========================================================
    SERVICE WORKER
 ========================================================= */
 
-if("serviceWorker" in navigator){
+if(
+  "serviceWorker" in navigator
+){
 
-  window.addEventListener("load",()=>{
+  window.addEventListener(
+    "load",
+    ()=>{
 
-    navigator.serviceWorker
-      .register("./sw.js")
-      .catch(error=>{
-        console.log("Service Worker:",error);
-      });
+      navigator.serviceWorker
+        .register("./sw.js")
+        .catch(error=>{
 
-  });
+          console.log(
+            "Service Worker:",
+            error
+          );
+
+        });
+
+    }
+  );
+
 }
 
 
@@ -3512,45 +6318,78 @@ if("serviceWorker" in navigator){
 function initializeAppUI(){
 
   renderCategories();
+
   renderHomeProducts();
+
   renderProductsPage();
+
   renderCart();
+
   renderOrders();
+
   renderAdminOrders();
+
   renderAdminProducts();
+
   renderDues();
 
   updateCartCount();
+
   updateHomeDeliveryCriteria();
 
+
   if(language==="en"){
-    document.getElementById("langBtn").textContent="বাংলা";
+
+    document.getElementById(
+      "langBtn"
+    ).textContent="বাংলা";
+
   }else{
-    document.getElementById("langBtn").textContent="English";
+
+    document.getElementById(
+      "langBtn"
+    ).textContent="English";
+
   }
+
 }
 
 
-window.addEventListener("load",()=>{
+window.addEventListener(
+  "load",
+  ()=>{
 
-  initializeAppUI();
+    initializeAppUI();
 
-  setTimeout(()=>{
 
-    const splash=document.getElementById("splash");
+    setTimeout(()=>{
 
-    if(splash){
-      splash.style.opacity="0";
-      splash.style.transition="opacity .4s";
+      const splash=
+        document.getElementById(
+          "splash"
+        );
 
-      setTimeout(()=>{
-        splash.remove();
-      },400);
-    }
 
-  },1000);
-});
+      if(splash){
 
+        splash.style.opacity="0";
+
+        splash.style.transition=
+          "opacity .4s";
+
+
+        setTimeout(()=>{
+
+          splash.remove();
+
+        },400);
+
+      }
+
+    },1000);
+
+  }
+);
 
 </script>
 
