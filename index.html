@@ -2853,6 +2853,22 @@ function getSubtotal(){
 }
 
 
+function formatExpectedDelivery(value){
+
+  const v=String(value ?? "").trim();
+
+  if(!v)return "";
+
+  if(v==="2-4" || v==="2–4")return "2–4 hours";
+  if(v==="4-6" || v==="4–6")return "4–6 hours";
+  if(v==="same-day" || v.toLowerCase()==="same day")return "Same Day";
+  if(v==="next-day" || v.toLowerCase()==="next day")return "Next Day";
+
+  return v;
+
+}
+
+
 function getDeliveryCharge(subtotal){
 
   const freeAmount=
@@ -3785,6 +3801,56 @@ async function placeOrder(){
   }
 
 
+  /*
+    Always read the latest delivery settings from Firebase
+    immediately before creating a new order.
+    This prevents an old/local delivery charge from being
+    used when Admin has already changed the setting.
+  */
+  try{
+
+    const latestSettingsSnapshot=
+      await settingsRef.once("value");
+
+    const latestData=
+      latestSettingsSnapshot.val();
+
+    if(latestData){
+
+      settings={
+        freeAmount:
+          Number(latestData.freeAmount)||149,
+
+        deliveryMode:
+          latestData.deliveryMode||"30",
+
+        customDelivery:
+          Number(latestData.customDelivery)||0,
+
+        expectedDelivery:
+          latestData.expectedDelivery||"2-4",
+
+        failedCharge:
+          Number(latestData.failedCharge)||30
+      };
+
+      save(
+        "gb_settings",
+        settings
+      );
+
+    }
+
+  }catch(settingsError){
+
+    console.warn(
+      "Latest settings read failed; using current settings.",
+      settingsError
+    );
+
+  }
+
+
   const subtotal=
     getSubtotal();
 
@@ -4029,7 +4095,7 @@ Items:
 `\nDelivery: ₹${order.delivery.toFixed(2)}`+
 `\nTotal: ₹${order.total.toFixed(2)}`+
 `\nPayment: ${order.paymentMethod}`+
-`\nExpected Delivery: ${order.expectedDelivery}`;
+`\nExpected Delivery: ${formatExpectedDelivery(order.expectedDelivery)}`;
 
 
   if(
@@ -4418,7 +4484,7 @@ function showOrderDetails(id){
 
     <p>
       <b>Expected Delivery:</b>
-      ${esc(order.expectedDelivery||"")}
+      ${esc(formatExpectedDelivery(order.expectedDelivery))}
     </p>
 
     <button
@@ -4584,7 +4650,7 @@ Total:
 
 <p>
 Expected Delivery:
-${esc(order.expectedDelivery||"")}
+${esc(formatExpectedDelivery(order.expectedDelivery))}
 </p>
 
 </body>
