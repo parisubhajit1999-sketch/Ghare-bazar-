@@ -603,6 +603,14 @@ hr{
   .productGrid{grid-template-columns:repeat(4,1fr)}
   .adminMenu{grid-template-columns:repeat(4,1fr)}
 }
+
+.adminOrderSection{margin:14px 0 18px}
+.adminOrderSectionTitle{background:var(--green);color:white;border-radius:12px;padding:11px 12px;margin:0 0 9px;font-size:17px}
+.adminOrderMini{display:grid;grid-template-columns:1.1fr 1.1fr 1.5fr 1.1fr .9fr;gap:7px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:11px;padding:10px;margin-bottom:7px}
+.adminOrderMini span{min-width:0;overflow-wrap:anywhere}
+.adminOrderMini .amount{font-weight:bold;color:var(--dark);text-align:right}
+.adminOrderMini .miniLabel{display:block;color:var(--muted);font-size:10px;margin-bottom:2px}
+@media(max-width:650px){.adminOrderMini{grid-template-columns:1fr 1fr}.adminOrderMini .amount{text-align:left}}
 </style>
 </head>
 
@@ -4132,199 +4140,104 @@ Items:
 
 function renderOrders(){
 
-  const box=
-    document.getElementById(
-      "ordersList"
-    );
-
-
+  const box=document.getElementById("ordersList");
   if(!box)return;
 
-
   if(!orders.length){
-
-    box.innerHTML=`
-
-      <div class="empty">
-
-        📦 এখনও কোনও Order নেই।
-
-      </div>
-
-    `;
-
+    box.innerHTML=`<div class="empty">📦 এখনও কোনও Order নেই।</div>`;
     return;
-
   }
 
+  box.innerHTML=orders.map(order=>{
 
-  box.innerHTML=
-    orders.map(order=>{
+    let statusClass="";
+    if(order.status==="Cancelled")statusClass="cancelled";
+    if(order.status==="Delivered")statusClass="delivered";
 
-      let statusClass="";
+    const canCustomerCancel=
+      !["Out for Delivery","Delivered","Cancelled"].includes(order.status);
 
-
-      if(
-        order.status==="Cancelled"
-      ){
-
-        statusClass="cancelled";
-
-      }
-
-
-      if(
-        order.status==="Delivered"
-      ){
-
-        statusClass="delivered";
-
-      }
-
-
-      return `
-
-        <div class="orderCard">
-
-          <div
-            style="
-              display:flex;
-              justify-content:space-between;
-              gap:8px">
-
-            <b>
-              ${esc(order.id)}
-            </b>
-
-            <span
-              class="status ${statusClass}">
-
-              ${esc(order.status)}
-
-            </span>
-
-          </div>
-
-          <div
-            class="muted"
-            style="margin-top:6px">
-
-            ${formatDate(order.date)}
-
-          </div>
-
-          <hr>
-
-          ${
-            (order.items||[])
-            .map(item=>`
-
-              <div class="summaryRow">
-
-                <span>
-
-                  ${esc(item.bn||item.name)}
-                  × ${item.qty}
-
-                  <small>
-                    (${esc(item.unit)})
-                  </small>
-
-                </span>
-
-                <b>
-                  ₹${(
-                    item.price*item.qty
-                  ).toFixed(2)}
-                </b>
-
-              </div>
-
-            `).join("")
-          }
-
-          <hr>
-
-          <div class="summaryRow">
-
-            <span>Subtotal</span>
-
-            <b>
-              ₹${Number(
-                order.subtotal||0
-              ).toFixed(2)}
-            </b>
-
-          </div>
-
-          <div class="summaryRow">
-
-            <span>Delivery</span>
-
-            <b>
-              ₹${Number(
-                order.delivery||0
-              ).toFixed(2)}
-            </b>
-
-          </div>
-
-          <div class="summaryRow total">
-
-            <span>Total</span>
-
-            <span>
-              ₹${Number(
-                order.total||0
-              ).toFixed(2)}
-            </span>
-
-          </div>
-
-          <p>
-            <b>Expected Delivery:</b>
-            ${esc(
-              order.expectedDelivery||""
-            )}
-          </p>
-
-          <p>
-            <b>Tracking:</b>
-            ${esc(
-              order.tracking||
-              order.status||
-              "Pending"
-            )}
-          </p>
-
-          <div class="row">
-
-            <button
-              class="btn secondary small"
-              onclick='showOrderDetails(${JSON.stringify(order.id)})'>
-
-              Details
-
-            </button>
-
-            <button
-              class="btn secondary small"
-              onclick='downloadOrder(${JSON.stringify(order.id)})'>
-
-              Download
-
-            </button>
-
-          </div>
-
+    return `
+      <div class="orderCard">
+        <div style="display:flex;justify-content:space-between;gap:8px">
+          <b>${esc(order.id)}</b>
+          <span class="status ${statusClass}">${esc(order.status||"Pending")}</span>
         </div>
 
-      `;
+        <div class="muted" style="margin-top:6px">${formatDate(order.date)}</div>
+        <hr>
 
-    }).join("");
+        ${(order.items||[]).map(item=>`
+          <div class="summaryRow">
+            <span>${esc(item.bn||item.name)} × ${item.qty}
+              <small>(${esc(item.unit||"")})</small>
+            </span>
+            <b>₹${(Number(item.price||0)*Number(item.qty||0)).toFixed(2)}</b>
+          </div>
+        `).join("")}
 
+        <hr>
+        <div class="summaryRow"><span>Subtotal</span><b>₹${Number(order.subtotal||0).toFixed(2)}</b></div>
+        <div class="summaryRow"><span>Delivery</span><b>₹${Number(order.delivery||0).toFixed(2)}</b></div>
+        <div class="summaryRow total"><span>Total</span><span>₹${Number(order.total||0).toFixed(2)}</span></div>
+
+        <p><b>Expected Delivery:</b> ${esc(formatExpectedDelivery(order.expectedDelivery||""))}</p>
+        <p><b>Tracking:</b> ${esc(order.tracking||order.status||"Pending")}</p>
+
+        <div class="row">
+          <button class="btn secondary small" onclick='showOrderDetails(${JSON.stringify(order.id)})'>Details</button>
+          <button class="btn secondary small" onclick='downloadOrder(${JSON.stringify(order.id)})'>Download</button>
+          ${canCustomerCancel ? `
+            <button class="btn danger small" onclick='customerCancelOrder(${JSON.stringify(order.id)})'>Cancel Order</button>
+          ` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
 }
 
+async function customerCancelOrder(id){
+
+  const order=orders.find(x=>x.id===id);
+
+  if(!order){
+    toast("Order পাওয়া যায়নি।");
+    return;
+  }
+
+  if(["Out for Delivery","Delivered","Cancelled"].includes(order.status)){
+    toast("Out for Delivery হওয়ার পরে Customer Cancel করা যাবে না।");
+    return;
+  }
+
+  if(!confirm("আপনি কি এই Order টি Cancel করতে চান?\n\nOrder ID: "+order.id))return;
+
+  const updates={
+    status:"Cancelled",
+    tracking:"Cancelled",
+    cancelled:true,
+    cancelledBy:"Customer",
+    cancelledAt:new Date().toISOString(),
+    updatedAt:new Date().toISOString()
+  };
+
+  try{
+    await ordersRef.child(id).update(updates);
+
+    const i=orders.findIndex(x=>x.id===id);
+    if(i!==-1){
+      orders[i]={...orders[i],...updates};
+      save("gb_orders",orders);
+    }
+
+    toast("Order Cancelled হয়েছে।");
+    renderOrders();
+
+  }catch(error){
+    console.error(error);
+    toast("Order Cancel করা যায়নি: "+(error.message||"Firebase Error"));
+  }
+}
 
 function formatDate(date){
 
@@ -4509,194 +4422,79 @@ function showOrderDetails(id){
 
 function downloadOrder(id){
 
-  const order=
-    orders.find(
-      x=>x.id===id
-    );
+  const order=orders.find(x=>x.id===id);
+  if(!order){
+    toast("Order পাওয়া যায়নি।");
+    return;
+  }
 
-
-  if(!order)return;
-
-
-  const html=`
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>${esc(order.id)}</title>
-
-<style>
-
-body{
-  font-family:Arial;
-  padding:20px;
-}
-
-table{
-  border-collapse:collapse;
-  width:100%;
-}
-
-th,td{
-  border:1px solid #ccc;
-  padding:7px;
-  text-align:left;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<h1>Ghare Bazar</h1>
-
-<h3>Ma Manosha Stationery</h3>
-
-<p>
-<b>Order ID:</b>
-${esc(order.id)}
-</p>
-
-<p>
-<b>Date:</b>
-${formatDate(order.date)}
-</p>
-
-<p>
-<b>Customer:</b>
-${esc(order.customer.name)}
-</p>
-
-<p>
-<b>Phone:</b>
-${esc(order.customer.phone)}
-</p>
-
-<p>
-<b>Address:</b>
-${esc(order.customer.address)}
-</p>
-
-<table>
-
-<tr>
-
-<th>Product</th>
-<th>Quantity</th>
-<th>Unit</th>
-<th>Price</th>
-<th>Total</th>
-
-</tr>
-
-${
-  (order.items||[])
-  .map(item=>`
-
+  const productRows=(order.items||[]).map((item,index)=>`
     <tr>
-
-      <td>
-        ${esc(item.bn||item.name)}
-      </td>
-
-      <td>
-        ${item.qty}
-      </td>
-
-      <td>
-        ${esc(item.unit)}
-      </td>
-
-      <td>
-        ₹${Number(
-          item.price
-        ).toFixed(2)}
-      </td>
-
-      <td>
-        ₹${(
-          item.price*item.qty
-        ).toFixed(2)}
-      </td>
-
+      <td>${index+1}</td>
+      <td>${esc(item.bn||item.name)}${item.name&&item.bn&&item.name!==item.bn?`<br><small>${esc(item.name)}</small>`:""}</td>
+      <td>${esc(item.unit||"")}</td>
+      <td>${Number(item.qty||0)}</td>
+      <td>₹${Number(item.price||0).toFixed(2)}</td>
+      <td>₹${(Number(item.price||0)*Number(item.qty||0)).toFixed(2)}</td>
     </tr>
+  `).join("");
 
-  `).join("")
-}
+  const html=`<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ghare Bazar - ${esc(order.id)}</title>
+<style>
+body{font-family:Arial,"Noto Sans Bengali",sans-serif;padding:20px;color:#202520;max-width:900px;margin:auto}
+.info{border:1px solid #ccc;border-radius:10px;padding:12px;margin:12px 0}
+table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:7px;text-align:left;vertical-align:top}
+th{background:#e8f5e9}.totalBox{margin-top:15px;margin-left:auto;max-width:350px}
+.totalRow{display:flex;justify-content:space-between;padding:5px 0}.grand{border-top:2px solid #333;margin-top:5px;padding-top:8px;font-size:20px;font-weight:bold}
+@media print{body{padding:8px}}
+</style></head><body>
 
-</table>
+<h1>Ghare Bazar</h1><h3>Ma Manosha Stationery</h3>
 
-<h3>
-Subtotal:
-₹${Number(
-  order.subtotal||0
-).toFixed(2)}
-</h3>
+<div class="info">
+<p><b>Order ID:</b> ${esc(order.id)}</p>
+<p><b>Date:</b> ${formatDate(order.date)}</p>
+<p><b>Status:</b> ${esc(order.status||"Pending")}</p>
+<p><b>Tracking:</b> ${esc(order.tracking||order.status||"Pending")}</p>
+</div>
 
-<h3>
-Delivery:
-₹${Number(
-  order.delivery||0
-).toFixed(2)}
-</h3>
+<div class="info">
+<p><b>Customer Name:</b> ${esc(order.customer?.name||"")}</p>
+<p><b>Phone:</b> ${esc(order.customer?.phone||"")}</p>
+<p><b>Place / Address:</b><br>${esc(order.customer?.address||"")}</p>
+${order.customer?.lat&&order.customer?.lng?`<p><b>Location:</b> ${Number(order.customer.lat)}, ${Number(order.customer.lng)}</p>`:""}
+</div>
 
-<h2>
-Total:
-₹${Number(
-  order.total||0
-).toFixed(2)}
-</h2>
+<h2>Product-wise Order Details</h2>
+<table><tr><th>No.</th><th>Product</th><th>Unit</th><th>Qty</th><th>Unit Price</th><th>Product Total</th></tr>
+${productRows}</table>
 
-<p>
-Expected Delivery:
-${esc(formatExpectedDelivery(order.expectedDelivery))}
-</p>
+<div class="totalBox">
+<div class="totalRow"><span>Subtotal</span><b>₹${Number(order.subtotal||0).toFixed(2)}</b></div>
+<div class="totalRow"><span>Delivery Charge</span><b>₹${Number(order.delivery||0).toFixed(2)}</b></div>
+<div class="totalRow"><span>Payment Method</span><b>${esc(order.paymentMethod||"")}</b></div>
+<div class="totalRow grand"><span>Total</span><span>₹${Number(order.total||0).toFixed(2)}</span></div>
+</div>
 
-</body>
-</html>
-`;
+<p><b>Expected Delivery:</b> ${esc(formatExpectedDelivery(order.expectedDelivery||""))}</p>
+${Number(order.previousDue||0)>0?`<p><b>Previous Due:</b> ₹${Number(order.previousDue||0).toFixed(2)}</p><p><b>Total Payable Including Previous Due:</b> ₹${Number(order.payable||0).toFixed(2)}</p>`:""}
+${order.status==="Cancelled"?`<p><b>Cancelled By:</b> ${esc(order.cancelledBy||"")}${order.cancelledAt?`<br><b>Cancelled At:</b> ${formatDate(order.cancelledAt)}`:""}</p>`:""}
 
+</body></html>`;
 
-  const blob=
-    new Blob(
-      [html],
-      {
-        type:
-          "text/html;charset=utf-8"
-      }
-    );
-
-
-  const url=
-    URL.createObjectURL(blob);
-
-
-  const a=
-    document.createElement("a");
-
-
+  const blob=new Blob([html],{type:"text/html;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
   a.href=url;
-
-  a.download=
-    order.id+".html";
-
-
+  a.download="Ghare-Bazar-"+order.id+"-Order-Details.html";
   document.body.appendChild(a);
-
   a.click();
-
   a.remove();
-
-
-  setTimeout(()=>{
-
-    URL.revokeObjectURL(url);
-
-  },1000);
-
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-
 
 /* =========================================================
    ADMIN CHECK
@@ -5388,267 +5186,95 @@ function renderAdminProducts(){
 
 function renderAdminOrders(){
 
-  const box=
-    document.getElementById(
-      "adminOrdersList"
-    );
-
-
+  const box=document.getElementById("adminOrdersList");
   if(!box)return;
 
+  const allOrders=[...orders].sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
 
-  if(!orders.length){
+  const newOrders=allOrders.filter(o=>["Pending","Confirmed","Processing"].includes(o.status));
+  const outOrders=allOrders.filter(o=>o.status==="Out for Delivery");
+  const deliveredOrders=allOrders.filter(o=>o.status==="Delivered");
+  const cancelledOrders=allOrders.filter(o=>o.status==="Cancelled");
 
-    box.innerHTML=
-      `<div class="empty">
-        কোনও Order নেই।
-      </div>`;
-
-    return;
-
-  }
-
-
-  box.innerHTML=
-    orders.map(order=>`
+  function compact(order){
+    return `
+      <div class="adminOrderMini">
+        <span><small class="miniLabel">Name</small><b>${esc(order.customer?.name||"")}</b></span>
+        <span><small class="miniLabel">Order ID</small>${esc(order.id)}</span>
+        <span><small class="miniLabel">Place</small>${esc(order.customer?.address||"")}</span>
+        <span><small class="miniLabel">Ph No.</small>${esc(order.customer?.phone||"")}</span>
+        <span class="amount"><small class="miniLabel">Amount</small>₹${Number(order.total||0).toFixed(2)}</span>
+      </div>
 
       <div class="orderCard">
-
-        <div
-          style="
-            display:flex;
-            justify-content:space-between">
-
-          <b>
-            ${esc(order.id)}
-          </b>
-
-          <span class="status">
-
-            ${esc(
-              order.status||
-              "Pending"
-            )}
-
-          </span>
-
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+          <b>${esc(order.id)}</b>
+          <span class="status ${order.status==="Delivered"?"delivered":order.status==="Cancelled"?"cancelled":""}">${esc(order.status||"Pending")}</span>
         </div>
 
-        <p>
-
-          <b>Customer:</b>
-
-          ${esc(
-            order.customer?.name||
-            ""
-          )}
-
-        </p>
-
-        <p>
-
-          <b>Phone:</b>
-
-          ${esc(
-            order.customer?.phone||
-            ""
-          )}
-
-        </p>
-
-        <p>
-
-          <b>Address:</b><br>
-
-          ${esc(
-            order.customer?.address||
-            ""
-          )}
-
-        </p>
-
+        <div class="muted" style="margin-top:6px">${formatDate(order.date)}</div>
         <hr>
 
-        ${
-          (order.items||[])
-          .map(item=>`
+        <div class="muted" style="margin-bottom:6px"><b>Product-wise Order Details</b></div>
 
-            <div class="summaryRow">
-
-              <span>
-
-                ${esc(
-                  item.bn||
-                  item.name
-                )}
-
-                × ${item.qty}
-
-                (${esc(
-                  item.unit
-                )})
-
-              </span>
-
-              <b>
-
-                ₹${(
-                  Number(item.price||0)*
-                  Number(item.qty||0)
-                ).toFixed(2)}
-
-              </b>
-
-            </div>
-
-          `).join("")
-        }
+        ${(order.items||[]).map(item=>`
+          <div class="summaryRow">
+            <span>${esc(item.bn||item.name)} × ${Number(item.qty||0)} (${esc(item.unit||"")})</span>
+            <b>₹${(Number(item.price||0)*Number(item.qty||0)).toFixed(2)}</b>
+          </div>
+        `).join("")}
 
         <hr>
-
-        <div class="summaryRow">
-
-          <span>Total</span>
-
-          <b>
-            ₹${Number(
-              order.total||0
-            ).toFixed(2)}
-          </b>
-
-        </div>
+        <div class="summaryRow"><span>Subtotal</span><b>₹${Number(order.subtotal||0).toFixed(2)}</b></div>
+        <div class="summaryRow"><span>Delivery</span><b>₹${Number(order.delivery||0).toFixed(2)}</b></div>
+        <div class="summaryRow total"><span>Amount</span><span>₹${Number(order.total||0).toFixed(2)}</span></div>
 
         <div class="formGroup">
-
           <label>Status</label>
-
-          <select
-            onchange='changeOrderStatus(
-              ${JSON.stringify(order.id)},
-              this.value
-            )'>
-
-            ${
-              [
-                "Pending",
-                "Confirmed",
-                "Processing",
-                "Out for Delivery",
-                "Delivered",
-                "Cancelled"
-              ]
-              .map(s=>`
-
-                <option
-                  value="${s}"
-                  ${
-                    order.status===s
-                    ?"selected"
-                    :""
-                  }>
-
-                  ${s}
-
-                </option>
-
-              `).join("")
-            }
-
+          <select onchange='changeOrderStatus(${JSON.stringify(order.id)},this.value)'>
+            ${["Pending","Confirmed","Processing","Out for Delivery","Delivered","Cancelled"].map(st=>`
+              <option value="${st}" ${order.status===st?"selected":""}>${st}</option>
+            `).join("")}
           </select>
-
         </div>
 
         <div class="formGroup">
-
           <label>Tracking</label>
-
-          <select
-            onchange='changeOrderTracking(
-              ${JSON.stringify(order.id)},
-              this.value
-            )'>
-
-            ${
-              [
-                "Pending",
-                "Confirmed",
-                "Processing",
-                "Out for Delivery",
-                "Delivered",
-                "Cancelled"
-              ]
-              .map(s=>`
-
-                <option
-                  value="${s}"
-                  ${
-                    order.tracking===s
-                    ?"selected"
-                    :""
-                  }>
-
-                  ${s}
-
-                </option>
-
-              `).join("")
-            }
-
+          <select onchange='changeOrderTracking(${JSON.stringify(order.id)},this.value)'>
+            ${["Pending","Confirmed","Processing","Out for Delivery","Delivered","Cancelled"].map(st=>`
+              <option value="${st}" ${order.tracking===st?"selected":""}>${st}</option>
+            `).join("")}
           </select>
-
         </div>
 
         <div class="row">
-
-          ${
-            order.customer?.lat &&
-            order.customer?.lng
-            ?
-            `
-
-            <button
-              class="btn secondary small"
-              onclick='openOrderLocation(
-                ${Number(order.customer.lat)},
-                ${Number(order.customer.lng)}
-              )'>
-
-              📍 Location
-
-            </button>
-
-            `
-            :""
-          }
-
-          <button
-            class="btn secondary small"
-            onclick='adminWhatsApp(
-              ${JSON.stringify(order.id)}
-            )'>
-
-            WhatsApp
-
-          </button>
-
-          <button
-            class="btn danger small"
-            onclick='deleteFirebaseOrder(
-              ${JSON.stringify(order.id)}
-            )'>
-
-            🗑️ Delete
-
-          </button>
-
+          <button class="btn secondary small" onclick='showOrderDetails(${JSON.stringify(order.id)})'>Details</button>
+          <button class="btn secondary small" onclick='downloadOrder(${JSON.stringify(order.id)})'>Download Order Details</button>
+          ${order.customer?.lat&&order.customer?.lng?`
+            <button class="btn secondary small" onclick='openOrderLocation(${Number(order.customer.lat)},${Number(order.customer.lng)})'>📍 Location</button>
+          `:""}
+          <button class="btn secondary small" onclick='adminWhatsApp(${JSON.stringify(order.id)})'>WhatsApp</button>
+          <button class="btn danger small" onclick='deleteFirebaseOrder(${JSON.stringify(order.id)})'>🗑️ Delete</button>
         </div>
-
       </div>
+    `;
+  }
 
-    `).join("");
+  function section(title,list,empty){
+    return `
+      <div class="adminOrderSection">
+        <h3 class="adminOrderSectionTitle">${title}<span style="float:right">${list.length}</span></h3>
+        ${list.length?list.map(compact).join(""):`<div class="empty">${empty}</div>`}
+      </div>
+    `;
+  }
 
+  box.innerHTML=
+    section("🆕 New Order",newOrders,"New Order নেই।")+
+    section("🚚 Out for Delivery",outOrders,"Out for Delivery Order নেই।")+
+    section("✅ Delivered",deliveredOrders,"Delivered Order নেই।")+
+    section("❌ Cancelled Orders",cancelledOrders,"Cancelled Order নেই।");
 }
-
 
 /* =========================================================
    CHANGE ORDER STATUS
@@ -5690,6 +5316,16 @@ async function changeOrderStatus(
 
     updates.tracking=
       "Cancelled";
+
+    updates.cancelled=true;
+
+    updates.cancelledBy=
+      order.cancelledBy ||
+      "Admin";
+
+    updates.cancelledAt=
+      order.cancelledAt ||
+      new Date().toISOString();
 
   }
 
