@@ -3334,6 +3334,9 @@ function loadCustomerInfo(){
 
   loadSavedAddresses();
 
+  // My Orders-এ শুধু এই customer-এর order দেখাবে।
+  renderOrders();
+
 }
 
 
@@ -4135,6 +4138,41 @@ Items:
 
 
 /* =========================================================
+   CUSTOMER ORDER IDENTITY
+========================================================= */
+
+function getCurrentCustomerPhone(){
+
+  if(adminLoggedIn)return "";
+
+  const info=loadJSON("gb_customer_info",{});
+
+  const savedPhone=normalizePhone(info.phone||"");
+
+  if(savedPhone.length===10)return savedPhone;
+
+  const inputPhone=normalizePhone(
+    document.getElementById("customerPhone")?.value||""
+  );
+
+  return inputPhone.length===10 ? inputPhone : "";
+
+}
+
+function isCustomerOrderVisible(order){
+
+  if(adminLoggedIn)return true;
+
+  const customerPhone=getCurrentCustomerPhone();
+
+  if(!customerPhone)return false;
+
+  return normalizePhone(order?.customer?.phone||"")===customerPhone;
+
+}
+
+
+/* =========================================================
    CUSTOMER ORDERS
 ========================================================= */
 
@@ -4143,12 +4181,30 @@ function renderOrders(){
   const box=document.getElementById("ordersList");
   if(!box)return;
 
-  if(!orders.length){
-    box.innerHTML=`<div class="empty">📦 এখনও কোনও Order নেই।</div>`;
+  if(adminLoggedIn){
+    // Admin can see every order.
+  }else if(!getCurrentCustomerPhone()){
+    box.innerHTML=`
+      <div class="empty">
+        📱 আপনার নিজের Order দেখতে আগে Checkout-এ নিজের Mobile Number দিন।
+      </div>
+    `;
     return;
   }
 
-  box.innerHTML=orders.map(order=>{
+  const customerOrders=
+    orders.filter(order=>isCustomerOrderVisible(order));
+
+  if(!customerOrders.length){
+    box.innerHTML=`
+      <div class="empty">
+        📦 এই Mobile Number দিয়ে কোনও Order পাওয়া যায়নি।
+      </div>
+    `;
+    return;
+  }
+
+  box.innerHTML=customerOrders.map(order=>{
 
     let statusClass="";
     if(order.status==="Cancelled")statusClass="cancelled";
@@ -4199,6 +4255,11 @@ function renderOrders(){
 async function customerCancelOrder(id){
 
   const order=orders.find(x=>x.id===id);
+
+  if(order && !isCustomerOrderVisible(order)){
+    toast("এই Order আপনার নয়।");
+    return;
+  }
 
   if(!order){
     toast("Order পাওয়া যায়নি।");
@@ -4277,6 +4338,11 @@ function showOrderDetails(id){
 
 
   if(!order)return;
+
+  if(!isCustomerOrderVisible(order)){
+    toast("এই Order আপনার নয়।");
+    return;
+  }
 
 
   const html=`
@@ -4425,6 +4491,11 @@ function downloadOrder(id){
   const order=orders.find(x=>x.id===id);
   if(!order){
     toast("Order পাওয়া যায়নি।");
+    return;
+  }
+
+  if(!isCustomerOrderVisible(order)){
+    toast("এই Order আপনার নয়।");
     return;
   }
 
